@@ -1,34 +1,17 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './assets/css/style.css'
-// import { PrivateRoute } from './privateRoute';
+import './assets/css/sb-admin.css'
 
-// const loading = (
-//   <div className="pt-3 text-center">
-//     <div className="sk-spinner sk-spinner-pulse"></div>
-//   </div>
-// )
-
-// Containers
-// const Layout = React.lazy(() => import('./layout/Layout'))
-const SingIn = React.lazy(() => import('./views/signIn/SingIn'))
-
+const SingIn = React.lazy(() => import('./views/signIn/SignIn'))
 
 function App() {
-  
   return (
-    // <Suspense fallback={loading}>
+    <Suspense>
       <Routes>
-        <Route path="/signin" name="signin" element={<SingIn />} />
-        {/* <Route path="/login" name="Login" element={<Login />} />
-        <Route path="/" name="Dashboard" element={<PrivateRoute><Layout child={'Genre'} /></PrivateRoute>} />
-        <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/genre" name="Genre" element={<PrivateRoute><Layout child={'Genre'} /></PrivateRoute>} />
-        <Route path="/urls" name="Urls" element={<PrivateRoute><Layout child={'Urls'} /></PrivateRoute>} />
-        <Route path="/blogs" name="Blogs" element={<PrivateRoute><Layout child={'Blog'} /></PrivateRoute>} />
-        <Route path="/setting" name="Settings" element={<PrivateRoute><Layout child={'Setting'} /></PrivateRoute>} /> */}
+        <Route path="/" name="SignIn" element={<SingIn />} />
       </Routes>
-    // </Suspense>
+    </Suspense>
   )
 }
 

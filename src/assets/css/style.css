@@ -1257,7 +1257,7 @@ input {
 .profile-page.zones .main.shadows .corner {
     position: relative;
     overflow: hidden;
-    background-image: url(../img/reactangle.png);
+    background-image: url(../images/reactangle.png);
     background-repeat: repeat;
     background-size: cover;
 }
@@ -2070,7 +2070,7 @@ ul#accordionSidebar button.btn.btn-primary {
 .selectzone-popup.serverspopup ::-webkit-calendar-picker-indicator {
     color: rgba(0, 0, 0, 0);
     opacity: 1;
-    background-image: url('../img/calendar.png');
+    background-image: url('../images/calendar.png');
     width: 18px;
     height: 18px;
     cursor: pointer;
