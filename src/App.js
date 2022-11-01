@@ -9,7 +9,7 @@ function App() {
   return (
     <Suspense>
       <Routes>
-        <Route path="/" name="SignIn" element={<SingIn />} />
+        <Route path="/signin" name="SignIn" element={<SingIn />} ></Route>
       </Routes>
     </Suspense>
   )
