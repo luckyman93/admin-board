@@ -1035,11 +1035,10 @@ input {
     cursor: pointer;
 }
 
-.gender-qu .switch input.first {
+.gender-qu .view input.first {
     position: absolute;
     background: #5272b014!important;
     width: 40px;
-    left: -40px;
     z-index: 999;
     opacity: 1;
     font-family: Space Grotesk;
@@ -1050,7 +1049,6 @@ input {
     padding: 1px;
     height: 46px;
     text-align: center;
-    pointer-events: none;
 }
 
 .gender-qu .switch i:nth-of-type(1) {

@@ -1,79 +1,73 @@
-// import React from 'react'
-// import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom';
 
-// //images start
-// import machineIcon from '../../assets/images/login.png'
-// // import updateIcon from '../../assets/images/update.png'
-// // import createIcon from '../../assets/images/create.png'
-// // import ZonesIcon from '../../assets/images/ZONES.png'
-// // import settingsIcon from '../../assets/images/settings.png'
-// // import grviewIcon from '../../assets/images/grview.png'
-// // import mvIcon from '../../assets/images/mv.png'
-// //images end
+//images start
+import logoIcon from '../assets/images/logo.png'
+import machineIcon from '../assets/images/machine.png'
+import updateIcon from '../assets/images/update.png'
+import createIcon from '../assets/images/create.png'
+import zonesIcon from '../assets/images/zones.png'
+import settingsIcon from '../assets/images/settings.png'
+import grviewIcon from '../assets/images/grview.png'
+import mvIcon from '../assets/images/mv.png'
+//images end
 
-// const AppSidebar = (props) =>  {
+const NavItem = (props) => (
+    <li className={`nav-item ${props.info.active ? "active" : ""}`}>
+        <Link className="nav-link" to={props.info.href}>
+            <img src={props.info.iconUrl} />
+            <span>{props.info.itemName}</span>
+        </Link>
+    </li>
+)
 
-//   return (
-//     <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-//         <a className="sidebar-brand d-flex align-items-center justify-content-center pb-5" href="index.html">
-//             <div className="sidebar-brand-icon">
-//                 <div className="sidebar-brand-text pl-2 pr-2">
-//                     <img src="../img/logo.png" className="full-width" alt="logo" />
-//                 </div>
-//             </div>
-//         </a>
+const AppSidebar = () =>  {
 
-//         <li className="nav-item active">
-//             <Link className="nav-link" href="location-setting.html">
-//                 <img src={machineIcon} />
-//                 <span>CREATE MACHINE</span>
-//             </Link>
-//         </li>
-//         {/* <li className="nav-item">
-//             <a className="nav-link" href="machine-list.html">
-//                 <img src={updateIcon} />
-//                 <span>UPDATE MACHINE</span>
-//             </a>
-//         </li>
+    const arrNavItemsInfo = [
+        { iconUrl: machineIcon, itemName: "CREATE MACHINE", href:"/createmachine", active:false},
+        { iconUrl: updateIcon, itemName: "UPDATE MACHINE", href:"/updatemachine", active:false},
+        { iconUrl: createIcon, itemName: "CREATE ZONE", href:"/createzone", active:false },
+        { iconUrl: zonesIcon, itemName: "UPDATE ZONE", href:"/updatezone", active:false },
+        { iconUrl: settingsIcon, itemName: "API SETTINGS", href:"/apisetting", active:false },
+        { iconUrl: grviewIcon, itemName: "GROUP VIEW", href:"/groupview", active:false },
+        { iconUrl: mvIcon, itemName: "MACHINE VIEW", href: "/machineview", active:false },
+    ]
 
-//         <li className="nav-item">
-//             <a className="nav-link" href="create-zone.html">
-//                 <img src={createIcon} />
-//                 <span>CREATE ZONE</span>
-//             </a>
-//         </li>
+    const currentLocation = useLocation().pathname
 
-//         <li className="nav-item">
-//             <a className="nav-link" href="update-zone.html">
-//                 <img src={ZonesIcon} />
-//                 <span>UPDATE ZONE</span>
-//             </a>
-//         </li>
+    const isActive = (pathname, arrNavItemsInfo) => {
+        const currentInfo = arrNavItemsInfo.find((info) => info.href === pathname)
+        return currentInfo ? currentInfo.active = true : false
+    }
 
-//         <li className="nav-item">
-//             <a className="nav-link" href="api-setting.html">
-//                 <img src={settingsIcon} />
-//                 <span>API SETTINGS</span>
-//             </a>
-//         </li>
+    const isActiveProcess = (location) => {
+        location.split('/').reduce((prev, curr) => {
+            const currentPathname = `${prev}/${curr}`
+            isActive(currentPathname, arrNavItemsInfo)
+            return currentPathname
+        })
+    }
 
-//         <li className="nav-item">
-//             <a className="nav-link" href="group-view.html">
-//                 <img src={grviewIcon} />
-//                 <span>GROUP VIEW</span>
-//             </a>
-//         </li>
+    isActiveProcess(currentLocation)
 
-//         <li className="nav-item">
-//             <a className="nav-link" href="machine-list.html">
-//                 <img src={mvIcon} />
-//                 <span>MACHINE VIEW</span>
-//             </a>
-//         </li> */}
+  return (
+    <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <a className="sidebar-brand d-flex align-items-center justify-content-center pb-5" href="index.html">
+            <div className="sidebar-brand-icon">
+                <div className="sidebar-brand-text pl-2 pr-2">
+                    <img src={logoIcon} className="full-width" alt="logo" />
+                </div>
+            </div>
+        </a>
+        
+        {arrNavItemsInfo.map((iteminfo, i) => (
+            <NavItem
+                key={i}
+                info={iteminfo}/>
+        ))}
 
-//         {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectZone">SELECT ZONE POPUP</button> */}
-//     </ul>
-//   )
-// }
+    </ul>
+  )
+}
 
-// export default AppSidebar
+export default AppSidebar

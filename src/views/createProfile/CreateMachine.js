@@ -1,0 +1,402 @@
+import React, {useState} from 'react'
+
+//images start
+import uploadIcon from '../../assets/images/upload.png'
+import deleteIcon from '../../assets/images/delete.png'
+import calendarIcon from '../../assets/images/calendar.png'
+//images end
+
+const InCreaOrReduInput = (props) => (
+    <div className="container">
+        <div className="button-container">
+            <button
+                className="cart-qty-plus"
+                type="button"
+                value={'+'} 
+                onClick={(e)=>props.onIncrOrRedueEvent(e, props.name)}>+</button>
+            <input
+                type="text"
+                name="qty input-text qty"
+                className="qty"
+                maxLength="12" value={props.score} 
+                onChange={(e) => props.onChange(e, props.name)}/>
+            <button 
+                className="cart-qty-minus"
+                type="button" 
+                value={'-'}
+                onClick={(e)=>props.onIncrOrRedueEvent(e, props.name)}>-</button>
+        </div>
+    </div>
+)
+
+const CheckboxInput = (props) => (
+    <div>
+        <span className="view">
+            <input 
+                type="text" 
+                className="first" 
+                placeholder="0" 
+                value={props.score} 
+                onChange={(e) => props.onChange(e, props.target)} 
+                disabled={props.checkState ? false : true}/>
+        </span>
+        <label 
+            className={`switch ${props.checkState ? "active" : ""}`} 
+            onClick={(e) => props.onCheck(e, props.checkState, props.target)}>
+            <i>ON</i>
+            <i>OFF</i>
+            <span className="slider round"></span>
+            <i className="texts">{props.scoreName}</i>
+        </label>
+    </div>    
+)
+
+const CreateMachine = (props) => {
+
+    const [checkFbx, setCheckFbx] = useState(0)
+    const [ativeCheckH, setAtiveCheckH] = useState(false)
+    const [ativeCheckE, setAtiveCheckE] = useState(false)
+    const [ativeCheckC, setAtiveCheckC] = useState(false)
+    const [ativeCheckA, setAtiveCheckA] = useState(false)
+
+    const [priorityScore, setPriorityScore] = useState(0)
+    const [minPeopleNum, setMinPeopleNum] = useState(0)
+    const [maxPeopleNum, setMaxPeopleNum] = useState(0)
+    const [requiredScoreH, setRequiredScoreH] = useState(0)
+    const [requiredScoreE, setRequiredScoreE] = useState(0)
+    const [requiredScoreC, setRequiredScoreC] = useState(0)
+    const [requiredScoreA, setRequiredScoreA] = useState(0)
+    const [genderEquality, setGenderEquality] = useState('STRICT')
+    const [moreOption, setMoreOption] = useState('EITHER')
+
+    const arrFbxOrSvgItemList = [
+        {FbxName: '3D MODEL 1.FBX', SvgName: '3D MODEL 1.SVG'},
+        {FbxName: '3D MODEL 2.FBX', SvgName: '3D MODEL 1.SVG'},
+        {FbxName: '3D MODEL 3.FBX', SvgName: '3D MODEL 1.SVG'},
+        {FbxName: '3D MODEL 4.FBX', SvgName: '3D MODEL 1.SVG'},
+    ]
+
+    const arrGenderEquality = [
+        {name: 'STRICT'},
+        {name: 'MODERATE'},
+        {name: 'SEPARATE'},
+        {name: 'OFF'}
+    ]
+
+    const arrMoreOption = [
+        {name: 'EITHER'},
+        {name: 'MALE ONLY'},
+        {name: 'FEMALE ONLY'},
+    ]
+
+    const activeFbx = (e) => {
+        setCheckFbx(parseInt(e.target.value))
+    }
+
+    const activeCheckBox = (e, state, target) => {
+
+        switch(target) {
+            case 'easy':
+                state ? setAtiveCheckE(false) : setAtiveCheckE(true)
+                break
+            case 'hard':
+                state ? setAtiveCheckH(false) : setAtiveCheckH(true)
+                break
+            case 'create':
+                state ? setAtiveCheckC(false) : setAtiveCheckC(true)
+                break
+            case 'battle':
+                state ? setAtiveCheckA(false) : setAtiveCheckA(true)
+                break
+            default:
+                break
+        }
+    }
+
+    const inputScore = (e, target) => {
+        let value = e.target.value
+
+        switch(target) {
+            case 'easy':
+                setRequiredScoreE(value)
+                break
+            case 'hard':
+                setRequiredScoreH(value)
+                break
+            case 'create':
+                setRequiredScoreC(value)
+                break
+            case 'battle':
+                setRequiredScoreA(value)
+                break
+            default:
+                break
+        }
+    }
+
+    const inputNum = (e, name) => {
+        let value = e.target.value
+
+        switch(name) {
+            case 'priorityScore':
+                setPriorityScore(value) 
+                break
+            case 'minPeople':
+                setMinPeopleNum(value)
+                break
+            case 'maxPeople':
+                setMaxPeopleNum(value)
+                break
+            default:
+                break
+        }         setPriorityScore(e.target.value)
+    }
+
+    const getValue = (e, name) => {
+        let mark = e.target.value
+
+        if ( mark === '+') {
+            switch(name) {
+                case 'priorityScore':
+                    setPriorityScore(priorityScore + 1) 
+                    break
+                case 'minPeople':
+                    setMinPeopleNum(minPeopleNum + 1)
+                    break
+                case 'maxPeople':
+                    setMaxPeopleNum(maxPeopleNum + 1)
+                    break
+                default:
+                    break
+            } 
+        } else {
+            switch(name) {
+                case 'priorityScore':
+                    if ( priorityScore > 0) setPriorityScore(priorityScore - 1) 
+                    break
+                case 'minPeople':
+                    if ( minPeopleNum > 0) setMinPeopleNum(minPeopleNum - 1)
+                    break
+                case 'maxPeople':
+                    if ( maxPeopleNum > 0) setMaxPeopleNum(maxPeopleNum - 1)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    const getGender = (e, target) => {
+        let value = e.target.value
+
+        if (target === 'equality') {
+            setGenderEquality(value)
+        } else {
+            setMoreOption(value)
+        }
+    }
+
+    return (
+        <div className="container-fluid profile-page">
+            <div className="row">
+                <div className="col-sm-5 right-separate">
+                    <h3>SELECT FBX OR SVG</h3>
+                    <div className="main shadows">
+                        <label className="profile-select">
+                            <input type="text" className="value" placeholder="UPLOAD FROM STORAGE" /> 
+                            <input type="file" id="select-files"/>
+                            <button><img src={uploadIcon} /></button>
+                        </label>
+
+                        <div className="select-files-li">
+                            <h4>OR SELECT FBX FROM LIST</h4>
+                            <ul>
+                                { arrFbxOrSvgItemList.map((info, i)=>(
+                                    <li className={`${ i === checkFbx ? "active" : ""}`} key={i}>
+                                        <label>
+                                            <input 
+                                                type="radio"
+                                                name="fbx"
+                                                value={i}
+                                                onChange={(e) => activeFbx(e)} 
+                                                checked={ i === checkFbx ? true : false}/>
+                                            <span>{info.FbxName}</span>
+                                        </label>
+                                        <span className="delete"><img src={deleteIcon} /></span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <h4>OR SELECT SVG FROM LIST</h4>
+                            <ul>
+                                {arrFbxOrSvgItemList.map((info, i)=>(
+                                    <li className={`${ i === checkFbx ? "active" : ""}`} key={i}>
+                                        <label>
+                                            <input
+                                                type="radio"
+                                                name="svg"
+                                                value={i}
+                                                onChange={(e) => activeFbx(e)} 
+                                                checked={ i === checkFbx ? true : false}/>
+                                            <span>{info.SvgName}</span>
+                                        </label>
+                                        <span className="delete"><img src={deleteIcon} /></span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <button type="submit" className="btn-secondary">Select</button>
+                    </div>
+                </div>
+                <div className="col-sm-7 border-left">
+                    <div className="main shadows">
+                        <h3>MACHINE ID</h3>
+
+                        <form>
+                            <div className="fm full-width mb-4">
+                                <label>MACHINE NAME</label>
+                                <input type="text" placeholder="MACHINE A" className="form-control full-width" />
+                            </div>
+                            <div className="fm">
+                                <div className="row mb-4">
+                                    <div className="col-sm-9">
+                                        <label>MACHINE TYPE</label>
+                                        <select className="form-control full-width">
+                                            <option>TYPE A</option>
+                                            <option>TYPE B</option>
+                                            <option>TYPE C</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-sm-3 inc">
+                                        <label>PRIORITY SCORE</label>
+                                        <InCreaOrReduInput
+                                            name={'priorityScore'}
+                                            score={priorityScore}
+                                            onChange={inputNum}
+                                            onIncrOrRedueEvent={getValue}/>
+                                    </div>
+                                </div>
+                                <div className="row mb-4">
+                                    <div className="col-sm-12 calebdar flex">
+                                        <label className="full-width">ACTIVE SINCE</label>
+                                        <select className="form-control">
+                                            <option>2019</option>
+                                            <option>2019</option>
+                                            <option>2019</option>
+                                        </select>
+                                        <select className="form-control">
+                                            <option>06</option>
+                                            <option>05</option>
+                                            <option>04</option>
+                                        </select>
+                                        <select className="form-control">
+                                            <option>14</option>
+                                            <option>13</option>
+                                            <option>12</option>
+                                        </select>
+
+                                        <span> <img src={calendarIcon} /></span>
+                                    </div>
+                                </div>
+
+                                <div className="row mb-4">
+                                    <div className="col-sm-3 inc">
+                                        <label className="mb-2">MINIMUM PEOPLE</label>
+                                        <InCreaOrReduInput
+                                            name={'minPeople'}
+                                            score={minPeopleNum}
+                                            onChange={inputNum}
+                                            onIncrOrRedueEvent={getValue}/>
+                                    </div>
+                                    <div className="col-sm-3 inc">
+                                        <label className="mb-2">MAXIMUM PEOPLE</label>
+                                        <InCreaOrReduInput
+                                            name={'maxPeople'}
+                                            score={maxPeopleNum}
+                                            onChange={inputNum}
+                                            onIncrOrRedueEvent={getValue}/>
+                                    </div>
+                                </div>
+
+                                <div className="full-width gender-qu mb-5">
+                                    <h4 className="full-width">REQUIRED RONTGEN SCORE</h4>
+                                    <CheckboxInput
+                                        checkState={ativeCheckE}
+                                        score={requiredScoreE}
+                                        target = {'easy'}
+                                        scoreName={'EASY MODE'}
+                                        onChange={inputScore}
+                                        onCheck={activeCheckBox}/>
+                                    <CheckboxInput
+                                        checkState={ativeCheckH}
+                                        score={requiredScoreH}
+                                        target = {'hard'}
+                                        scoreName={'HARD MODE'}
+                                        onChange={inputScore}
+                                        onCheck={activeCheckBox}/>
+                                    <CheckboxInput
+                                        checkState={ativeCheckC}
+                                        score={requiredScoreC}
+                                        target={'create'}
+                                        scoreName={'CREATE MODE'}
+                                        onChange={inputScore}
+                                        onCheck={activeCheckBox}/>
+                                    <CheckboxInput
+                                        checkState={ativeCheckA}
+                                        score={requiredScoreA}
+                                        target={'battle'}
+                                        scoreName={'A.I. BATTLE MODE'}
+                                        onChange={inputScore}
+                                        onCheck={activeCheckBox}/>
+                                </div>
+
+                                <div className="full-width gender-qu mb-4">
+                                    <h4 className="full-width">GENDER EQUALITY</h4>
+                                    {
+                                        arrGenderEquality.map((info, i)=>(
+                                            <label key={i}>
+                                                <input
+                                                    type="radio"
+                                                    name="strict"
+                                                    value={info.name}
+                                                    onChange={(e)=>getGender(e, 'equality')}
+                                                    checked={info.name === genderEquality ? true : false}/>
+                                                <span>{info.name}</span>
+                                            </label>
+                                        ))
+                                    }
+                                </div>
+
+                                <div className="full-width gender-qu">
+                                    <h4 className="full-width">MORE OPTIONS</h4>
+                                    {
+                                        arrMoreOption.map((info, i)=>(
+                                            <label key={i}>
+                                                <input
+                                                    type="radio"
+                                                    name="either"
+                                                    value={info.name}
+                                                    onChange={(e)=>getGender(e,'more')}
+                                                    checked={info.name === moreOption ? true : false}/>
+                                                <span>{info.name}</span>
+                                            </label>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <div className="full-width btns mt-4 text-center">
+                            <button className="cancel">CANCEL</button>
+                            <button type="submit" className="next">NEXT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CreateMachine
