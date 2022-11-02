@@ -14,6 +14,8 @@ function App() {
       <Routes>
         <Route path="/signin" name="SignIn" element={<SingIn />} ></Route>
         <Route path="/createmachine" name="CreateMachine" element={<Layout child={'CreateMachine'} />} />
+        <Route path="/createzone" name="CreateZone" element={<Layout child={'CreateZone'} />} />
+        <Route path="/groupview" name="GroupView" element={<Layout child={'GroupView'} />} />
       </Routes>
     </Suspense>
   )

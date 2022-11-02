@@ -8,14 +8,17 @@ import loginIcon from '../assets/images/login.png'
 const AppBreadcrumb = (props) =>  {
 
     const arrTitleInfo = [
-        { childName:'CreateMachine', title:'MACHINE SETTINGS / PROFILE CREATION'},
+        { childName:'CreateMachine', title:'MACHINE SETTINGS / PROFILE CREATION' },
+        { childName:'CreateZone', title:'CREATE ZONE' },
+        { childName:'GroupView', title:'GROUP VIEW' },
     ]
 
     const getTilteByChild = () => {
-        const t = arrTitleInfo.map((info)=>{
-            if (info.childName === props.subChild) return info.title
+        let t;
+        arrTitleInfo.map((info)=>{
+            if (info.childName === props.subChild) t = info.title
         })
-        return t[0]
+        return t
     }
 
     const title = getTilteByChild()
