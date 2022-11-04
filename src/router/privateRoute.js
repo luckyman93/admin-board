@@ -10,7 +10,7 @@ function PrivateRoute({ children }) {
 
     if (!authToken) {
         // not logged in so redirect to login page with the return url
-        return <Navigate to="/login" state={{ from: history.location }} />
+        return <Navigate to="/signin" state={{ from: history.location }} />
     }
 
     // authorized so return child components

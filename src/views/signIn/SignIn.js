@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import loginIcon from '../../assets/images/login.png'
 import passwordIcon from '../../assets/images/password.png'
 import eyeIcon from '../../assets/images/eye.png'
-import groupIcon from '../../assets/images/group.png'
 import logoIcon from '../../assets/images/logo.png'
 //images end
 
@@ -36,15 +35,6 @@ const SingIn = (props) =>  {
                                 <input type="text" placeholder="ENTER PASSWORD..." required id="hide" />
 
                                 <i className="show"><img src={eyeIcon} alt="eye"/></i>
-                            </div>
-                            <div className="icons">
-                                <label className="full-width">GROUP</label>
-                                <i><img src={groupIcon} alt='group'/></i>
-                                <select required>
-                                    <option>GROUP A - NAME</option>
-                                    <option>GROUP A - NAME</option>
-                                    <option>GROUP A - NAME</option>
-                                </select>
                             </div>
                             <p className="forgot-passowrd"><Link to='/'>FORGOT PASSWORD?</Link></p>
                             <button type="submit">SIGN IN</button>
