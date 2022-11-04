@@ -13,19 +13,19 @@ const InCreaOrReduInput = (props) => (
                 className="cart-qty-plus"
                 type="button"
                 value={'+'} 
-                onClick={()=>props.setState(props.score + 1)}>+</button>
+                onClick={()=>props.setScoreState(props.score + 1)}>+</button>
             <input
                 className="qty"
                 type="text"
                 name="qty input-text qty"
                 value={props.score} 
                 maxLength="12"
-                onChange={(e) => props.setState(e.target.value)}/>
+                onChange={(e) => props.setScoreState(e.target.value)}/>
             <button 
                 className="cart-qty-minus"
                 type="button" 
                 value={'-'}
-                onClick={()=>{ if(props.score > 0) props.setState(props.score - 1)}}>-</button>
+                onClick={()=>{ if(props.score > 0) props.setScoreState(props.score - 1)}}>-</button>
         </div>
     </div>
 )
@@ -166,7 +166,7 @@ const CreateMachine = (props) => {
                                         <label>PRIORITY SCORE</label>
                                         <InCreaOrReduInput
                                             score={priorityScore}
-                                            setState={setPriorityScore}/>
+                                            setScoreState={setPriorityScore}/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
@@ -197,13 +197,13 @@ const CreateMachine = (props) => {
                                         <label className="mb-2">MINIMUM PEOPLE</label>
                                         <InCreaOrReduInput
                                             score={minPeopleNum}
-                                            setState={setMinPeopleNum}/>
+                                            setScoreState={setMinPeopleNum}/>
                                     </div>
                                     <div className="col-sm-3 inc">
                                         <label className="mb-2">MAXIMUM PEOPLE</label>
                                         <InCreaOrReduInput
                                             score={maxPeopleNum}
-                                            setState={setMaxPeopleNum}/>
+                                            setScoreState={setMaxPeopleNum}/>
                                     </div>
                                 </div>
 

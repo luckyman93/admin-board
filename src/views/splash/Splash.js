@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate} from 'react-router-dom'
 
-const NotFound = (props) => {
+const NotFound = () => {
+
+    let authToken = sessionStorage.getItem('Auth Token')
+    if (authToken) return <Navigate to="/createmachine"/>
 
     return (
         <div>

@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './router/privateRoute';
+import { ToastContainer } from 'react-toastify';
 import './assets/css/sb-admin.css'
 import './assets/css/style.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -22,6 +23,7 @@ function App() {
         <Route path="/createzone" name="CreateZone" element={<PrivateRoute><Layout child={'CreateZone'} /></PrivateRoute>} />
         <Route path="/groupview" name="GroupView" element={<PrivateRoute><Layout child={'GroupView'} /></PrivateRoute>} />
       </Routes>
+      <ToastContainer/>
     </Suspense>
   )
 }
