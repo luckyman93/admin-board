@@ -13,18 +13,19 @@ const InCreaOrReduInput = (props) => (
                 className="cart-qty-plus"
                 type="button"
                 value={'+'} 
-                onClick={(e)=>props.onIncrOrRedueEvent(e, props.name)}>+</button>
+                onClick={()=>props.setState(props.score + 1)}>+</button>
             <input
+                className="qty"
                 type="text"
                 name="qty input-text qty"
-                className="qty"
-                maxLength="12" value={props.score} 
-                onChange={(e) => props.onChange(e, props.name)}/>
+                value={props.score} 
+                maxLength="12"
+                onChange={(e) => props.setState(e.target.value)}/>
             <button 
                 className="cart-qty-minus"
                 type="button" 
                 value={'-'}
-                onClick={(e)=>props.onIncrOrRedueEvent(e, props.name)}>-</button>
+                onClick={()=>{ if(props.score > 0) props.setState(props.score - 1)}}>-</button>
         </div>
     </div>
 )
@@ -37,12 +38,12 @@ const CheckboxInput = (props) => (
                 className="first" 
                 placeholder="0" 
                 value={props.score} 
-                onChange={(e) => props.onChange(e, props.target)} 
+                onChange={(e) => props.setValueState(e.target.value)} 
                 disabled={props.checkState ? false : true}/>
         </span>
         <label 
             className={`switch ${props.checkState ? "active" : ""}`} 
-            onClick={(e) => props.onCheck(e, props.checkState, props.target)}>
+            onClick={() => props.checkState ? props.setCheckState(false) : props.setCheckState(true)}>
             <i>ON</i>
             <i>OFF</i>
             <span className="slider round"></span>
@@ -89,113 +90,6 @@ const CreateMachine = (props) => {
         {name: 'FEMALE ONLY'},
     ]
 
-    const activeFbx = (e) => {
-        setCheckFbx(parseInt(e.target.value))
-    }
-
-    const activeCheckBox = (e, state, target) => {
-
-        switch(target) {
-            case 'easy':
-                state ? setAtiveCheckE(false) : setAtiveCheckE(true)
-                break
-            case 'hard':
-                state ? setAtiveCheckH(false) : setAtiveCheckH(true)
-                break
-            case 'create':
-                state ? setAtiveCheckC(false) : setAtiveCheckC(true)
-                break
-            case 'battle':
-                state ? setAtiveCheckA(false) : setAtiveCheckA(true)
-                break
-            default:
-                break
-        }
-    }
-
-    const inputScore = (e, target) => {
-        let value = e.target.value
-
-        switch(target) {
-            case 'easy':
-                setRequiredScoreE(value)
-                break
-            case 'hard':
-                setRequiredScoreH(value)
-                break
-            case 'create':
-                setRequiredScoreC(value)
-                break
-            case 'battle':
-                setRequiredScoreA(value)
-                break
-            default:
-                break
-        }
-    }
-
-    const inputNum = (e, name) => {
-        let value = e.target.value
-
-        switch(name) {
-            case 'priorityScore':
-                setPriorityScore(value) 
-                break
-            case 'minPeople':
-                setMinPeopleNum(value)
-                break
-            case 'maxPeople':
-                setMaxPeopleNum(value)
-                break
-            default:
-                break
-        }         setPriorityScore(e.target.value)
-    }
-
-    const getValue = (e, name) => {
-        let mark = e.target.value
-
-        if ( mark === '+') {
-            switch(name) {
-                case 'priorityScore':
-                    setPriorityScore(priorityScore + 1) 
-                    break
-                case 'minPeople':
-                    setMinPeopleNum(minPeopleNum + 1)
-                    break
-                case 'maxPeople':
-                    setMaxPeopleNum(maxPeopleNum + 1)
-                    break
-                default:
-                    break
-            } 
-        } else {
-            switch(name) {
-                case 'priorityScore':
-                    if ( priorityScore > 0) setPriorityScore(priorityScore - 1) 
-                    break
-                case 'minPeople':
-                    if ( minPeopleNum > 0) setMinPeopleNum(minPeopleNum - 1)
-                    break
-                case 'maxPeople':
-                    if ( maxPeopleNum > 0) setMaxPeopleNum(maxPeopleNum - 1)
-                    break
-                default:
-                    break
-            }
-        }
-    }
-
-    const getGender = (e, target) => {
-        let value = e.target.value
-
-        if (target === 'equality') {
-            setGenderEquality(value)
-        } else {
-            setMoreOption(value)
-        }
-    }
-
     return (
         <div className="container-fluid profile-page">
             <div className="row">
@@ -218,7 +112,7 @@ const CreateMachine = (props) => {
                                                 type="radio"
                                                 name="fbx"
                                                 value={i}
-                                                onChange={(e) => activeFbx(e)} 
+                                                onChange={(e) => setCheckFbx(parseInt(e.target.value))} 
                                                 checked={ i === checkFbx ? true : false}/>
                                             <span>{info.FbxName}</span>
                                         </label>
@@ -236,7 +130,7 @@ const CreateMachine = (props) => {
                                                 type="radio"
                                                 name="svg"
                                                 value={i}
-                                                onChange={(e) => activeFbx(e)} 
+                                                onChange={(e) => setCheckFbx(parseInt(e.target.value))} 
                                                 checked={ i === checkFbx ? true : false}/>
                                             <span>{info.SvgName}</span>
                                         </label>
@@ -271,10 +165,8 @@ const CreateMachine = (props) => {
                                     <div className="col-sm-3 inc">
                                         <label>PRIORITY SCORE</label>
                                         <InCreaOrReduInput
-                                            name={'priorityScore'}
                                             score={priorityScore}
-                                            onChange={inputNum}
-                                            onIncrOrRedueEvent={getValue}/>
+                                            setState={setPriorityScore}/>
                                     </div>
                                 </div>
                                 <div className="row mb-4">
@@ -304,18 +196,14 @@ const CreateMachine = (props) => {
                                     <div className="col-sm-3 inc">
                                         <label className="mb-2">MINIMUM PEOPLE</label>
                                         <InCreaOrReduInput
-                                            name={'minPeople'}
                                             score={minPeopleNum}
-                                            onChange={inputNum}
-                                            onIncrOrRedueEvent={getValue}/>
+                                            setState={setMinPeopleNum}/>
                                     </div>
                                     <div className="col-sm-3 inc">
                                         <label className="mb-2">MAXIMUM PEOPLE</label>
                                         <InCreaOrReduInput
-                                            name={'maxPeople'}
                                             score={maxPeopleNum}
-                                            onChange={inputNum}
-                                            onIncrOrRedueEvent={getValue}/>
+                                            setState={setMaxPeopleNum}/>
                                     </div>
                                 </div>
 
@@ -324,31 +212,27 @@ const CreateMachine = (props) => {
                                     <CheckboxInput
                                         checkState={ativeCheckE}
                                         score={requiredScoreE}
-                                        target = {'easy'}
                                         scoreName={'EASY MODE'}
-                                        onChange={inputScore}
-                                        onCheck={activeCheckBox}/>
+                                        setValueState={setRequiredScoreE}
+                                        setCheckState={setAtiveCheckE}/>
                                     <CheckboxInput
                                         checkState={ativeCheckH}
                                         score={requiredScoreH}
-                                        target = {'hard'}
                                         scoreName={'HARD MODE'}
-                                        onChange={inputScore}
-                                        onCheck={activeCheckBox}/>
+                                        setValueState={setRequiredScoreH}
+                                        setCheckState={setAtiveCheckH}/>
                                     <CheckboxInput
                                         checkState={ativeCheckC}
                                         score={requiredScoreC}
-                                        target={'create'}
                                         scoreName={'CREATE MODE'}
-                                        onChange={inputScore}
-                                        onCheck={activeCheckBox}/>
+                                        setValueState={setRequiredScoreC}
+                                        setCheckState={setAtiveCheckC}/>
                                     <CheckboxInput
                                         checkState={ativeCheckA}
                                         score={requiredScoreA}
-                                        target={'battle'}
                                         scoreName={'A.I. BATTLE MODE'}
-                                        onChange={inputScore}
-                                        onCheck={activeCheckBox}/>
+                                        setValueState={setRequiredScoreA}
+                                        setCheckState={setAtiveCheckA}/> 
                                 </div>
 
                                 <div className="full-width gender-qu mb-4">
@@ -360,7 +244,7 @@ const CreateMachine = (props) => {
                                                     type="radio"
                                                     name="strict"
                                                     value={info.name}
-                                                    onChange={(e)=>getGender(e, 'equality')}
+                                                    onChange={(e)=>setGenderEquality(e.target.value)}
                                                     checked={info.name === genderEquality ? true : false}/>
                                                 <span>{info.name}</span>
                                             </label>
@@ -377,7 +261,7 @@ const CreateMachine = (props) => {
                                                     type="radio"
                                                     name="either"
                                                     value={info.name}
-                                                    onChange={(e)=>getGender(e,'more')}
+                                                    onChange={(e)=>setMoreOption(e.target.value)}
                                                     checked={info.name === moreOption ? true : false}/>
                                                 <span>{info.name}</span>
                                             </label>
