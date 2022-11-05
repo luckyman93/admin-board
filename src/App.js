@@ -17,6 +17,7 @@ const NotFound = React.lazy(() => import('./views/NotFound'))
 function App() {
   return (
     <Suspense>
+      <ToastContainer/>
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Splash />} />
@@ -25,7 +26,6 @@ function App() {
         <Route path="/createzone" name="CreateZone" element={<PrivateRoute><Layout child={'CreateZone'} /></PrivateRoute>} />
         <Route path="/groupview" name="GroupView" element={<PrivateRoute><Layout child={'GroupView'} /></PrivateRoute>} />
       </Routes>
-      <ToastContainer/>
     </Suspense>
   )
 }
