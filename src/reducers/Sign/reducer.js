@@ -28,6 +28,7 @@ export const signInUser = ({ email, password }) => async dispatch => {
       .then((response)=>{
         if (response === 'signIn') {
           dispatch(SignInSuccess())
+          toast.success('login successfully!')
         } else {
           if(response === 'auth/wrong-password') toast.error('Please check the Password')
           if(response === 'auth/user-not-found') toast.error('Please check the Email')

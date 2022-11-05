@@ -33,7 +33,7 @@ const SignIn = () =>  {
     }
 
     let authToken = sessionStorage.getItem('Auth Token')
-    if (authToken) return <Navigate to="/createmachine"/>
+    if (authToken) return <Navigate to="/createprofile"/>
 
     return (
         <div className="container-fluid sign-in" style={{padding: '0px'}}>

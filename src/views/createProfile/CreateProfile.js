@@ -52,7 +52,7 @@ const CheckboxInput = (props) => (
     </div>    
 )
 
-const CreateMachine = (props) => {
+const CreateProfile = (props) => {
 
     const [checkFbx, setCheckFbx] = useState(0)
     const [ativeCheckH, setAtiveCheckH] = useState(false)
@@ -283,4 +283,4 @@ const CreateMachine = (props) => {
     )
 }
 
-export default CreateMachine
+export default CreateProfile

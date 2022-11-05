@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { PrivateRoute } from './router/privateRoute';
-import { ToastContainer, toast } from 'react-toastify';
+import { PrivateRoute } from './router/privateRoute'
+import { ToastContainer } from 'react-toastify'
 import './assets/css/sb-admin.css'
 import './assets/css/style.css'
 import './assets/js/bootstrap.bundle.min'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'
 
 //containers
 const Splash = React.lazy(() => import('./views/splash/Splash'))
@@ -21,7 +21,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Splash />} />
         <Route path="/signin" name="SignIn" element={<SingIn />} />
-        <Route path="/createmachine" name="CreateMachine" element={<PrivateRoute><Layout child={'CreateMachine'} /></PrivateRoute>} />
+        <Route path="/createprofile" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
         <Route path="/createzone" name="CreateZone" element={<PrivateRoute><Layout child={'CreateZone'} /></PrivateRoute>} />
         <Route path="/groupview" name="GroupView" element={<PrivateRoute><Layout child={'GroupView'} /></PrivateRoute>} />
       </Routes>

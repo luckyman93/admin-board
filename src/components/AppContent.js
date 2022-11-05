@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types';
 
-const CreateProfile = React.lazy(() => import('../views/createProfile/CreateMachine'))
+const CreateProfile = React.lazy(() => import('../views/createProfile/CreateProfile'))
 const GroupView = React.lazy(() => import('../views/groupView/GroupView'))
 const CreateZone = React.lazy(() => import('../views/createZone/CreateZone'))
 
@@ -10,7 +10,7 @@ const AppContent = ({ subChild }) => {
   return (
     <Suspense>
       {
-        subChild==="CreateMachine" && <CreateProfile /> || 
+        subChild==="CreateProfile" && <CreateProfile /> || 
         subChild==="GroupView" && <GroupView /> ||
         subChild==="CreateZone" && <CreateZone />
       }

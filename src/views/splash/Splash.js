@@ -4,7 +4,7 @@ import { Link, Navigate} from 'react-router-dom'
 const NotFound = () => {
 
     let authToken = sessionStorage.getItem('Auth Token')
-    if (authToken) return <Navigate to="/createmachine"/>
+    if (authToken) return <Navigate to="/createprofile"/>
 
     return (
         <div>
