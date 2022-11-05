@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import { SignInUser } from '../../reducers/Sign/reducer'
-
+import { signInUser } from '../../reducers/Sign/reducer'
+import SendEmailForm from '../../components/elements/SendMailFormPopup'
 //images start
 import loginIcon from '../../assets/images/login.png'
 import passwordIcon from '../../assets/images/password.png'
@@ -17,13 +17,12 @@ const SignIn = () =>  {
     const { isSingIn } = useSelector(state => state.Sign)
     const dispatch = useDispatch()
 
-    const onSignInEmailAndPw = (e) => {
-        e.preventDefault();
+    const onSignInEmailAndPw = () => {
         const credentials = {
             email: email,
             password: password,
         }
-        dispatch(SignInUser(credentials))
+        dispatch(signInUser(credentials))
     }
 
     const onViewPassWord = () => {
@@ -38,6 +37,7 @@ const SignIn = () =>  {
 
     return (
         <div className="container-fluid sign-in" style={{padding: '0px'}}>
+            <SendEmailForm/>
             <div className="row">
                 <div className="col-sm-6 img">
                     <img src={logoIcon} alt='logo'/>
@@ -47,30 +47,28 @@ const SignIn = () =>  {
                         <h2>SIGN IN</h2>
                         <p>Please enter your details to login to the VA admin board</p>
                         <div className="forms-app">
-                            <form onSubmit={(e) => onSignInEmailAndPw(e)}>
-                                <div className="icons">
-                                    <label className="full-width">EMAIL ADDRESS</label>
-                                    <i><img src={loginIcon} alt="login"/></i>
-                                    <input
-                                        type="email"
-                                        placeholder="ENTER EMAIL..."
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required/>
-                                </div>
-                                <div className="icons">
-                                    <label className="full-width">PASSWORD</label>
-                                    <i><img src={passwordIcon} alt="password"/></i>
-                                    <input
-                                        type="password"
-                                        placeholder="ENTER PASSWORD..."
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        required id="hide" />
+                            <div className="icons">
+                                <label className="full-width">EMAIL ADDRESS</label>
+                                <i><img src={loginIcon} alt="login"/></i>
+                                <input
+                                    type="email"
+                                    placeholder="ENTER EMAIL..."
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required/>
+                            </div>
+                            <div className="icons">
+                                <label className="full-width">PASSWORD</label>
+                                <i><img src={passwordIcon} alt="password"/></i>
+                                <input
+                                    type="password"
+                                    placeholder="ENTER PASSWORD..."
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required id="hide" />
 
-                                    <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
-                                </div>
-                                <p className="forgot-passowrd"><Link to='/'>FORGOT PASSWORD?</Link></p>
-                                <button type="submit">SIGN IN</button>
-                            </form>
+                                <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
+                            </div>
+                            <p className="forgot-passowrd"><a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a></p>
+                            <button type="submit" onClick={onSignInEmailAndPw}>SIGN IN</button>
                         </div>
                     </div>
                 </div>

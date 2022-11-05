@@ -4,7 +4,6 @@ import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from 'fir
 export const apiClient = {
     constructor() {
     },
-    
     // Login Process
     async login(email, password) {
 
@@ -15,6 +14,20 @@ export const apiClient = {
                 sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
                 return response.operationType
             }).catch((error) => {
+                return error.code
+        })
+
+    },
+
+    // Reset Password Process
+    async resetPw(email) {
+
+        const authentication = getAuth();
+
+        return await sendPasswordResetEmail(authentication, email)
+            .then(()=>{
+                return 'sent'
+            }).catch((error)=>{
                 return error.code
         })
 

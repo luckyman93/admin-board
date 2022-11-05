@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './router/privateRoute';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import './assets/css/sb-admin.css'
 import './assets/css/style.css'
+import './assets/js/bootstrap.bundle.min'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 //containers
 const Splash = React.lazy(() => import('./views/splash/Splash'))
@@ -29,4 +31,3 @@ function App() {
 }
 
 export default App
-
