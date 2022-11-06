@@ -10,6 +10,7 @@ const AppBreadcrumb = (props) =>  {
         { childName:'CreateProfile', title:'MACHINE SETTINGS / PROFILE CREATION' },
         { childName:'UpdateMachine', title:'MACHINE LIST' },
         { childName:'CreateZone', title:'CREATE ZONE' },
+        { childName: 'UpdateZone', title: 'UPDATE ZONE'},
         { childName:'ApiSettings', title:'API SETTING' },
         { childName:'GroupView', title:'GROUP VIEW' },
         { childName:'MachineView', title:'MACHINE VIEW' },

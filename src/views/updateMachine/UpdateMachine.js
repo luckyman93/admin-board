@@ -12,32 +12,37 @@ const UpdateMachine = () =>  {
     const dataSource = [
         {
             key: '1',
-            machine_id: '#APL-Pro',
-            group_id: 'DETAIL' + <i><img src={detailIcon}/></i>,
-            register_id: '2012-12-30',
-            order_code: 'CHANGE' + <i><img src={editIcon}/></i>,
+            machine_id: 'ABCD1234',
+            group_id: <div>DETAIL <i><img src={detailIcon}/></i></div>,
+            register_at: '2012-12-30',
+            order_code: <div>CHANGE <i><img src={editIcon}/></i></div>,
             synced: '2012-12-30',
-            location: 'CHANGE' + <i><img src={editIcon}/></i>,
-            health: 'DETAIL' + <i><img src={detailIcon}/></i>,
-            SVG: 'VIEW' + <i><img src={viewIcon}/></i>,
+            location: <div>CHANGE <i><img src={editIcon}/></i></div>,
+            health: <div>DETAIL <i><img src={detailIcon}/></i></div>,
+            svg: <div>VIEW <i><img src={viewIcon}/></i></div>,
         }
       ];
       
     const columns = [
         {
-          title: 'MACHINE ID',
-          dataIndex: 'machine_id',
-          key: 'machine_id',
+            title: 'MACHINE ID',
+            dataIndex: 'machine_id',
+            key: 'machine_id',
         },
         {
-          title: 'GROUP ID',
-          dataIndex: 'group_id',
-          key: 'group_id',
+            title: 'GROUP ID',
+            dataIndex: 'group_id',
+            key: 'group_id',
         },
         {
-          title: 'SERVER' + <span>ORDER CODE</span>,
-          dataIndex: 'order_code',
-          key: 'order_code',
+            title: 'REGISTER AT ',
+            dataIndex: 'register_at',
+            key: 'register_at',
+        },
+        {
+            title: <div>SERVER<span>ORDER CODE</span></div>,
+            dataIndex: 'order_code',
+            key: 'order_code',
         },
         {
             title: 'LAST SYNCED',
@@ -50,7 +55,7 @@ const UpdateMachine = () =>  {
             key: 'location',
         },
         {
-            title: 'HEALTH' + <span>CODE</span>,
+            title: <div>HEALTH <span>CODE</span></div>,
             dataIndex: 'health',
             key: 'health',
         },

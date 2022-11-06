@@ -25,6 +25,7 @@ function App() {
         <Route path="/createprofile" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
         <Route path="/updatemachine" name="UpdateMachine" element={<PrivateRoute><Layout child={'UpdateMachine'} /></PrivateRoute>} />
         <Route path="/createzone" name="CreateZone" element={<PrivateRoute><Layout child={'CreateZone'} /></PrivateRoute>} />
+        <Route path="/updatezone" name="UpdateZone" element={<PrivateRoute><Layout child={'UpdateZone'} /></PrivateRoute>} />
         <Route path="/apisettings" name="ApiSettings" element={<PrivateRoute><Layout child={'ApiSettings'} /></PrivateRoute>} />
         <Route path="/groupview" name="GroupView" element={<PrivateRoute><Layout child={'GroupView'} /></PrivateRoute>} />
         <Route path="/machineview" name="MachineView" element={<PrivateRoute><Layout child={'MachineView'} /></PrivateRoute>} />
