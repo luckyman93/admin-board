@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-
 //images start
 import loginIcon from '../assets/images/login.png'
 //images end
@@ -9,6 +8,7 @@ const AppBreadcrumb = (props) =>  {
 
     const arrTitleInfo = [
         { childName:'CreateProfile', title:'MACHINE SETTINGS / PROFILE CREATION' },
+        { childName:'UpdateMachine', title:'MACHINE LIST' },
         { childName:'CreateZone', title:'CREATE ZONE' },
         { childName:'ApiSettings', title:'API SETTING' },
         { childName:'GroupView', title:'GROUP VIEW' },

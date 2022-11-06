@@ -2,9 +2,10 @@ import React, { Suspense } from 'react'
 import PropTypes from 'prop-types';
 
 const CreateProfile = React.lazy(() => import('../views/createProfile/CreateProfile'))
+const UpdateMachine = React.lazy(() => import('../views/updateMachine/UpdateMachine'))
 const CreateZone = React.lazy(() => import('../views/createZone/CreateZone'))
-const GroupView = React.lazy(() => import('../views/groupView/GroupView'))
 const ApiSettings = React.lazy(() => import('../views/apiSettings/ApiSettings'))
+const GroupView = React.lazy(() => import('../views/groupView/GroupView'))
 const MachineView = React.lazy(() => import('../views/machineView/MachineView'))
 
 const AppContent = ({ subChild }) => {
@@ -13,8 +14,9 @@ const AppContent = ({ subChild }) => {
     <Suspense>
       {
         subChild === "CreateProfile" && <CreateProfile /> || 
-        subChild === "ApiSettings" && <ApiSettings /> ||
+        subChild === "UpdateMachine" && <UpdateMachine /> ||
         subChild === "CreateZone" && <CreateZone /> ||
+        subChild === "ApiSettings" && <ApiSettings /> ||
         subChild === "GroupView" && <GroupView /> ||
         subChild === "MachineView" && <MachineView />
       }
