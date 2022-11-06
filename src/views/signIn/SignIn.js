@@ -33,7 +33,7 @@ const SignIn = () =>  {
     }
 
     let authToken = sessionStorage.getItem('Auth Token')
-    if (authToken) return <Navigate to="/createprofile"/>
+    if (authToken) return <Navigate to="/createmachine"/>
 
     return (
         <div className="container-fluid sign-in" style={{padding: '0px'}}>
@@ -68,7 +68,7 @@ const SignIn = () =>  {
                                 <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
                             </div>
                             <p className="forgot-passowrd"><a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a></p>
-                            <button type="submit" onClick={onSignInEmailAndPw}>SIGN IN</button>
+                            <button type="button" onClick={onSignInEmailAndPw}>SIGN IN</button>
                         </div>
                     </div>
                 </div>

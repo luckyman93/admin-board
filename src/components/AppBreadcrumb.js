@@ -7,7 +7,9 @@ import loginIcon from '../assets/images/login.png'
 const AppBreadcrumb = (props) =>  {
 
     const arrTitleInfo = [
+        { childName:'CreateMachine', title:'MaCHINE SETTINGS' },
         { childName:'CreateProfile', title:'MACHINE SETTINGS / PROFILE CREATION' },
+        { childName:'LocationSetting', title:'MACHINE SETTINGS / LOCATION SETTING' },
         { childName:'UpdateMachine', title:'MACHINE LIST' },
         { childName:'CreateZone', title:'CREATE ZONE' },
         { childName: 'UpdateZone', title: 'UPDATE ZONE'},

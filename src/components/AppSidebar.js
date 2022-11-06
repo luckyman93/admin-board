@@ -24,7 +24,7 @@ const NavItem = (props) => (
 const AppSidebar = () =>  {
 
     const arrNavItemsInfo = [
-        { iconUrl: machineIcon, itemName: "CREATE MACHINE", href:"/createprofile", active:false},
+        { iconUrl: machineIcon, itemName: "CREATE MACHINE", href:"/createmachine", active:false},
         { iconUrl: updateIcon, itemName: "UPDATE MACHINE", href:"/updatemachine", active:false},
         { iconUrl: createIcon, itemName: "CREATE ZONE", href:"/createzone", active:false },
         { iconUrl: zonesIcon, itemName: "UPDATE ZONE", href:"/updatezone", active:false },

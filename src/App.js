@@ -22,7 +22,10 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Splash />} />
         <Route path="/signin" name="SignIn" element={<SingIn />} />
-        <Route path="/createprofile" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
+        <Route path="/createmachine" name="CreateMachine" element={<PrivateRoute><Layout child={'CreateMachine'} /></PrivateRoute>} />
+        <Route path="/createmachine/profilecreation" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
+        <Route path="/createmachine/profilecreation" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
+        <Route path="/createmachine/locationsetting" name="LocationSetting" element={<PrivateRoute><Layout child={'LocationSetting'} /></PrivateRoute>} />
         <Route path="/updatemachine" name="UpdateMachine" element={<PrivateRoute><Layout child={'UpdateMachine'} /></PrivateRoute>} />
         <Route path="/createzone" name="CreateZone" element={<PrivateRoute><Layout child={'CreateZone'} /></PrivateRoute>} />
         <Route path="/updatezone" name="UpdateZone" element={<PrivateRoute><Layout child={'UpdateZone'} /></PrivateRoute>} />
