@@ -58,7 +58,7 @@ export const sendEmailforResetPw = (email) => async dispatch => {
 }
 
 const validEmail = (email) => {
-  let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   if (!email.match(mailformat)) return false
   if (email.length === 0) return false
   return true

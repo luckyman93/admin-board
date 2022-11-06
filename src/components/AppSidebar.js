@@ -28,7 +28,7 @@ const AppSidebar = () =>  {
         { iconUrl: updateIcon, itemName: "UPDATE MACHINE", href:"/updatemachine", active:false},
         { iconUrl: createIcon, itemName: "CREATE ZONE", href:"/createzone", active:false },
         { iconUrl: zonesIcon, itemName: "UPDATE ZONE", href:"/updatezone", active:false },
-        { iconUrl: settingsIcon, itemName: "API SETTINGS", href:"/apisetting", active:false },
+        { iconUrl: settingsIcon, itemName: "API SETTINGS", href:"/apisettings", active:false },
         { iconUrl: grviewIcon, itemName: "GROUP VIEW", href:"/groupview", active:false },
         { iconUrl: mvIcon, itemName: "MACHINE VIEW", href: "/machineview", active:false },
     ]

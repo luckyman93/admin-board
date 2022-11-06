@@ -10,7 +10,9 @@ const AppBreadcrumb = (props) =>  {
     const arrTitleInfo = [
         { childName:'CreateProfile', title:'MACHINE SETTINGS / PROFILE CREATION' },
         { childName:'CreateZone', title:'CREATE ZONE' },
+        { childName:'ApiSettings', title:'API SETTING' },
         { childName:'GroupView', title:'GROUP VIEW' },
+        { childName:'MachineView', title:'MACHINE VIEW' },
     ]
 
     const getTilteByChild = () => {

@@ -24,7 +24,9 @@ function App() {
         <Route path="/signin" name="SignIn" element={<SingIn />} />
         <Route path="/createprofile" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
         <Route path="/createzone" name="CreateZone" element={<PrivateRoute><Layout child={'CreateZone'} /></PrivateRoute>} />
+        <Route path="/apisettings" name="ApiSettings" element={<PrivateRoute><Layout child={'ApiSettings'} /></PrivateRoute>} />
         <Route path="/groupview" name="GroupView" element={<PrivateRoute><Layout child={'GroupView'} /></PrivateRoute>} />
+        <Route path="/machineview" name="MachineView" element={<PrivateRoute><Layout child={'MachineView'} /></PrivateRoute>} />
       </Routes>
     </Suspense>
   )
