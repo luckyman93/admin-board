@@ -1,8 +1,8 @@
 import React from 'react'
-import Table from '../../components/elements/const/Table'
+import Table from '../components/elements/const/Table'
 //images start
-import deleteIcon from '../../assets/images/delete.png'
-import bundleIcon from '../../assets/images/bundle.png'
+import deleteIcon from '../assets/images/delete.png'
+import bundleIcon from '../assets/images/bundle.png'
 //images end
 
 const ApiSettings = () =>  {

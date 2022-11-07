@@ -23,14 +23,11 @@ const CreateMachine = createSlice({
 });
 
 // Actions
-const { SignInSuccess, SendEmailSuccess, InitialIsSendEmailState } = Sign.actions
+const { SignInSuccess, SendEmailSuccess, InitialIsSendEmailState } = CreateMachine.actions
 
-// once user siginin..
-export const signInUser = ({ email, password }) => async dispatch => {
+// get group list..
+export const getGroupList = () => async dispatch => {
   //validation email and password
-  if (!validEmail(email)) return toast.error('Please enter the email correctly!')
-  if (!validPassword(password)) return toast.error('Please enter the password correctly!')
-
   try {
     apiClient.login(email, password)
       .then((response)=>{
@@ -45,48 +42,6 @@ export const signInUser = ({ email, password }) => async dispatch => {
   } catch (e) {
     return console.error(e.message);
   }
-}
-
-// once user send email for password reset..
-export const sendEmailforResetPw = (email) => async dispatch => {
-  // validation email
-  if (!validEmail(email)) return toast.error('Please enter the email correctly!')
-
-  try {
-    apiClient.resetPw(email)
-      .then((response)=>{
-        if (response === 'sent') {
-          toast.success('Email sent successfully!')
-          dispatch(SendEmailSuccess())
-        } else {
-          toast.error('Please check the Email!')
-        }
-      })
-  } catch (e) {
-    return console.error(e.message);
-  }
-}
-
-// once isSendEamil initiall.. 
-export const initialIsSendEmail = () => async dispatch => {
-
-  try {
-    dispatch(InitialIsSendEmailState())
-  } catch (e) {
-    return console.error(e.message);
-  }
-}
-
-const validEmail = (email) => {
-  let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-  if (!email.match(mailformat)) return false
-  if (email.length === 0) return false
-  return true
-}
-
-const validPassword = (pw) => {
-  if (pw.length === 0) return false
-  return true
 }
 
 export default CreateMachine.reducer

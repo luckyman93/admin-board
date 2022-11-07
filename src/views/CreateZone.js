@@ -1,10 +1,9 @@
 import React from 'react'
-import Table from '../../components/elements/const/Table'
-import '../../assets/js/custom'
-
+import Table from '../components/elements/const/Table'
+import '../assets/js/custom'
 //images start
-import uploadIcon from '../../assets/images/upload.png'
-import modelIcon from '../../assets/images/model.png'
+import uploadIcon from '../assets/images/upload.png'
+import modelIcon from '../assets/images/model.png'
 //images end
 
 const CreateZone = (props) => {

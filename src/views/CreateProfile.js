@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
-
 //images start
-import uploadIcon from '../../assets/images/upload.png'
-import deleteIcon from '../../assets/images/delete.png'
-import calendarIcon from '../../assets/images/calendar.png'
+import uploadIcon from '../assets/images/upload.png'
+import deleteIcon from '../assets/images/delete.png'
+import calendarIcon from '../assets/images/calendar.png'
 //images end
 
 const InCreaOrReduInput = (props) => (

@@ -9,8 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 //containers
-const Splash = React.lazy(() => import('./views/splash/Splash'))
-const SingIn = React.lazy(() => import('./views/signIn/SignIn'))
+const Splash = React.lazy(() => import('./views/Splash'))
+const SingIn = React.lazy(() => import('./views/SignIn'))
 const Layout = React.lazy(() => import('./layout/Layout'))
 const NotFound = React.lazy(() => import('./views/NotFound'))
 

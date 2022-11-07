@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import { signInUser } from '../../reducers/sign/reducer'
-import SendEmailForm from '../../components/elements/SendMailFormPopup'
+import { signInUser } from '../reducers/sign/reducer'
+import SendEmailForm from '../components/elements/SendMailFormPopup'
 //images start
-import loginIcon from '../../assets/images/login.png'
-import passwordIcon from '../../assets/images/password.png'
-import eyeIcon from '../../assets/images/eye.png'
-import logoIcon from '../../assets/images/logo.png'
+import loginIcon from '../assets/images/login.png'
+import passwordIcon from '../assets/images/password.png'
+import eyeIcon from '../assets/images/eye.png'
+import logoIcon from '../assets/images/logo.png'
 //images end
 
 const SignIn = () =>  {

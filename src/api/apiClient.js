@@ -32,4 +32,18 @@ export const apiClient = {
         })
 
     }
+
+    // //Get group list
+    // async resetPw(email) {
+
+    //     const authentication = getAuth();
+
+    //     return await sendPasswordResetEmail(authentication, email)
+    //         .then(()=>{
+    //             return 'sent'
+    //         }).catch((error)=>{
+    //             return error.code
+    //     })
+
+    // }
 }

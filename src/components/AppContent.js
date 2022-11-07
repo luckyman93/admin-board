@@ -1,15 +1,15 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types';
 
-const CreateMachine = React.lazy(() => import('../views/createMachine/CreateMachine'))
-const CreateProfile = React.lazy(() => import('../views/createProfile/CreateProfile'))
-const LocationSetting = React.lazy(() => import('../views/locationSetting/LocationSetting'))
-const UpdateMachine = React.lazy(() => import('../views/updateMachine/UpdateMachine'))
-const CreateZone = React.lazy(() => import('../views/createZone/CreateZone'))
-const UpdateZone = React.lazy(() => import('../views/updateZone/UpdateZone'))
-const ApiSettings = React.lazy(() => import('../views/apiSettings/ApiSettings'))
-const GroupView = React.lazy(() => import('../views/groupView/GroupView'))
-const MachineView = React.lazy(() => import('../views/machineView/MachineView'))
+const CreateMachine = React.lazy(() => import('../views/CreateMachine'))
+const CreateProfile = React.lazy(() => import('../views/CreateProfile'))
+const LocationSetting = React.lazy(() => import('../views/LocationSetting'))
+const UpdateMachine = React.lazy(() => import('../views/UpdateMachine'))
+const CreateZone = React.lazy(() => import('../views/CreateZone'))
+const UpdateZone = React.lazy(() => import('../views/UpdateZone'))
+const ApiSettings = React.lazy(() => import('../views/ApiSettings'))
+const GroupView = React.lazy(() => import('../views/GroupView'))
+const MachineView = React.lazy(() => import('../views/MachineView'))
 
 const AppContent = ({ subChild }) => {
   

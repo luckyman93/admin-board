@@ -1,9 +1,9 @@
 import React from 'react'
-import Table from '../../components/elements/const/Table'
+import Table from '../components/elements/const/Table'
 //images start
-import editIcon from '../../assets/images/edit.png'
-import searchIcon from '../../assets/images/search.png'
-import fbxIcon from '../../assets/images/fbx-viewer.png'
+import editIcon from '../assets/images/edit.png'
+import searchIcon from '../assets/images/search.png'
+import fbxIcon from '../assets/images/fbx-viewer.png'
 //images end
 
 const UpdateZone = () =>  {

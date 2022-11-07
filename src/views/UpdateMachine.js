@@ -1,10 +1,10 @@
 import React from 'react'
-import Table from '../../components/elements/const/Table'
+import Table from '../components/elements/const/Table'
 //images start
-import detailIcon from '../../assets/images/details.png'
-import editIcon from '../../assets/images/edit.png'
-import viewIcon from '../../assets/images/view.png'
-import searchIcon from '../../assets/images/search.png'
+import detailIcon from '../assets/images/details.png'
+import editIcon from '../assets/images/edit.png'
+import viewIcon from '../assets/images/view.png'
+import searchIcon from '../assets/images/search.png'
 //images end
 
 const UpdateMachine = () =>  {
