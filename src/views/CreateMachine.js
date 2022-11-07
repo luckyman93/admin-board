@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { apiClient } from '../api/apiClient'
 
 const CreateMachine = () =>  {
 
+    apiClient.getAstokenByRftoken()
     let navigate = useNavigate();
 
     const createGroup = (e) => {
