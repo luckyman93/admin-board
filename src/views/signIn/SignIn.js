@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Navigate } from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import { signInUser } from '../../reducers/Sign/reducer'
+import { signInUser } from '../../reducers/sign/reducer'
 import SendEmailForm from '../../components/elements/SendMailFormPopup'
 //images start
 import loginIcon from '../../assets/images/login.png'
@@ -16,6 +16,13 @@ const SignIn = () =>  {
     const [password, setPassword] = useState('')
     const { isSingIn } = useSelector(state => state.Sign)
     const dispatch = useDispatch()
+    let navigate = useNavigate()
+
+    useEffect(() => {
+        
+        if (isSingIn) navigate('/createmachine')
+
+      }, [navigate, isSingIn])
 
     const onSignInEmailAndPw = () => {
         const credentials = {

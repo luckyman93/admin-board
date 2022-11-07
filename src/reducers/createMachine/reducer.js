@@ -3,7 +3,7 @@ import { apiClient } from '../../api/apiClient'
 import { toast } from 'react-toastify';
 
 // Slice
-const Sign = createSlice({
+const CreateMachine = createSlice({
   name: 'sign',
   initialState: {
     isSingIn: false,
@@ -89,4 +89,4 @@ const validPassword = (pw) => {
   return true
 }
 
-export default Sign.reducer
+export default CreateMachine.reducer

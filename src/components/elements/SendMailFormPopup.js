@@ -1,21 +1,32 @@
-import React, { useState } from 'react'
-import {useDispatch} from 'react-redux'
-import { sendEmailforResetPw } from '../../reducers/Sign/reducer'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { sendEmailforResetPw, initialIsSendEmail } from '../../reducers/sign/reducer'
 import loginIcon from '../../assets/images/login.png'
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 
 const SendEmailForm = () => {
 
     const [email, setEmail] = useState('')
     const dispatch = useDispatch()
+    const { isSendEmail } = useSelector(state => state.Sign)
+
+    useEffect(() => {
+        if (isSendEmail) {
+            let myModalEl = document.getElementById('sendmailform')
+            bootstrap.Modal.getInstance(myModalEl).hide()
+            dispatch(initialIsSendEmail())
+            setEmail('')
+        }
+      }, [isSendEmail])
 
     const resetPwForSendEmail = () => {
+
         dispatch(sendEmailforResetPw(email))
-        setEmail('')
     }
 
     return (
         <div className="modal fade selectzone-popup" id="sendmailform" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="exampleModalLabel">Reset Password</h5>
@@ -35,7 +46,7 @@ const SendEmailForm = () => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onClick={resetPwForSendEmail}>OKAY</button>
+                        <button type="submit" className="btn btn-primary" onClick={resetPwForSendEmail}>OKAY</button>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,11 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom';
-
 //images start
 import logoIcon from '../assets/images/logo.png'
 import machineIcon from '../assets/images/machine.png'
 import updateIcon from '../assets/images/update.png'
-import createIcon from '../assets/images/create.png'
 import zonesIcon from '../assets/images/zones.png'
+import addressIcon from '../assets/images/addresss.png'
 import settingsIcon from '../assets/images/settings.png'
 import grviewIcon from '../assets/images/grview.png'
 import mvIcon from '../assets/images/mv.png'
@@ -26,8 +25,8 @@ const AppSidebar = () =>  {
     const arrNavItemsInfo = [
         { iconUrl: machineIcon, itemName: "CREATE MACHINE", href:"/createmachine", active:false},
         { iconUrl: updateIcon, itemName: "UPDATE MACHINE", href:"/updatemachine", active:false},
-        { iconUrl: createIcon, itemName: "CREATE ZONE", href:"/createzone", active:false },
-        { iconUrl: zonesIcon, itemName: "UPDATE ZONE", href:"/updatezone", active:false },
+        { iconUrl: zonesIcon, itemName: "CREATE ZONE", href:"/createzone", active:false },
+        { iconUrl: addressIcon, itemName: "UPDATE ZONE", href:"/updatezone", active:false },
         { iconUrl: settingsIcon, itemName: "API SETTINGS", href:"/apisettings", active:false },
         { iconUrl: grviewIcon, itemName: "GROUP VIEW", href:"/groupview", active:false },
         { iconUrl: mvIcon, itemName: "MACHINE VIEW", href: "/machineview", active:false },
