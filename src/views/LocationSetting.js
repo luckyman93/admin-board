@@ -3,14 +3,14 @@ import React from 'react'
 const LocationSetting = () =>  {
 
     return (
-        <div class="container-fluid profile-page zones gr-view location-view">
-            <div class="row">
-                <div class="col-sm-5 right-separate">
+        <div className="container-fluid profile-page zones gr-view location-view">
+            <div className="row">
+                <div className="col-sm-5 right-separate">
                     <h3>SELECT ZONE</h3>
-                    <div class="main shadows mb-3">
+                    <div className="main shadows mb-3">
                         <h4>GET ZONE LIST</h4>
                     </div>
-                    <div class="selected-files">
+                    <div className="selected-files">
                         <h3>SELECTED SITE</h3>
 
                         <table>
@@ -32,12 +32,12 @@ const LocationSetting = () =>  {
                         <button>CLEAR SELECTION</button>
                     </div>
                 </div>
-                <div class="col-sm-7 border-left">
-                    <div class="main shadows">
+                <div className="col-sm-7 border-left">
+                    <div className="main shadows">
                         <h3>MACHINE ID</h3>
 
-                        <div class="modelthreed">
-                            <div class="main shadows">
+                        <div className="modelthreed">
+                            <div className="main shadows">
 
                                 <table>
                                     <thead>
@@ -78,7 +78,7 @@ const LocationSetting = () =>  {
                                     </tbody>
                                 </table>
 
-                                <div class="btns">
+                                <div className="btns">
                                     <button>CANCEL</button>
                                     <button>PUT</button>
                                 </div>

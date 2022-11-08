@@ -34,12 +34,12 @@ export const signInUser = ({ email, password }) => async dispatch => {
   try {
     apiClient.login(email, password)
       .then((response)=>{
-        if (response === 'signIn') {
+        if (response.auth) {
           dispatch(SignInSuccess())
           toast.success('login successfully!')
         } else {
-          if(response === 'auth/wrong-password') toast.error('Please check the Password')
-          if(response === 'auth/user-not-found') toast.error('Please check the Email')
+          if(response.message === 'auth/wrong-password') toast.error('Please check the Password')
+          if(response.message === 'auth/user-not-found') toast.error('Please check the Email')
         }
       })
   } catch (e) {
@@ -55,7 +55,7 @@ export const sendEmailforResetPw = (email) => async dispatch => {
   try {
     apiClient.resetPw(email)
       .then((response)=>{
-        if (response === 'sent') {
+        if (response.sent) {
           toast.success('Email sent successfully!')
           dispatch(SendEmailSuccess())
         } else {

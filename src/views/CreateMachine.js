@@ -4,7 +4,7 @@ import { apiClient } from '../api/apiClient'
 
 const CreateMachine = () =>  {
 
-    apiClient.getAstokenByRftoken()
+    apiClient.getGroupList()
     let navigate = useNavigate();
 
     const createGroup = (e) => {

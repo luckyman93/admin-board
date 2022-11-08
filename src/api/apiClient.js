@@ -1,61 +1,77 @@
 import axios from 'axios'
 import '../firebase/firebase';
-import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, getIdToken } from 'firebase/auth'
+import { 
+    getAuth,
+    getIdToken,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+} from 'firebase/auth'
 
-const authentication = getAuth();
+const authentication = getAuth()
 const baseUrl = 'https://rontgen-service-pth7oyojla-an.a.run.app'
+// var token
 
 export const apiClient = {
 
-    // Get access token
-    getAstokenByRftoken() {
-        return onAuthStateChanged(authentication, async (user) => {
-            if (user) {
-              const token = await getIdToken(user);
-              return token
-            }
-        });
-    },
-
     // Login Process
     async login(email, password) {
+        let result
 
-        return await signInWithEmailAndPassword(authentication, email, password)
+        await signInWithEmailAndPassword(authentication, email, password)
             .then((response) => {
-                sessionStorage.setItem('Auth Token', response._tokenResponse.idToken)
-                return response.operationType
+                sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
+                result = { 
+                    auth : true,
+                }
             }).catch((error) => {
-                return error.code
-        })
-
+                result = { 
+                    auth : false,
+                }
+            })
+        return result
     },
 
     // Reset Password Process
     async resetPw(email) {
+        let result
 
-        return await sendPasswordResetEmail(authentication, email)
+        await sendPasswordResetEmail(authentication, email)
             .then(()=>{
-                return 'sent'
+                result = {
+                    sent :  true,
+                    message : 'sent'
+                }
             }).catch((error)=>{
-                return error.code
-        })
-
+                result = {
+                    sent : false,
+                    message: error.code
+                }
+            })
+        return result
     },
-    
+
     // //Get group list
-    getGroupList() {
-        return new Promise(function (resolve, reject) {
-          axios
-            .get(baseUrl + '/v1/group', {
-                headers: {"Authorization" : `Bearer ${sessionStorage.getItem('Auth Token')}`} 
-              })
-            .then(function (response) {
-                console.log(response)
-              resolve(response)
-            })
-            .catch(function (error) {
-              reject(error)
+    async getGroupList() {
+        let token;
+        onAuthStateChanged(authentication, async (user) => {
+            if (user) {
+               token = await getIdToken(user);
+            }
+            console.log(token)
+            return new Promise(function (resolve, reject) {
+                axios
+                  .get(baseUrl + '/v1/group', {
+                      headers: {"Authorization" : `Bearer ${token}`} 
+                    })
+                  .then(function (response) {
+                      console.log(response)
+                    resolve(response)
+                  })
+                  .catch(function (error) {
+                    reject(error)
+                  })
             })
         })
-      },
+    }
 }

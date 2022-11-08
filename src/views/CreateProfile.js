@@ -4,6 +4,7 @@ import uploadIcon from '../assets/images/upload.png'
 import deleteIcon from '../assets/images/delete.png'
 import calendarIcon from '../assets/images/calendar.png'
 //images end
+import { apiClient } from '../api/apiClient'
 
 const InCreaOrReduInput = (props) => (
     <div className="container">
@@ -52,6 +53,7 @@ const CheckboxInput = (props) => (
 )
 
 const CreateProfile = (props) => {
+    apiClient.getGroupList()
 
     const [checkFbx, setCheckFbx] = useState(0)
     const [ativeCheckH, setAtiveCheckH] = useState(false)
@@ -171,23 +173,14 @@ const CreateProfile = (props) => {
                                 <div className="row mb-4">
                                     <div className="col-sm-12 calebdar flex">
                                         <label className="full-width">ACTIVE SINCE</label>
-                                        <select className="form-control">
-                                            <option>2019</option>
-                                            <option>2019</option>
-                                            <option>2019</option>
-                                        </select>
-                                        <select className="form-control">
-                                            <option>06</option>
-                                            <option>05</option>
-                                            <option>04</option>
-                                        </select>
-                                        <select className="form-control">
-                                            <option>14</option>
-                                            <option>13</option>
-                                            <option>12</option>
-                                        </select>
+                                        <input className="form-control" type="text" placeholder="Year" id="year" />
+                                        <input className="form-control" type="text" placeholder="Months" id="month" />
+                                        <input className="form-control" type="text" placeholder="Date" id="date" />
+                                        <span>
+                                            <img src={calendarIcon} id="daterange"/>
+                                            {/* <input type="text" className="hide" id="daterange" name="daterange" /> */}
+                                        </span>
 
-                                        <span> <img src={calendarIcon} /></span>
                                     </div>
                                 </div>
 

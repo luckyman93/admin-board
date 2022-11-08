@@ -43,9 +43,9 @@ const SignIn = () =>  {
     if (authToken) return <Navigate to="/createmachine"/>
 
     return (
-        <div className="container-fluid sign-in" style={{padding: '0px'}}>
+        <div className="container-fluid sign-in">
             <SendEmailForm/>
-            <div className="row">
+            <div className="row" style={{height:'100vh'}}>
                 <div className="col-sm-6 img">
                     <img src={logoIcon} alt='logo'/>
                 </div>
