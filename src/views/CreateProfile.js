@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { getGroupList } from '../reducers/createMachine/reducer'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 import deleteIcon from '../assets/images/delete.png'
 import calendarIcon from '../assets/images/calendar.png'
 //images end
-import { apiClient } from '../api/apiClient'
+import { useEffect } from 'react'
 
 const InCreaOrReduInput = (props) => (
     <div className="container">
@@ -52,8 +54,9 @@ const CheckboxInput = (props) => (
     </div>    
 )
 
-const CreateProfile = (props) => {
-    apiClient.getGroupList()
+const CreateProfile = () => {
+
+    const dispatch = useDispatch()
 
     const [checkFbx, setCheckFbx] = useState(0)
     const [ativeCheckH, setAtiveCheckH] = useState(false)
@@ -90,6 +93,12 @@ const CreateProfile = (props) => {
         {name: 'MALE ONLY'},
         {name: 'FEMALE ONLY'},
     ]
+
+    useEffect(() => {
+        
+        dispatch(getGroupList())
+
+    }, [])
 
     return (
         <div className="container-fluid profile-page">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Spin } from 'antd'
 import { signInUser } from '../reducers/sign/reducer'
 import SendEmailForm from '../components/elements/SendMailFormPopup'
 //images start
@@ -14,15 +15,13 @@ const SignIn = () =>  {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { isSingIn } = useSelector(state => state.Sign)
+    const { isSingIn, isSignInLoading } = useSelector(state => state.Sign)
     const dispatch = useDispatch()
     let navigate = useNavigate()
 
-    useEffect(() => {
-        
+    useEffect(() => {        
         if (isSingIn) navigate('/createmachine')
-
-      }, [navigate, isSingIn])
+    }, [navigate, isSingIn])
 
     const onSignInEmailAndPw = () => {
         const credentials = {
@@ -53,30 +52,32 @@ const SignIn = () =>  {
                     <div className="main">
                         <h2>SIGN IN</h2>
                         <p>Please enter your details to login to the VA admin board</p>
-                        <div className="forms-app">
-                            <div className="icons">
-                                <label className="full-width">EMAIL ADDRESS</label>
-                                <i><img src={loginIcon} alt="login"/></i>
-                                <input
-                                    type="email"
-                                    placeholder="ENTER EMAIL..."
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required/>
-                            </div>
-                            <div className="icons">
-                                <label className="full-width">PASSWORD</label>
-                                <i><img src={passwordIcon} alt="password"/></i>
-                                <input
-                                    type="password"
-                                    placeholder="ENTER PASSWORD..."
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required id="hide" />
+                        <Spin spinning = {isSignInLoading}>
+                            <div className="forms-app" style={{contain: "content"}}>
+                                <div className="icons">
+                                    <label className="full-width">EMAIL ADDRESS</label>
+                                    <i><img src={loginIcon} alt="login"/></i>
+                                    <input
+                                        type="email"
+                                        placeholder="ENTER EMAIL..."
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required/>
+                                </div>
+                                <div className="icons">
+                                    <label className="full-width">PASSWORD</label>
+                                    <i><img src={passwordIcon} alt="password"/></i>
+                                    <input
+                                        type="password"
+                                        placeholder="ENTER PASSWORD..."
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required id="hide" />
 
-                                <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
+                                    <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
+                                </div>
+                                <p className="forgot-passowrd"><a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a></p>
+                                <button type="button" onClick={onSignInEmailAndPw}>SIGN IN</button>
                             </div>
-                            <p className="forgot-passowrd"><a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a></p>
-                            <button type="button" onClick={onSignInEmailAndPw}>SIGN IN</button>
-                        </div>
+                        </Spin>                        
                     </div>
                 </div>
             </div>

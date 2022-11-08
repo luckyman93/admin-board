@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { PrivateRoute } from './router/privateRoute'
-import { ToastContainer } from 'react-toastify'
+import { Spin } from 'antd'
 import './assets/css/sb-admin.css'
 import './assets/css/style.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'react-toastify/dist/ReactToastify.css'
+import 'antd/dist/antd.css'
 
 //containers
 const Splash = React.lazy(() => import('./views/Splash'))
@@ -16,8 +16,7 @@ const NotFound = React.lazy(() => import('./views/NotFound'))
 
 function App() {
   return (
-    <Suspense>
-      <ToastContainer/>
+    <Suspense fallback={<Spin/>}>
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Splash />} />

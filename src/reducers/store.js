@@ -5,7 +5,7 @@ import CreateMachine from './createMachine/reducer'
 
 const reducer = combineReducers({
     Sign: Sign,
-    Machine: CreateMachine
+    Machine: CreateMachine,
 })
 
 const store = configureStore({

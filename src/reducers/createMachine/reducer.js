@@ -1,46 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { apiClient } from '../../api/apiClient'
-import { toast } from 'react-toastify';
 
 // Slice
 const CreateMachine = createSlice({
-  name: 'sign',
+  name: 'createMachine',
   initialState: {
-    isSingIn: false,
-    isSendEmail: false,
+    isLoading: false,
+    arrGroupList : []
   },
   reducers: {
-    SignInSuccess: (state) => {
-      state.isSingIn = true
+    //createmachine
+    LoadGetGpListRequest: (state) => {
+      state.isLoading = true
     },
-    SendEmailSuccess: (state) => {
-      state.isSendEmail = true
+    LoadGetGpListSuccess: (state, action) => {
+      state.isLoading = false
+      state.arrGroupList = action.payload.map((info) => (
+        { 'groupId': info.id, 'groupName': info.name }
+      ))
     },
-    InitialIsSendEmailState: (state) => {
-      state.isSendEmail = false
+    LoadGetGpListFailure: (state) => {
+      state.isLoading = false
+      state.arrGroupList = []
     }
   },
 });
 
 // Actions
-const { SignInSuccess, SendEmailSuccess, InitialIsSendEmailState } = CreateMachine.actions
+const { LoadGetGpListSuccess, LoadGetGpListFailur, LoadGetGpListRequest } = CreateMachine.actions
 
 // get group list..
-export const getGroupList = () => async dispatch => {
-  //validation email and password
+export const getGroupList = (token) => async dispatch => {  
   try {
-    apiClient.login(email, password)
+    dispatch(LoadGetGpListRequest())
+    apiClient.getGroupList(token)
       .then((response)=>{
-        if (response === 'signIn') {
-          dispatch(SignInSuccess())
-          toast.success('login successfully!')
-        } else {
-          if(response === 'auth/wrong-password') toast.error('Please check the Password')
-          if(response === 'auth/user-not-found') toast.error('Please check the Email')
+        if (response.status === 200 ) {
+          dispatch(LoadGetGpListSuccess(response.data.groups))
         }
       })
   } catch (e) {
-    return console.error(e.message);
+    dispatch(LoadGetGpListFailure())
+    console.error(e.message);
   }
 }
 
