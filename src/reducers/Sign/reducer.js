@@ -1,131 +1,91 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { notification } from 'antd'
 import { apiClient } from '../../api/apiClient'
+import { toast } from 'react-toastify';
 
 // Slice
 const Sign = createSlice({
   name: 'sign',
   initialState: {
     isSignInLoading : false,
-    isSendEmailLoading: false,
     isSignIn: false,
+    isSendEmail: false,
   },
   reducers: {
     SignInRequest: (state) => {
       state.isSignInLoading = true
     },
     SignInSuccess: (state) => {
-      state.isSignInLoading = false
+      state.isSignInLoading = false,
       state.isSignIn = true
     },
     SignInFailure: (state) => {
       state.isSignInLoading = false
     },
-    SendMailRequest: (state) => {
+    SendEmailRequest: (state) => {
       state.isSendEmailLoading = true
     },
-    SendMailSuccess: (state) => {
+    SendEmailSuccess: (state) => {
+      state.isSendEmailLoading = false
+      state.isSendEmail = true
+    },
+    SendEmailFailure: (state) => {
       state.isSendEmailLoading = false
     },
-    SendMailFailure: (state) => {
-      state.isSendEmailLoading = false
+    InitialIsSendEmailState: (state) => {
+      state.isSendEmail = false
     }
   },
 });
 
 // Actions
-const { SignInRequest, SignInSuccess, SignInFailure, SendMailRequest, SendMailSuccess, SendMailFailure } = Sign.actions
+const { SignInRequest, SignInSuccess, SignInFailure, SendEmailRequest, SendEmailSuccess, SendEmailFailure, InitialIsSendEmailState } = Sign.actions
 
 // once user siginin..
 export const signInUser = ({ email, password }) => async dispatch => {
-
   //validation email and password
-  if (!validEmail(email)){
-    return notification.error({
-      duration: 2,
-      description: 'Please enter the email address correctly!'
-    })
-  }
-    
-  if (!validPassword(password)){
-    return notification.error({
-      duration: 2,
-      description: 'Please enter the email password correctly!'
-    })
-  }    
+  if (!validEmail(email)) return toast.error('Please enter the email correctly!')
+  if (!validPassword(password)) return toast.error('Please enter the password correctly!')
 
   try {
     dispatch(SignInRequest())
     apiClient.login(email, password)
       .then((response)=>{
         if (response.auth) {
+          toast.success('login successfully!')
           dispatch(SignInSuccess())
-          notification.error({
-            duration: 2,
-            description: 'login successfully!'
-          })
         } else {
           dispatch(SignInFailure())
-          if(response.message === 'auth/wrong-password') {
-            notification.error({
-              duration: 2,
-              description: 'Please check the Password!'
-            })
-          }
-
-          if(response.message === 'auth/user-not-found') {
-            notification.error({
-              duration: 2,
-              description: 'Please check the Email!'
-            })
-          }
-
-          if (response.message === 'auth/too-many-requests') {
-            notification.error({
-              duration: 2,
-              description: 'too many requests!'
-            })
-          }
+          if(response.message === 'auth/wrong-password') toast.error('Please check the Password')
+          if(response.message === 'auth/user-not-found') toast.error('Please check the Email')
+          if(response.message === 'auth/too-many-requests') toast.error('too many requests')
         }
       })
   } catch (e) {
-    console.error(e.message)
     dispatch(SignInFailure())
+    console.error(e.message);
   }
 }
 
 // once user send email for password reset..
 export const sendEmailforResetPw = (email) => async dispatch => {
-
   // validation email
-  if (!validEmail(email)){
-    return notification.error({
-      duration: 2,
-      description: 'Please enter the email correctly!!'
-    })
-  }
+  if (!validEmail(email)) return toast.error('Please enter the email correctly!')
 
   try {
-    dispatch(SendMailRequest())
+    dispatch(SendEmailRequest())
     apiClient.resetPw(email)
       .then((response)=>{
         if (response.sent) {
-          notification.success({
-            duration: 2,
-            description: 'Email sent successfully!'
-          })
-          dispatch(SendMailSuccess())
+          toast.success('Email sent successfully!')
+          dispatch(SendEmailSuccess())
         } else {
-          dispatch(SendMailFailure())
-          notification.error({
-            duration: 2,
-            description: 'Please check the Email!'
-          })
+          toast.error('Please check the Email!')
+          dispatch(SendEmailFailure())
         }
       })
   } catch (e) {
+    dispatch(SendEmailFailure())
     console.error(e.message);
-    dispatch(SendMailFailure())
   }
 }
 
@@ -135,7 +95,7 @@ export const initialIsSendEmail = () => async dispatch => {
   try {
     dispatch(InitialIsSendEmailState())
   } catch (e) {
-    console.error(e.message);
+    return console.error(e.message)
   }
 }
 

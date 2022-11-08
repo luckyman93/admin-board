@@ -27,7 +27,7 @@ const CreateMachine = createSlice({
 });
 
 // Actions
-const { LoadGetGpListSuccess, LoadGetGpListFailur, LoadGetGpListRequest } = CreateMachine.actions
+const { LoadGetGpListSuccess, LoadGetGpListFailure, LoadGetGpListRequest } = CreateMachine.actions
 
 // get group list..
 export const getGroupList = (token) => async dispatch => {  

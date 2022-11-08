@@ -53,7 +53,7 @@ const SignIn = () =>  {
                         <h2>SIGN IN</h2>
                         <p>Please enter your details to login to the VA admin board</p>
                         <Spin spinning = {isSignInLoading}>
-                            <div className="forms-app" style={{contain: "content"}}>
+                            <div className="forms-app">
                                 <div className="icons">
                                     <label className="full-width">EMAIL ADDRESS</label>
                                     <i><img src={loginIcon} alt="login"/></i>
@@ -74,7 +74,9 @@ const SignIn = () =>  {
 
                                     <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
                                 </div>
-                                <p className="forgot-passowrd"><a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a></p>
+                                <p className="forgot-passowrd">
+                                    <a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a>
+                                </p>
                                 <button type="button" onClick={onSignInEmailAndPw}>SIGN IN</button>
                             </div>
                         </Spin>                        

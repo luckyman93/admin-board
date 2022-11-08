@@ -905,6 +905,10 @@ body {
     margin-top: 33px;
 }
 
+.sign-in .forms-app {
+    contain: content;
+}
+
 .main.shadows label.profile-select {
     position: relative;
 }

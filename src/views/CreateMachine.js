@@ -22,7 +22,7 @@ const CreateMachine = () =>  {
                 const token = await getIdToken(user)
                 dispatch(getGroupList(token))
             }
-        })  
+        })
     }, [])
 
     const createGroup = (e) => {
