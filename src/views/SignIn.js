@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
 import { signInUser } from '../reducers/sign/reducer'
@@ -13,15 +13,11 @@ import logoIcon from '../assets/images/logo.png'
 
 const SignIn = () =>  {
 
+    const dispatch = useDispatch()
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { isSingIn, isSignInLoading } = useSelector(state => state.Sign)
-    const dispatch = useDispatch()
-    let navigate = useNavigate()
-
-    useEffect(() => {        
-        if (isSingIn) navigate('/createmachine')
-    }, [navigate, isSingIn])
+    const { isSignInLoading } = useSelector(state => state.Sign)
 
     const onSignInEmailAndPw = () => {
         const credentials = {
@@ -38,8 +34,9 @@ const SignIn = () =>  {
             : document.getElementById('hide').setAttribute('type', 'text')
     }
 
-    let authToken = sessionStorage.getItem('Auth Token')
-    if (authToken) return <Navigate to="/createmachine"/>
+    let token =sessionStorage.getItem('Auth Token')
+    
+    if (token) return <Navigate to="/createmachine"/>
 
     return (
         <div className="container-fluid sign-in">

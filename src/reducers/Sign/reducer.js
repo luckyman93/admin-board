@@ -7,16 +7,17 @@ const Sign = createSlice({
   name: 'sign',
   initialState: {
     isSignInLoading : false,
-    isSignIn: false,
+    // isSignIn: false,
     isSendEmail: false,
+    isSendEmailLoading: false
   },
   reducers: {
     SignInRequest: (state) => {
       state.isSignInLoading = true
     },
     SignInSuccess: (state) => {
-      state.isSignInLoading = false,
-      state.isSignIn = true
+      state.isSignInLoading = false
+      // state.isSignIn = true
     },
     SignInFailure: (state) => {
       state.isSignInLoading = false
@@ -42,6 +43,7 @@ const { SignInRequest, SignInSuccess, SignInFailure, SendEmailRequest, SendEmail
 
 // once user siginin..
 export const signInUser = ({ email, password }) => async dispatch => {
+
   //validation email and password
   if (!validEmail(email)) return toast.error('Please enter the email correctly!')
   if (!validPassword(password)) return toast.error('Please enter the password correctly!')
@@ -66,8 +68,19 @@ export const signInUser = ({ email, password }) => async dispatch => {
   }
 }
 
+// once use sign out 
+
+export const signOut = () => async dispatch => {
+  try {
+    apiClient.signOut()
+  } catch (e) {
+    console.error(e.message);
+  }
+}
+
 // once user send email for password reset..
 export const sendEmailforResetPw = (email) => async dispatch => {
+  
   // validation email
   if (!validEmail(email)) return toast.error('Please enter the email correctly!')
 

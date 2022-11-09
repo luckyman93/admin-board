@@ -2,11 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getGroupList } from '../reducers/createMachine/reducer'
-import { 
-    getAuth,
-    getIdToken,
-    onAuthStateChanged,
-} from 'firebase/auth'
 import { Spin } from 'antd';
 
 const CreateMachine = () =>  {
@@ -16,13 +11,8 @@ const CreateMachine = () =>  {
     let navigate = useNavigate()
 
     useEffect(() => {
-        const authentication = getAuth()
-        onAuthStateChanged(authentication, async (user) => {
-            if (user) {
-                const token = await getIdToken(user)
-                dispatch(getGroupList(token))
-            }
-        })
+       let token = sessionStorage.getItem('Auth Token')
+        dispatch(getGroupList(token))            
     }, [])
 
     const createGroup = (e) => {

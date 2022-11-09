@@ -1,16 +1,16 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { history } from '../history';
+import React from 'react'
+import { Navigate } from 'react-router-dom'
+import { history } from '../history'
+import PropTypes from 'prop-types'
 
 export { PrivateRoute };
 
 function PrivateRoute({ children }) {
-    let authToken = sessionStorage.getItem('Auth Token')
+    let token =sessionStorage.getItem('Auth Token')
 
-    if (!authToken) {
+    if (!token) {
         // not logged in so redirect to login page with the return url
-        return <Navigate to="/signin" state={{ from: history.location }} /> 
+        return <Navigate to="/" state={{ from: history.location }} /> 
     }
 
     // authorized so return child components

@@ -1,10 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { signOut } from '../reducers/sign/reducer'
 //images start
 import loginIcon from '../assets/images/login.png'
 //images end
 
 const AppBreadcrumb = (props) =>  {
+
+    const dispatch = useDispatch()
 
     const arrTitleInfo = [
         { childName:'CreateMachine', title:'MACHINE SETTINGS' },
@@ -26,6 +30,10 @@ const AppBreadcrumb = (props) =>  {
         return t
     }
 
+    const onSignOut = () => {
+        dispatch(signOut())
+    }
+
     const title = getTilteByChild()
 
   return (
@@ -40,8 +48,8 @@ const AppBreadcrumb = (props) =>  {
 
         <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown no-arrow">
-                <Link className="nav-link dropdown-toggle" to={'/'} id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img className="img-profile rounded-circle" src={loginIcon} />
+                <Link className="nav-link dropdown-toggle" to={'#'} id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div onClick={onSignOut}><img className="img-profile rounded-circle" src={loginIcon} /></div>
                 </Link>
             </li>
         </ul>

@@ -1,28 +1,49 @@
-import React, { Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import React, { Suspense, useEffect } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { PrivateRoute } from './router/privateRoute'
 import { ToastContainer } from 'react-toastify'
+import { getAuth, onAuthStateChanged, getIdToken } from 'firebase/auth'
+import logIcon from './assets/images/logo.png'
 import './assets/css/sb-admin.css'
 import './assets/css/style.css'
-import 'bootstrap/dist/js/bootstrap.bundle.js'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.css'
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.min.css'
 
+const loading = (
+  <div className="simple-logo full-width">
+    <img src={logIcon} />
+  </div>
+)
 //containers
-const Splash = React.lazy(() => import('./views/Splash'))
 const SingIn = React.lazy(() => import('./views/SignIn'))
 const Layout = React.lazy(() => import('./layout/Layout'))
 const NotFound = React.lazy(() => import('./views/NotFound'))
 
 function App() {
+
+  let navigate = useNavigate()
+
+  useEffect(() => {
+    const authentication = getAuth()
+
+    onAuthStateChanged(authentication, async (user) => {
+      if (user) {
+        const token = await getIdToken(user)
+        sessionStorage.setItem('Auth Token', token)
+      } else {
+        sessionStorage.removeItem('Auth Token')
+        navigate('/')
+      }
+    })
+  }, [navigate])
+
   return (
-    <Suspense>
+    <Suspense fallback = {loading}>
       <ToastContainer/>
       <Routes>
         <Route path="*" element={<NotFound />} />
-        <Route path="/" element={<Splash />} />
-        <Route path="/signin" name="SignIn" element={<SingIn />} />
+        <Route path="/" name="SignIn" element={<SingIn />} />
         <Route path="/createmachine" name="CreateMachine" element={<PrivateRoute><Layout child={'CreateMachine'} /></PrivateRoute>} />
         <Route path="/createmachine/profilecreation" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
         <Route path="/createmachine/profilecreation" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />

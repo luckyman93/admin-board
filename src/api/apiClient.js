@@ -2,22 +2,22 @@ import axios from 'axios'
 import '../firebase/firebase';
 import { 
     getAuth,
+    signOut,
     sendPasswordResetEmail,
     signInWithEmailAndPassword,
 } from 'firebase/auth'
 
-const authentication = getAuth()
 const baseUrl_1 = 'https://group-service-pth7oyojla-an.a.run.app'
 
 export const apiClient = {
 
     // Login Process
     async login(email, password) {
+        const authentication = getAuth()
         let result
 
         await signInWithEmailAndPassword(authentication, email, password)
             .then((response) => {
-                sessionStorage.setItem('Auth Token', response._tokenResponse.refreshToken)
                 result = { 
                     auth : true,
                     message: response.operationType
@@ -31,8 +31,16 @@ export const apiClient = {
         return result
     },
 
+    // sign out
+    async signOut() {
+        const authentication = getAuth()
+
+        await signOut(authentication)
+    },
+
     // Reset Password Process
     async resetPw(email) {
+        const authentication = getAuth()
         let result
 
         await sendPasswordResetEmail(authentication, email)
