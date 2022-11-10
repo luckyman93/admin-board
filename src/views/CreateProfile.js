@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { getGroupList } from '../reducers/createMachine/reducer'
+// import { getGroupList } from '../reducers/createMachine/reducer'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 import deleteIcon from '../assets/images/delete.png'
@@ -96,7 +96,7 @@ const CreateProfile = () => {
 
     useEffect(() => {
         
-        dispatch(getGroupList())
+        // dispatch(getGroupList())
 
     }, [])
 

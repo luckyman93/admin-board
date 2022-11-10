@@ -1,8 +1,13 @@
 import React from 'react'
+import { isEmpty } from "lodash"
+import { useSelector } from 'react-redux'
 import Table from './const/Table'
-// import { Spin } from 'antd'
+import { Spin } from 'antd'
 
 const SelectGroupPopup = () => {
+
+    
+    const {isGroupLoading, objMachinDetail} = useSelector(state => state.Group)
 
     const columns1 = [
         {
@@ -38,8 +43,23 @@ const SelectGroupPopup = () => {
         }
     ]
 
-    const dataSource1 = [
-    ]
+    let dataSource1
+
+    if (isEmpty(objMachinDetail)) {
+        dataSource1 = []
+    } else {
+        dataSource1 = [        
+            {
+                key : 0,
+                group_id: objMachinDetail.id,
+                name: objMachinDetail.name,
+                status: objMachinDetail.status,
+                language: objMachinDetail.language,
+                region: objMachinDetail.regions.toString(),
+                SITES: objMachinDetail.sites.toString()
+            }
+        ]
+    }       
 
     return (
         <div className="modal fade selectzone-popup grDetailPopup" id="grDetailPopup" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -50,14 +70,16 @@ const SelectGroupPopup = () => {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <div className="main">
-                            <Table
-                                columns = {columns1}
-                                dataSource = {dataSource1}/>
-                        </div>
+                        <Spin spinning = {isGroupLoading}>
+                            <div className="main">
+                                    <Table
+                                        columns = {columns1}
+                                        dataSource = {dataSource1}/>
+                            </div>
+                        </Spin>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-primary">OKAY</button>
+                        <button type="button" className="btn btn-primary" data-bs-dismiss="modal">OKAY</button>
                     </div>
                 </div>
             </div>

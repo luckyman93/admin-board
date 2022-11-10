@@ -3,8 +3,8 @@ import { apiClient } from '../../api/apiClient'
 import { toast } from 'react-toastify';
 
 // Slice
-const Sign = createSlice({
-  name: 'sign',
+const Auth = createSlice({
+  name: 'Auth',
   initialState: {
     isSignInLoading : false,
     isSendEmail: false,
@@ -37,7 +37,7 @@ const Sign = createSlice({
 });
 
 // Actions
-const { SignInRequest, SignInSuccess, SignInFailure, SendEmailRequest, SendEmailSuccess, SendEmailFailure, InitialIsSendEmailState } = Sign.actions
+const { SignInRequest, SignInSuccess, SignInFailure, SendEmailRequest, SendEmailSuccess, SendEmailFailure, InitialIsSendEmailState } = Auth.actions
 
 // once user siginin..
 export const signInUser = ({ email, password }) => async dispatch => {
@@ -122,4 +122,4 @@ const validPassword = (pw) => {
   return true
 }
 
-export default Sign.reducer
+export default Auth.reducer

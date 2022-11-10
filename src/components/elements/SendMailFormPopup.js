@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
-import { sendEmailforResetPw, initialIsSendEmail } from '../../reducers/sign/reducer'
+import { sendEmailforResetPw, initialIsSendEmail } from '../../reducers/auth/reducer'
 import loginIcon from '../../assets/images/login.png'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 
@@ -9,7 +9,7 @@ const SendEmailForm = () => {
 
     const [email, setEmail] = useState('')
     const dispatch = useDispatch()
-    const { isSendEmail, isSendEmailLoading } = useSelector(state => state.Sign)
+    const { isSendEmail, isSendEmailLoading } = useSelector(state => state.Auth)
 
     useEffect(() => {
         if (isSendEmail) {
@@ -18,7 +18,7 @@ const SendEmailForm = () => {
             dispatch(initialIsSendEmail())
             setEmail('')
         }
-      }, [isSendEmail])
+      }, [isSendEmail, dispatch])
 
     const resetPwForSendEmail = () => {
 

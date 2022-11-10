@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { combineReducers } from 'redux'
-import Sign from './sign/reducer'
-import CreateMachine from './createMachine/reducer'
-import UpdateMachine from './updateMachine/reducer'
+import Auth from './auth/reducer'
+import Group from './group/reducer'
+import Machine from './machine/reducer'
 
 const reducer = combineReducers({
-    Sign,
-    CreateMachine,
-    UpdateMachine,
+    Auth,
+    Group,
+    Machine,
 })
 
 const store = configureStore({

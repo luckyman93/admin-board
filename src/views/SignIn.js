@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
-import { signInUser } from '../reducers/sign/reducer'
+import { signInUser } from '../reducers/auth/reducer'
 import SendEmailForm from '../components/elements/SendMailFormPopup'
 //images start
 import loginIcon from '../assets/images/login.png'
@@ -17,7 +17,7 @@ const SignIn = () =>  {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { isSignInLoading } = useSelector(state => state.Sign)
+    const { isSignInLoading } = useSelector(state => state.Auth)
 
     const onSignInEmailAndPw = () => {
         const credentials = {
@@ -72,7 +72,7 @@ const SignIn = () =>  {
                                     <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
                                 </div>
                                 <p className="forgot-passowrd">
-                                    <a type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</a>
+                                    <Link type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</Link>
                                 </p>
                                 <button type="button" onClick={onSignInEmailAndPw}>SIGN IN</button>
                             </div>

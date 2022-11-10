@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getGroupList, createNewMachine } from '../reducers/createMachine/reducer'
+import { getGroupList } from '../reducers/group/reducer'
+import { createNewMachine } from '../reducers/machine/reducer'
 import { Spin } from 'antd'
 
 const CreateMachine = () =>  {
 
     const dispatch = useDispatch()
     const [groupId, setGroupId] = useState(0)
-    const { isLoading, arrGroupList } = useSelector(state => state.CreateMachine)
+    const { isGroupLoading, arrGroupList } = useSelector(state => state.Group)
+    const { isMachineLoading } = useSelector(state => state.Machine)
 
     useEffect(() => {
         dispatch(getGroupList())            
-    }, [])
+    }, [dispatch])
 
     const createGroup = (e) => {
         e.preventDefault()
@@ -27,7 +29,7 @@ const CreateMachine = () =>  {
                         <p>Do you want to create a new machine?</p>
 
                         <label>SELECT GROUP</label>
-                        <Spin spinning = {isLoading}>
+                        <Spin spinning = {isGroupLoading || isMachineLoading}>
                             <select defaultValue={0} onChange={(e)=> setGroupId(e.target.value)}>
                                 <option value={0}>Select Group</option>
                                 {

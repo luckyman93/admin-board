@@ -3,33 +3,34 @@ import { apiClient } from '../../api/apiClient'
 import { toast } from 'react-toastify';
 
 // Slice
-const CreateMachine = createSlice({
+const Group = createSlice({
   name: 'createMachine',
   initialState: {
-    isLoading: false,
-    arrGroupList : []
+    isGroupLoading: false,
+    arrGroupList : [],
+    objMachinDetail : {}
   },
   reducers: {
-    //createmachine
     LoadingRequest: (state) => {
-      state.isLoading = true
+      state.isGroupLoading = true
     },
     LoadingGrpListSuccess: (state, action) => {
-      state.isLoading = false
+      state.isGroupLoading = false
       state.arrGroupList = action.payload
     },
-    LoadingCrtMachinSuccess: (state) => {
-      state.isLoading = false
+    LoadingGrpDtlByIdSuccess: (state, action) => {
+      state.isGroupLoading = false
+      state.objMachinDetail = action.payload
     },
     LoadingFailure: (state) => {
-      state.isLoading = false
+      state.isGroupLoading = false
       state.arrGroupList = []
     }
   },
 });
 
 // Actions
-const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingCrtMachinSuccess } = CreateMachine.actions
+const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingGrpDtlByIdSuccess } = Group.actions
 
 // get group list..
 export const getGroupList = () => async dispatch => {  
@@ -49,36 +50,23 @@ export const getGroupList = () => async dispatch => {
   }
 }
 
-//createNewMachine
-export const createNewMachine = (groupId) => async dispatch => {
-  //validation groupId
-  if (groupId === 0) return toast.error('Please select a group!')
-  let userEmail = sessionStorage.getItem('User Email')
-
-  const data = {
-    "groupId": groupId,
-    "registeredAt": new Date(),
-    "serverOrderCode": "string",
-    "serverOrderActiveDate": new Date(),
-    "triggerSub": userEmail
-  }
-
+// get machine detail by id..
+export const getGrpDetailById = (id) => async dispatch => {  
   try {
     dispatch(LoadingRequest())
-    apiClient.createNewMachine(data)
+    apiClient.getGrpDetailById(id)
       .then((response)=>{
-        console.log(response)
         if (response.status === 200 ) {
-          toast.success('New machine created successfully!')
-          dispatch(LoadingCrtMachinSuccess())
+          dispatch(LoadingGrpDtlByIdSuccess(response.data.group))
         } else {
           dispatch(LoadingFailure())
         }
       })
   } catch (e) {
-    dispatch(LoadGetGpListFailure())
+    dispatch(LoadingFailure())
     console.error(e.message);
   }
 }
 
-export default CreateMachine.reducer
+
+export default Group.reducer

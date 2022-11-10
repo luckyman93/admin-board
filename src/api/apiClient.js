@@ -12,7 +12,7 @@ const baseUrl_2 = 'https://rontgen-service-pth7oyojla-an.a.run.app'
 
 export const apiClient = {
 
-//firebase auth part start
+//AUTH
     // Login Process
     async login(email, password) {
         const authentication = getAuth()
@@ -50,26 +50,25 @@ export const apiClient = {
             })
         return result
     },
-//firebase auth part end
 
-//create machine part start
-    // Get group list
-    async getGroupList() {
+//MACHINE
+    //get machine list
+    async getMachineList() {
         let token = sessionStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
-                .get(baseUrl_1 + '/v1/group', {
-                    headers: {
-                    "Content-Type": "application/json",
-                    "Authorization" : `Bearer ${token}`
-                    } 
-                })
-                .then(function (response) {
-                resolve(response)
-                })
-                .catch(function (error) {
-                reject(error)
-                })
+            .get(baseUrl_2 + '/machine/v1/machine', {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
         })
     },
 
@@ -92,26 +91,45 @@ export const apiClient = {
             })
         })
     },
-//create machine part end
 
-//update machine part start
-    //get machine list
-    async getMachineList() {
+//GROUP
+    // get machine Detail By id
+    async getGroupList() {
         let token = sessionStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
-              .get(baseUrl_2 + '/machine/v1/machine', {
-                headers: {
-                "Content-Type": "application/json",
-                "Authorization" : `Bearer ${token}`
-                }
-            })
-            .then(function (response) {
-            resolve(response)
-            })
-            .catch(function (error) {
-            reject(error)
-            })
+                .get(baseUrl_1 + '/v1/group', {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
         })
-    }
+    },
+
+    // get group list
+    async getGrpDetailById(id) {
+        let token = sessionStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+                .get(baseUrl_1 + '/v1/group/'+id, {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
+        })
+    },
 }
