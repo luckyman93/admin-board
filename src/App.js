@@ -31,6 +31,7 @@ function App() {
       if (user) {
         const token = await getIdToken(user)
         sessionStorage.setItem('Auth Token', token)
+        sessionStorage.setItem('User Email', user.email)
       } else {
         sessionStorage.removeItem('Auth Token')
         navigate('/')

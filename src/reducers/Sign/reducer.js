@@ -7,7 +7,6 @@ const Sign = createSlice({
   name: 'sign',
   initialState: {
     isSignInLoading : false,
-    // isSignIn: false,
     isSendEmail: false,
     isSendEmailLoading: false
   },
@@ -17,7 +16,6 @@ const Sign = createSlice({
     },
     SignInSuccess: (state) => {
       state.isSignInLoading = false
-      // state.isSignIn = true
     },
     SignInFailure: (state) => {
       state.isSignInLoading = false

@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Spin } from 'antd'
+import { getMachineList } from '../reducers/updateMachine/reducer'
 import Table from '../components/elements/const/Table'
+import SelectGroupPopup from '../components/elements/SelectGroupPopup'
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
+
 //images start
 import detailIcon from '../assets/images/details.png'
 import editIcon from '../assets/images/edit.png'
@@ -9,20 +15,32 @@ import searchIcon from '../assets/images/search.png'
 
 const UpdateMachine = () =>  {
 
-    const dataSource = [
+    const dispatch = useDispatch()
+    const {isLoading, arrMachineList} = useSelector(state => state.UpdateMachine)
+
+    useEffect(() => {
+        dispatch(getMachineList())
+    }, [])
+
+    const getGroupById = () => {
+        let myModalEl = document.getElementById('grDetailPopup')
+        bootstrap.Modal.getInstance(myModalEl).show()
+    }
+
+    const dataSource = arrMachineList.map((info, i) => (
         {
-            key: '1',
-            machine_id: 'ABCD1234',
-            group_id: <div>DETAIL <i><img src={detailIcon}/></i></div>,
-            register_at: '2012-12-30',
-            order_code: <div>CHANGE <i><img src={editIcon}/></i></div>,
-            synced: '2012-12-30',
-            location: <div>CHANGE <i><img src={editIcon}/></i></div>,
-            health: <div>DETAIL <i><img src={detailIcon}/></i></div>,
-            svg: <div>VIEW <i><img src={viewIcon}/></i></div>,
+            key: i,
+            machine_id: info.id,
+            group_id: <div className='cursor' onClick={getGroupById}>DETAIL <i><img src={detailIcon}/></i></div>,
+            register_at: info.registeredAt,
+            order_code: <div className='cursor'>CHANGE <i><img src={editIcon}/></i></div>,
+            synced: info.updatedAt,
+            location: <div className='cursor'>CHANGE <i><img src={editIcon}/></i></div>,
+            health: <div className='cursor'>DETAIL <i><img src={detailIcon}/></i></div>,
+            svg: <div className='cursor'>VIEW <i><img src={viewIcon}/></i></div>,
         }
-      ];
-      
+    ))
+
     const columns = [
         {
             title: 'MACHINE ID',
@@ -64,10 +82,11 @@ const UpdateMachine = () =>  {
             dataIndex: 'svg',
             key: 'svg',
         },
-    ];
+    ]
 
     return (
         <div className="container-fluid profile-page zones machine-list">
+            <SelectGroupPopup/>
             <div className="row">
                 <div className="col-sm-4 search">
                     <input type="text" placeholder="Search site names..." />
@@ -82,9 +101,11 @@ const UpdateMachine = () =>  {
                 </div>
             </div>
             <div className="data-list">
-                <Table
-                    columns={columns}
-                    dataSource={dataSource}/>
+                <Spin spinning={isLoading}>
+                    <Table
+                        columns={columns}
+                        dataSource={dataSource}/>
+                </Spin>                
             </div>
         </div>
     )

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { apiClient } from '../../api/apiClient'
+import { toast } from 'react-toastify';
 
 // Slice
 const CreateMachine = createSlice({
@@ -10,16 +11,17 @@ const CreateMachine = createSlice({
   },
   reducers: {
     //createmachine
-    LoadGetGpListRequest: (state) => {
+    LoadingRequest: (state) => {
       state.isLoading = true
     },
-    LoadGetGpListSuccess: (state, action) => {
+    LoadingGrpListSuccess: (state, action) => {
       state.isLoading = false
-      state.arrGroupList = action.payload.map((info) => (
-        { 'groupId': info.id, 'groupName': info.name }
-      ))
+      state.arrGroupList = action.payload
     },
-    LoadGetGpListFailure: (state) => {
+    LoadingCrtMachinSuccess: (state) => {
+      state.isLoading = false
+    },
+    LoadingFailure: (state) => {
       state.isLoading = false
       state.arrGroupList = []
     }
@@ -27,16 +29,50 @@ const CreateMachine = createSlice({
 });
 
 // Actions
-const { LoadGetGpListSuccess, LoadGetGpListFailure, LoadGetGpListRequest } = CreateMachine.actions
+const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingCrtMachinSuccess } = CreateMachine.actions
 
 // get group list..
-export const getGroupList = (token) => async dispatch => {  
+export const getGroupList = () => async dispatch => {  
   try {
-    dispatch(LoadGetGpListRequest())
-    apiClient.getGroupList(token)
+    dispatch(LoadingRequest())
+    apiClient.getGroupList()
       .then((response)=>{
         if (response.status === 200 ) {
-          dispatch(LoadGetGpListSuccess(response.data.groups))
+          dispatch(LoadingGrpListSuccess(response.data.groups))
+        } else {
+          dispatch(LoadingFailure())
+        }
+      })
+  } catch (e) {
+    dispatch(LoadingFailure())
+    console.error(e.message);
+  }
+}
+
+//createNewMachine
+export const createNewMachine = (groupId) => async dispatch => {
+  //validation groupId
+  if (groupId === 0) return toast.error('Please select a group!')
+  let userEmail = sessionStorage.getItem('User Email')
+
+  const data = {
+    "groupId": groupId,
+    "registeredAt": new Date(),
+    "serverOrderCode": "string",
+    "serverOrderActiveDate": new Date(),
+    "triggerSub": userEmail
+  }
+
+  try {
+    dispatch(LoadingRequest())
+    apiClient.createNewMachine(data)
+      .then((response)=>{
+        console.log(response)
+        if (response.status === 200 ) {
+          toast.success('New machine created successfully!')
+          dispatch(LoadingCrtMachinSuccess())
+        } else {
+          dispatch(LoadingFailure())
         }
       })
   } catch (e) {
