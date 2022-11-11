@@ -91,9 +91,109 @@ export const apiClient = {
             })
         })
     },
+    
+    // get mahcine detail by id
+    async getMcDetailById(id) {
+        let token = sessionStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .get(baseUrl_2 + '/machine/v1/machine/' + id, {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
+    //update machine by id
+    async upDateSvOrderCode(id, data) {
+        let token = sessionStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .put(baseUrl_2 + '/machine/v1/machine/' + id, data, {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
+    //get machine location by id
+    async getMcLocationById(id) {
+        let token = sessionStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .get(baseUrl_2 + '/machine/v1/machine/' + id + "/location", {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
+    //get machine health by id
+    async getMcHealthById(id) {
+        let token = sessionStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .get(baseUrl_2 + '/machine/v1/machine/' + id + "/healthCode", {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
+    //get machine images by id
+    async getGetMcImageById(id) {
+        let token = sessionStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .get(baseUrl_2 + '/machine/v1/machine/' + id + "/image", {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
 
 //GROUP
-    // get machine Detail By id
+    // get group list
     async getGroupList() {
         let token = sessionStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
@@ -113,7 +213,7 @@ export const apiClient = {
         })
     },
 
-    // get group list
+    // get group detail by id
     async getGrpDetailById(id) {
         let token = sessionStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {

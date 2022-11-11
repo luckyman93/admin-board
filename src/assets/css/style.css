@@ -68,7 +68,7 @@ img.full-width {
     letter-spacing: 0.1em;
     text-align: left;
     color: #5272B0;
-    opacity: 50%;
+    /* opacity: 50%; */
 }
 
 nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
@@ -237,7 +237,7 @@ form label {
     letter-spacing: 0.1em;
     text-align: left;
     color: #5272B0;
-    opacity: 50%;
+    /* opacity: 50%; */
 }
 
 .calebdar select.form-control {
@@ -459,7 +459,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     color: #4C4C4C;
     letter-spacing: 0.1em;
     text-align: left;
-    opacity: 50%;
+    /* opacity: 50%; */
 }
 
 .profile-page.zones tr:nth-of-type(even) {
@@ -632,7 +632,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     letter-spacing: 0.1em;
     text-align: left;
     color: #5272B0;
-    opacity: 50%;
+    /* opacity: 50%; */
 }
 
 .selectzone-popup table {
@@ -650,7 +650,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     letter-spacing: 0.1em;
     text-align: left;
     color: #4C4C4C;
-    opacity: 50%;
+    /* opacity: 50%; */
 }
 
 .selectzone-popup .modal-dialog {
@@ -825,7 +825,7 @@ body {
     letter-spacing: 0.1em;
     color: #5272B0;
     text-align: left;
-    opacity: 50%;
+    /* opacity: 50%; */
     display: block;
     margin-bottom: 11px;
 }
@@ -1517,7 +1517,7 @@ li {
     letter-spacing: -0.05em;
     color: #4C4C4C;
     text-align: left;
-    opacity: 50%;
+    /* opacity: 50%; */
     margin-bottom: 41px;
 }
 
@@ -1544,7 +1544,7 @@ li {
     border: none;
     background: #5272B01A;
     color: #4c4c4cd1;
-    opacity: 82%;
+    /* opacity: 82%; */
     margin-bottom: 42px;
 }
 
@@ -1850,13 +1850,13 @@ li {
     letter-spacing: 0.1em;
     color: #5272B0;
     text-align: left;
-    opacity: 75%;
+    /* opacity: 75%; */
     display: block;
 }
 
 .selectzone-popup .modal-dialog .modal-content .main input {
-    color: #5272B0;
-    opacity: 75%;
+    color: #4C4C4C;
+    /* opacity: 75%; */
     background: #5272b030;
     border: none;
     font-family: Space Grotesk;
@@ -1877,7 +1877,7 @@ li {
     letter-spacing: 0em;
     text-align: left;
     color: #5272B0;
-    opacity: 75%;
+    /* opacity: 75%; */
     position: relative;
 }
 
@@ -1939,7 +1939,7 @@ li {
     letter-spacing: 0.1em;
     text-align: left;
     color: #5272B0;
-    opacity: 50%;
+    /* opacity: 50%; */
     margin-bottom: 0px;
 }
 
@@ -2036,7 +2036,7 @@ ul#accordionSidebar button.btn.btn-primary {
     text-align: left;
     color: #4c4c4c9c;
     padding: 15px 0px;
-    opacity: 75%;
+    /* opacity: 75%; */
     position: relative;
     text-decoration: none;
     border-bottom: #ccc solid 1px;

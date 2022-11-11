@@ -7,8 +7,13 @@ import ServerOrderPopup from '../components/elements/ServerOrderPopup'
 import HealthCodePopup from '../components/elements/HealthCodePopup'
 import LocationDetailPopup from '../components/elements/LocationDetailPopup'
 import SvgViewer from '../components/elements/SvgViewer'
-import { getMachineList } from '../reducers/machine/reducer'
 import { getGrpDetailById } from '../reducers/group/reducer'
+import { 
+    getMachineList,
+    getMcDetailById,
+    getMcLocationById,
+    getMcHealthById,
+    getGetMcImageById } from '../reducers/machine/reducer'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 
 //images start
@@ -37,6 +42,26 @@ const UpdateMachine = () =>  {
         dispatch(getGrpDetailById(i))
     }
 
+    const getMachineById = (e, i) => {
+        showModal("serverOrderPopup")
+        dispatch(getMcDetailById(i))
+    }
+
+    const getLocationById = (e, i) => {
+        showModal("locationDetailPopup")
+        dispatch(getMcLocationById(i))
+    }
+
+    const getHealthById = (e, i) => {
+        showModal("successPopup")
+        dispatch(getMcHealthById(i))
+    }
+
+    const getSvgById = (e, i) => {
+        showModal("svgViewerPopup")
+        dispatch(getGetMcImageById(i))
+    }
+
     const dataSource = arrMachineList.map((info, i) => (
         {
             key: i,
@@ -45,9 +70,9 @@ const UpdateMachine = () =>  {
             register_at: info.registeredAt,
             order_code: <div className="cursor" onClick={(e) => getMachineById(e, info.id)}>CHANGE <i><img src={editIcon} alt="edit_icon"/></i></div>,
             synced: info.updatedAt,
-            location: <div className="cursor">CHANGE <i><img src={editIcon} alt="edit_icon"/></i></div>,
-            health: <div className="cursor">DETAIL <i><img src={detailIcon} alt="detail_icon"/></i></div>,
-            svg: <div className="cursor">VIEW <i><img src={viewIcon} alt="view_icon"/></i></div>,
+            location: <div className="cursor" onClick={(e) => getLocationById(e, info.id)}>CHANGE <i><img src={editIcon} alt="edit_icon"/></i></div>,
+            health: <div className="cursor" onClick={(e) => getHealthById(e, info.id)}>DETAIL <i><img src={detailIcon} alt="detail_icon"/></i></div>,
+            svg: <div className="cursor" onClick={(e) => getSvgById(e, info.id)}>VIEW <i><img src={viewIcon} alt="view_icon"/></i></div>,
         }
     ))
 
@@ -96,11 +121,6 @@ const UpdateMachine = () =>  {
 
     return (
         <div className="container-fluid profile-page zones machine-list">
-            <SelectGroupPopup/>
-            <ServerOrderPopup/>
-            <HealthCodePopup/>
-            <LocationDetailPopup/>
-            <SvgViewer/>
             <div className="row">
                 <div className="col-sm-4 search">
                     <input type="text" placeholder="Search site names..." />
@@ -121,6 +141,11 @@ const UpdateMachine = () =>  {
                         dataSource={dataSource}/>
                 </Spin>                
             </div>
+            <LocationDetailPopup/>
+            <SelectGroupPopup/>
+            <ServerOrderPopup/>
+            <HealthCodePopup/>
+            <SvgViewer/>
         </div>
     )
 }

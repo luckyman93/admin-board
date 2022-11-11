@@ -7,7 +7,7 @@ import { Spin } from 'antd'
 const SelectGroupPopup = () => {
 
     
-    const {isGroupLoading, objMachinDetail} = useSelector(state => state.Group)
+    const {isGroupLoading, objGroupDetail} = useSelector(state => state.Group)
 
     const columns1 = [
         {
@@ -45,25 +45,25 @@ const SelectGroupPopup = () => {
 
     let dataSource1
 
-    if (isEmpty(objMachinDetail)) {
+    if (isEmpty(objGroupDetail)) {
         dataSource1 = []
     } else {
         dataSource1 = [        
             {
                 key : 0,
-                group_id: objMachinDetail.id,
-                name: objMachinDetail.name,
-                status: objMachinDetail.status,
-                language: objMachinDetail.language,
-                region: objMachinDetail.regions.toString(),
-                SITES: objMachinDetail.sites.toString()
+                group_id: objGroupDetail.id,
+                name: objGroupDetail.name,
+                status: objGroupDetail.status,
+                language: objGroupDetail.language,
+                region: objGroupDetail.regions.toString(),
+                SITES: objGroupDetail.sites.toString()
             }
         ]
     }       
 
     return (
         <div className="modal fade selectzone-popup grDetailPopup" id="grDetailPopup" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title uppercase" id="exampleModalLabel">v2/public/group</h5>

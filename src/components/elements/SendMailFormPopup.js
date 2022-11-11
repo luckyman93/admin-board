@@ -27,7 +27,7 @@ const SendEmailForm = () => {
 
     return (
         <div className="modal fade selectzone-popup" id="sendmailform" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog">
                 <div className="modal-content">
                     <Spin spinning = {isSendEmailLoading}>
                         <div className="modal-header">

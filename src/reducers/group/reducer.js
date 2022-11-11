@@ -8,7 +8,7 @@ const Group = createSlice({
   initialState: {
     isGroupLoading: false,
     arrGroupList : [],
-    objMachinDetail : {}
+    objGroupDetail : {}
   },
   reducers: {
     LoadingRequest: (state) => {
@@ -20,7 +20,7 @@ const Group = createSlice({
     },
     LoadingGrpDtlByIdSuccess: (state, action) => {
       state.isGroupLoading = false
-      state.objMachinDetail = action.payload
+      state.objGroupDetail = action.payload
     },
     LoadingFailure: (state) => {
       state.isGroupLoading = false
