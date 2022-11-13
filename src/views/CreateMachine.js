@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 import { getGroupList } from '../reducers/group/reducer'
 import { createNewMachine } from '../reducers/machine/reducer'
 import { Spin } from 'antd'
@@ -19,6 +20,13 @@ const CreateMachine = () =>  {
         e.preventDefault()
         dispatch(createNewMachine(parseInt(groupId)))
     }
+
+    let creationInfo = JSON.parse(localStorage.getItem('Machine Creating Status'))
+
+    if (creationInfo !== null) {
+        if (creationInfo.creation_statue === 1) return <Navigate to="/createmachine/profilecreation"/>
+        if (creationInfo.creation_statue === 2) return <Navigate to="/createmachine/locationsetting"/>
+    }    
 
     return (
         <div className="container-fluid create-machine">

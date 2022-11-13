@@ -14,7 +14,6 @@ import logoIcon from '../assets/images/logo.png'
 const SignIn = () =>  {
 
     const dispatch = useDispatch()
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { isSignInLoading } = useSelector(state => state.Auth)
@@ -34,7 +33,7 @@ const SignIn = () =>  {
             : document.getElementById('hide').setAttribute('type', 'text')
     }
 
-    let token =sessionStorage.getItem('Auth Token')
+    let token =localStorage.getItem('Auth Token')
     
     if (token) return <Navigate to="/createmachine"/>
 

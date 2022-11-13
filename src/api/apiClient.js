@@ -54,7 +54,7 @@ export const apiClient = {
 //MACHINE
     //get machine list
     async getMachineList() {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
             .get(baseUrl_2 + '/machine/v1/machine', {
@@ -74,7 +74,7 @@ export const apiClient = {
 
     //create new machine
     async createNewMachine(data) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
               .post(baseUrl_2 + '/machine/v1/machine', data , {
@@ -94,7 +94,7 @@ export const apiClient = {
     
     // get mahcine detail by id
     async getMcDetailById(id) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
               .get(baseUrl_2 + '/machine/v1/machine/' + id, {
@@ -114,7 +114,7 @@ export const apiClient = {
 
     //update machine by id
     async upDateSvOrderCode(id, data) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
               .put(baseUrl_2 + '/machine/v1/machine/' + id, data, {
@@ -134,7 +134,7 @@ export const apiClient = {
 
     //get machine location by id
     async getMcLocationById(id) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
               .get(baseUrl_2 + '/machine/v1/machine/' + id + "/location", {
@@ -154,7 +154,7 @@ export const apiClient = {
 
     //get machine health by id
     async getMcHealthById(id) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
               .get(baseUrl_2 + '/machine/v1/machine/' + id + "/healthCode", {
@@ -174,7 +174,7 @@ export const apiClient = {
 
     //get machine images by id
     async getGetMcImageById(id) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
               .get(baseUrl_2 + '/machine/v1/machine/' + id + "/image", {
@@ -192,10 +192,50 @@ export const apiClient = {
         })
     },
 
+    //get machin type list
+    async getMachineTypeList() {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .get(baseUrl_2 + '/machine-type/v1/machine-type', {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
+    //create new machine profile by id
+    async createMcProfileById(id, data) {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .post(baseUrl_2 + '/machine/v1/machine/' + id + "/profile", data, {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
 //GROUP
     // get group list
     async getGroupList() {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
                 .get(baseUrl_1 + '/v1/group', {
@@ -215,10 +255,31 @@ export const apiClient = {
 
     // get group detail by id
     async getGrpDetailById(id) {
-        let token = sessionStorage.getItem('Auth Token')
+        let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
                 .get(baseUrl_1 + '/v1/group/'+id, {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
+        })
+    },
+
+//ZONE
+    //get zone list
+    async getZonetList() {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+                .get(baseUrl_2 + '/zone/v1/zone/', {
                     headers: {
                     "Content-Type": "application/json",
                     "Authorization" : `Bearer ${token}`

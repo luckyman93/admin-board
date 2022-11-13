@@ -23,17 +23,20 @@ const NotFound = React.lazy(() => import('./views/NotFound'))
 function App() {
 
   let navigate = useNavigate()
-
+  
   useEffect(() => {
     const authentication = getAuth()
 
     onAuthStateChanged(authentication, async (user) => {
       if (user) {
         const token = await getIdToken(user)
-        sessionStorage.setItem('Auth Token', token)
-        sessionStorage.setItem('User Email', user.email)
+        
+        localStorage.setItem('Auth Token', token)
+        localStorage.setItem('User Email', user.email)
+
       } else {
-        sessionStorage.removeItem('Auth Token')
+        localStorage.removeItem('Auth Token')
+        localStorage.removeItem('User Email')
         navigate('/')
       }
     })
@@ -46,7 +49,6 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/" name="SignIn" element={<SingIn />} />
         <Route path="/createmachine" name="CreateMachine" element={<PrivateRoute><Layout child={'CreateMachine'} /></PrivateRoute>} />
-        <Route path="/createmachine/profilecreation" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
         <Route path="/createmachine/profilecreation" name="CreateProfile" element={<PrivateRoute><Layout child={'CreateProfile'} /></PrivateRoute>} />
         <Route path="/createmachine/locationsetting" name="LocationSetting" element={<PrivateRoute><Layout child={'LocationSetting'} /></PrivateRoute>} />
         <Route path="/updatemachine" name="UpdateMachine" element={<PrivateRoute><Layout child={'UpdateMachine'} /></PrivateRoute>} />

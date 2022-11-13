@@ -117,7 +117,7 @@ a#userDropdown img {
     letter-spacing: 0.1em;
     text-align: left;
     color: #5272B0;
-    opacity: 50%;
+    /* opacity: 50%; */
     border-bottom: #5272b08f solid 2px;
     padding-bottom: 11px;
     margin-bottom: 0px;
@@ -141,6 +141,7 @@ a#userDropdown img {
     text-align: left;
     line-height: normal;
     background: #5272b024;
+    border-radius: unset;
 }
 
 .main.shadows button {
@@ -170,7 +171,7 @@ a#userDropdown img {
     letter-spacing: 0.1em;
     text-align: left;
     color: #4C4C4C;
-    opacity: 50%;
+    /* opacity: 50%; */
 }
 
 .select-files-li ul li {
@@ -309,7 +310,7 @@ select.form-control,
     letter-spacing: 0.1em;
     text-align: left;
     color: #5272B0;
-    opacity: 50%;
+    /* opacity: 50%; */
     width: 100%;
 }
 
@@ -1104,7 +1105,7 @@ input {
     bottom: -41px;
     display: flex;
     color: #4C4C4C;
-    opacity: 25%;
+    /* opacity: 25%; */
     max-width: 200px;
     justify-content: center;
 }

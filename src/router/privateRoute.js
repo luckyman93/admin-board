@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 export { PrivateRoute };
 
 function PrivateRoute({ children }) {
-    let token =sessionStorage.getItem('Auth Token')
+    
+    let token = localStorage.getItem('Auth Token')
 
     if (!token) {
         // not logged in so redirect to login page with the return url
