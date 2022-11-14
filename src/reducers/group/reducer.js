@@ -42,6 +42,10 @@ export const getGroupList = () => async dispatch => {
           dispatch(LoadingGrpListSuccess(response.data.groups))
         } 
       })
+      .catch((error)=>{
+        toast.error(error.data)
+        dispatch(LoadingFailure())
+      })
   } catch (e) {
     dispatch(LoadingFailure())
     console.error(e.message);

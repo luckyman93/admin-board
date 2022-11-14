@@ -66,8 +66,7 @@ export const signInUser = ({ email, password }) => async dispatch => {
   }
 }
 
-// once use sign out 
-
+// once use sign out
 export const signOut = () => async dispatch => {
   try {
     apiClient.signOut()

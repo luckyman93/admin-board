@@ -11,12 +11,14 @@ const HealthCodePopup = () => {
 
     if (isEmpty(objMcHealth)) {
         obj = {
+            'status': '',
             'main': '',
             'sub':'',
             'createdAt': ''
         }
     } else {
         obj = {
+            'status': 'Success:200',
             'main': objMcHealth.triggerMain,
             'sub': objMcHealth.triggerSub,
             'createdAt': objMcHealth.createdAt
@@ -35,7 +37,7 @@ const HealthCodePopup = () => {
                         <Spin spinning={isMachineLoading}>
                             <div className="main">
                                 <p>STATUS</p>
-                                <span>Success:200</span>
+                                <span>{obj.status }</span>
                                 <p>TRIGGER MAIN</p>
                                 <span>{obj.main}</span>
 

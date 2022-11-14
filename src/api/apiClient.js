@@ -152,6 +152,27 @@ export const apiClient = {
         })
     },
 
+    //update machine location by id
+    async updateMachineById(data, id) {
+
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+              .put(baseUrl_2 + '/machine/v1/machine/' + id + "/location", data, {
+                headers: {
+                "Content-Type": "application/json",
+                "Authorization" : `Bearer ${token}`
+                }
+            })
+            .then(function (response) {
+            resolve(response)
+            })
+            .catch(function (error) {
+            reject(error)
+            })
+        })
+    },
+
     //get machine health by id
     async getMcHealthById(id) {
         let token = localStorage.getItem('Auth Token')

@@ -37,6 +37,10 @@ const Machine = createSlice({
       state.isMachineLoading = false
       state.objMCLocation = action.payload
     },
+    LoadingUpdMcByIdSuccess: (state, action) => {
+      state.isMachineLoading = false
+      state.objMCLocation = action.payload
+    },
     LoadingGetMcHealthByIdSuccess: (state, action) => {
       state.isMachineLoading = false
       state.objMcHealth = action.payload
@@ -67,6 +71,9 @@ const Machine = createSlice({
         case 'machineDetail':
           state.objMachineDetail = {}
           break
+        case 'updatingMachine':
+          state.objMachineDetail = {}
+          break
         case 'location':
           state.objMCLocation = {}
           break
@@ -89,6 +96,7 @@ const {
   LoadingGetMcDetailSuccess,
   LoadingUpdateMcByIdSuccess,
   LoadingGetMcLocationByIdSuccess,
+  LoadingUpdMcByIdSuccess,
   LoadingGetMcHealthByIdSuccess,
   LoadingGetMcImagesByIdSuccess,
   LoadingGetMcTypeByIdSuccess,
@@ -110,7 +118,7 @@ export const createNewMachine = (groupId) => async dispatch => {
       .then((response)=>{
         if (response.status === 200) {
 
-          //store new creating machine in localstorage
+          //store new creating state in localstorage
           let item = {
             "creation_statue": 1,
             "machine_id": response.data.id
@@ -120,13 +128,15 @@ export const createNewMachine = (groupId) => async dispatch => {
 
           toast.success('New machine created successfully!')
           dispatch(LoadingCrtMachinSuccess())
-        } else {
-          dispatch(LoadingFailure())
-        }
+        } 
+      })
+      .catch((error) => {
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure())
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -148,8 +158,7 @@ export const getMachineList = () => async dispatch => {
         dispatch(LoadingFailure('machine'))
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -169,8 +178,7 @@ export const getMcDetailById = (id) => async dispatch => {
         dispatch(LoadingFailure('machineDetail'))
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -195,8 +203,7 @@ export const upDateSvOrderCode = (id, groupId, code, activeAt) => async dispatch
         } 
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -217,8 +224,37 @@ export const getMcLocationById = (id) => async dispatch => {
         dispatch(LoadingFailure('location'))
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
+  }
+}
+
+//update machine by Id
+export const updateMachineById = (re, la, lo, id) => async dispatch => {
+
+  if (re.length >= 3) return toast.error('The maximum character length must be less than 3.')
+  let data = {
+    region: re,
+    latitude: la,
+    longitude: lo
+  }
+
+  try {
+    dispatch(LoadingRequest())
+    apiClient.updateMachineById(data, id)
+      .then((response)=>{
+        console.log(response)
+        if (response.status === 200) {
+          toast.success('Update successfully')
+          dispatch(LoadingUpdMcByIdSuccess(response.data))
+        } 
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('updatingMachine'))
+      })
+  } catch (e) {
+    console.error(e.message)
   }
 }
 
@@ -239,8 +275,7 @@ export const getMcHealthById = (id) => async dispatch => {
         dispatch(LoadingFailure('health'))
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -262,8 +297,7 @@ export const getGetMcImageById = (id) => async dispatch => {
         dispatch(LoadingFailure('image'))
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -284,8 +318,7 @@ export const getMachineTypeList = () => async dispatch => {
         dispatch(LoadingFailure('machineType'))
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -330,8 +363,7 @@ export const createMcProfileById = (info) => async dispatch => {
         dispatch(LoadingFailure())
       })
   } catch (e) {
-    dispatch(LoadingFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 

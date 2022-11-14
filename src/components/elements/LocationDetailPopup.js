@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isEmpty } from "lodash"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateMachineById } from '../../reducers/machine/reducer'
 import Table from './const/Table'
 import { Spin } from 'antd'
 
 const LocatioinDetailPopup = () => {
 
-    const [region, setRegion] = useState()
+    const [region, setRegion] = useState('')
+    const [latitude, setLatitude] = useState('')
+    const [longitude, setLongitude] = useState('')
+    const dispatch = useDispatch()
     const {isMachineLoading, objMCLocation} = useSelector(state => state.Machine)
     let dataSource2
+
+    useEffect(() => {
+        setRegion(!objMCLocation.region?'':objMCLocation.region)
+        setLatitude(!objMCLocation.latitude?'':objMCLocation.latitude)
+        setLongitude(!objMCLocation.longitude?'':objMCLocation.longitude)
+    }, [])
 
     if (isEmpty(objMCLocation)) {
         dataSource2 = []
@@ -17,7 +27,7 @@ const LocatioinDetailPopup = () => {
             {
                 key : '1',
                 id : 'REGION',
-                id_value : <input type="text" value={objMCLocation.region} onChange={e => console.log(e)} placeholder="ENTER REGION HERE..." />
+                id_value : <input type="text" value={region} onChange={e => setRegion(e.target.value)} placeholder="ENTER REGION HERE..." />
             },
             {
                 key : '2',
@@ -37,12 +47,12 @@ const LocatioinDetailPopup = () => {
             {
                 key : '5',
                 id : 'LATITUDE',
-                id_value : <input type="text" value={objMCLocation.latitude} onChange={e => console.log(e)} placeholder="*OPTIONAL" />
+                id_value : <input type="text" value={latitude} onChange={e => setLatitude(e.target.value)} placeholder="*OPTIONAL" />
             },
             {
                 key : '6',
                 id : 'LONGITUDE',
-                id_value : <input type="text" value={objMCLocation.longitude} onChange={e => console.log(e)} placeholder="*OPTIONAL" />
+                id_value : <input type="text" value={longitude} onChange={e => setLongitude(e.target.value)} placeholder="*OPTIONAL" />
             },
             {
                 key : '7',
@@ -64,6 +74,11 @@ const LocatioinDetailPopup = () => {
             key: 'id_value',
         },
     ]
+
+    const putLocation = () => {
+        dispatch(updateMachineById(region, latitude, longitude, objMCLocation.id))
+    }
+
     return (
         <div className="modal fade selectzone-popup grDetailPopup locationDetailPopup" id="locationDetailPopup" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -83,7 +98,7 @@ const LocatioinDetailPopup = () => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="button" className="btn btn-primary">PUT</button>
+                        <button type="button" className="btn btn-primary" onClick={putLocation}>PUT</button>
                     </div>
                 </div>
             </div>
