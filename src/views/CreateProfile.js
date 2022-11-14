@@ -6,7 +6,6 @@ import { Spin } from 'antd'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 import deleteIcon from '../assets/images/delete.png'
-import calendarIcon from '../assets/images/calendar.png'
 //images end
 
 const InCreaOrReduInput = (props) => (
@@ -64,9 +63,11 @@ const CreateProfile = () => {
     const [ativeCheckE, setAtiveCheckE] = useState(false)
     const [ativeCheckC, setAtiveCheckC] = useState(false)
     const [ativeCheckA, setAtiveCheckA] = useState(false)
+    const [isVieMoreOption, setIsVieMoreOption] = useState(false)
 
     const [machineName, setMachineName] = useState('')
     const [machinType, setMachineType] = useState('none')
+    const [activeSince, setActiveSince] = useState('')
     const [priorityScore, setPriorityScore] = useState(0)
     const [minPeopleNum, setMinPeopleNum] = useState(0)
     const [maxPeopleNum, setMaxPeopleNum] = useState(0)
@@ -106,7 +107,7 @@ const CreateProfile = () => {
             "name": machineName,
             "type": machinType,
             "priorityScore": priorityScore,
-            "activeSince": "2022-11-11T13:14:08.309Z",
+            "activeSince": activeSince,
             "minPeople": minPeopleNum,
             "maxPeople": maxPeopleNum,
             "requiredScoreH": requiredScoreH,
@@ -118,6 +119,7 @@ const CreateProfile = () => {
         }
         dispatch(createMcProfileById(data))
     }
+
     let creationInfo = localStorage.getItem('Machine Creating Status')
 
     if (creationInfo !== null) {
@@ -212,13 +214,7 @@ const CreateProfile = () => {
                                     <div className="row mb-4">
                                         <div className="col-sm-12 calebdar flex">
                                             <label className="full-width">ACTIVE SINCE</label>
-                                            <input className="form-control" type="text" placeholder="Year" id="year" />
-                                            <input className="form-control" type="text" placeholder="Months" id="month" />
-                                            <input className="form-control" type="text" placeholder="Date" id="date" />
-                                            <span>
-                                                <img src={calendarIcon}/>
-                                                {/* <input type="datetime-local" style={{display:"none"}} id="datePicker" placeholder="2012-12-30" onChange={(e) => setActiveAt(e.target.value)}/> */}
-                                            </span>
+                                            <input type="datetime-local" value={activeSince} onChange={(e) => setActiveSince(e.target.value)}/>
                                         </div>
                                     </div>
 
@@ -228,7 +224,7 @@ const CreateProfile = () => {
                                             <InCreaOrReduInput
                                                 score={minPeopleNum}
                                                 setScoreState={setMinPeopleNum}/>
-                                        </div>
+                                        </div>                                      
                                         <div className="col-sm-3 inc">
                                             <label className="mb-2">MAXIMUM PEOPLE</label>
                                             <InCreaOrReduInput
@@ -274,7 +270,10 @@ const CreateProfile = () => {
                                                         type="radio"
                                                         name="strict"
                                                         value={info.name}
-                                                        onChange={(e)=>setGenderEquality(e.target.value)}
+                                                        onChange={(e)=>{ 
+                                                            setGenderEquality(e.target.value) 
+                                                            e.target.value === "SEPARATE" ? setIsVieMoreOption(true) : setIsVieMoreOption(false)
+                                                        }}
                                                         checked={info.name === genderEquality ? true : false}/>
                                                     <span>{info.name}</span>
                                                 </label>
@@ -285,6 +284,7 @@ const CreateProfile = () => {
                                     <div className="full-width gender-qu">
                                         <h4 className="full-width">MORE OPTIONS</h4>
                                         {
+                                            isVieMoreOption &&
                                             arrMoreOption.map((info, i)=>(
                                                 <label key={i}>
                                                     <input

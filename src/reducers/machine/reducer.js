@@ -52,12 +52,30 @@ const Machine = createSlice({
     LoadingCrMcProByIdSuccess: (state) => {
       state.isMachineLoading = false
     },
-    LoadingFailure: (state) => {
+    LoadingFailure: (state, action) => {
       state.isMachineLoading = false
-      state.arrMachineList = []
-      state.objMachineDetail = {}
-      state.objMcHealth = {}
-      state.arrImageList = []
+      switch(action.payload) {
+        case 'health':
+          state.objMcHealth = {}
+          break
+        case 'machine':
+          state.arrMachineList = []
+          break
+        case 'image':
+          state.arrImageList = []
+          break
+        case 'machineDetail':
+          state.objMachineDetail = {}
+          break
+        case 'location':
+          state.objMCLocation = {}
+          break
+        case 'machineType':
+          state.arrMachineType = []
+          break
+        default:
+          break
+      }
     }
   },
 });
@@ -82,14 +100,9 @@ export const createNewMachine = (groupId) => async dispatch => {
   //validation groupId
   if (groupId === 0) return toast.error('Please select a group!')
 
-  let userEmail = localStorage.getItem('User Email')
-
   const data = {
     "groupId": groupId,
     "registeredAt": new Date().toJSON(),
-    "serverOrderCode": "string",
-    "serverOrderActiveDate": new Date().toJSON(),
-    "triggerSub": userEmail
   }
   try {
     dispatch(LoadingRequest())
@@ -129,6 +142,11 @@ export const getMachineList = () => async dispatch => {
           dispatch(LoadingFailure())
         }
       })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('machine'))
+      })
   } catch (e) {
     dispatch(LoadingFailure())
     console.error(e.message);
@@ -143,9 +161,12 @@ export const getMcDetailById = (id) => async dispatch => {
       .then((response)=>{
         if (response.status === 200) {
           dispatch(LoadingGetMcDetailSuccess(response.data))
-        } else {
-          dispatch(LoadingFailure())
-        }
+        } 
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('machineDetail'))
       })
   } catch (e) {
     dispatch(LoadingFailure())
@@ -159,13 +180,9 @@ export const upDateSvOrderCode = (id, groupId, code, activeAt) => async dispatch
   if (!valid(code)) return toast.error('Please enter the Server code!')
   if (!valid(activeAt)) return toast.error('Please enter the Server Activated Date!')
 
-  let userEmail = localStorage.getItem('User Email')
   let data = {
     "groupId": groupId,
     "registeredAt": new Date().toJSON(),
-    "serverOrderCode": code,
-    "serverOrderActiveDate": activeAt + ":00.00Z",
-    "triggerSub": userEmail
   }
   
   try {
@@ -175,9 +192,7 @@ export const upDateSvOrderCode = (id, groupId, code, activeAt) => async dispatch
         if (response.status === 200) {
           dispatch(LoadingUpdateMcByIdSuccess(response.data))
           toast.success('updated successfully!')
-        } else {
-          dispatch(LoadingFailure())
-        }
+        } 
       })
   } catch (e) {
     dispatch(LoadingFailure())
@@ -194,9 +209,12 @@ export const getMcLocationById = (id) => async dispatch => {
       .then((response)=>{
         if (response.status === 200) {
           dispatch(LoadingGetMcLocationByIdSuccess(response.data))
-        } else {
-          dispatch(LoadingFailure())
         }
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('location'))
       })
   } catch (e) {
     dispatch(LoadingFailure())
@@ -213,9 +231,12 @@ export const getMcHealthById = (id) => async dispatch => {
       .then((response)=>{
         if (response.status === 200) {
           dispatch(LoadingGetMcHealthByIdSuccess(response.data))
-        } else {
-          dispatch(LoadingFailure())
-        }
+        } 
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('health'))
       })
   } catch (e) {
     dispatch(LoadingFailure())
@@ -233,9 +254,12 @@ export const getGetMcImageById = (id) => async dispatch => {
         console.log(response)
         if (response.status === 200) {
           dispatch(LoadingGetMcImagesByIdSuccess(response.data))
-        } else {
-          dispatch(LoadingFailure())
-        }
+        } 
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('image'))
       })
   } catch (e) {
     dispatch(LoadingFailure())
@@ -252,9 +276,12 @@ export const getMachineTypeList = () => async dispatch => {
       .then((response)=>{
         if (response.status === 200) {
           dispatch(LoadingGetMcTypeByIdSuccess(response.data))
-        } else {
-          dispatch(LoadingFailure())
-        }
+        } 
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure('machineType'))
       })
   } catch (e) {
     dispatch(LoadingFailure())
@@ -268,13 +295,12 @@ export const createMcProfileById = (info) => async dispatch => {
   if (!valid(info.name)) return toast.error('Please enter machine name!')
   if (info.type === 'none') return toast.error('Please select a machin type!')
 
-  let userEmail = localStorage.getItem('User Email')
   let id = JSON.parse(localStorage.getItem('Machine Creating Status')).machine_id
   let data = {
     "name": info.name,
     "type": info.type,
     "priorityScore": parseInt(info.priorityScore),
-    "activeSince": info.activeSince,
+    "activeSince": info.activeSince + ":00.00Z",
     "minPeople": parseInt(info.minPeople),
     "maxPeople": parseInt(info.maxPeople),
     "requiredScoreH": parseInt(info.requiredScoreH),
@@ -283,21 +309,11 @@ export const createMcProfileById = (info) => async dispatch => {
     "requiredScoreA": parseInt(info.requiredScoreA),
     "genderEquality": info.genderEquality.toLocaleLowerCase(),
     "genderOptions": info.genderOptions.toLocaleLowerCase(),
-    "licensesRequired": [
-      0
-    ],
-    "workRecordRequired": 0,
-    "titleRequired": [
-      "string"
-    ],
-    "description": "string",
-    "triggerSub": userEmail
   }
   try {
     dispatch(LoadingRequest())
     apiClient.createMcProfileById(id, data)
       .then((response)=>{
-        console.log(response)
         if (response.status === 200) {
           toast.success('put seccessfully!')
           let item = {
@@ -306,9 +322,12 @@ export const createMcProfileById = (info) => async dispatch => {
           }
           localStorage.setItem('Machine Creating Status', JSON.stringify(item))
           dispatch(LoadingCrMcProByIdSuccess(response.data))
-        } else {
-          dispatch(LoadingFailure())
         }
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure())
       })
   } catch (e) {
     dispatch(LoadingFailure())

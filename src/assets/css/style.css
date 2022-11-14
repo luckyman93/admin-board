@@ -144,6 +144,31 @@ a#userDropdown img {
     border-radius: unset;
 }
 
+.main.shadows input[type="datetime-local"] {
+    width: 50%;
+    border: none;
+    font-family: Space Grotesk;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px;
+    letter-spacing: 0.1em;
+    padding: 15px 20px;
+    text-align: left;
+    line-height: normal;
+    background: #5272b024;
+    border-radius: unset;
+}
+
+.main.shadows ::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    background-image: url('../images/calendar.png');
+    width: 18px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-left: .5rem;
+}
+
 .main.shadows button {
     border: transparent;
     width: 54px;
@@ -2168,6 +2193,28 @@ ul#accordionSidebar button.btn.btn-primary {
 .error-page .text span {
     font-size: 19px;
     color: #878787;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.input-container input {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
 }
 
 /*end*/

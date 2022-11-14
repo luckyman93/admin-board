@@ -48,7 +48,7 @@ const SelectZonePopup = () => {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <Spin spinning={true}>
+                        <Spin spinning={isZoneLoading}>
                             <div className="col-sm-12 search">
                                 <input type="text" placeholder="Search zone names..." />
                                 <button><img src={searchIcon} /></button>

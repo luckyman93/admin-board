@@ -33,11 +33,15 @@ export const getZonetList = () => async dispatch => {
         dispatch(LoadingRequest())
         apiClient.getZonetList()
         .then((response)=>{
+            console.log(response)
             if (response.status === 200 ) {
             dispatch(LoadingZoneListSuccess(response.data))
-            } else {
+            } 
+        })
+        .catch((error)=>{
+            let errorInfo = error.response.data
+            toast.error(errorInfo.message)
             dispatch(LoadingFailure())
-            }
         })
     } catch (e) {
         dispatch(LoadingFailure())
