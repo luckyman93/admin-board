@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 import Table from '../components/elements/const/Table'
-import { getZonetList } from '../reducers/zone/reducer'
 import SelectZonePopup from '../components/elements/SelectZonePopup'
 
 const LocationSetting = () =>  {
@@ -63,7 +62,6 @@ const LocationSetting = () =>  {
     const getZone = () => {
         let myModal = new bootstrap.Modal(document.getElementById("selectZone"))
         myModal.show()
-        dispatch(getZonetList())
     }
 
     return (

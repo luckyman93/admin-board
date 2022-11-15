@@ -1,13 +1,31 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getZonetList, getZoneDetailById, intitialIsSelect } from '../../reducers/zone/reducer'
 import Table from './const/Table'
 import { Spin } from 'antd'
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 import searchIcon from '../../assets/images/search.png'
 
 const SelectZonePopup = () => {
 
-    
-    const {isZoneLoading, arrZoneList} = useSelector(state => state.Zone)
+    const dispatch = useDispatch()
+    const {isZoneLoading, isSelect, arrZoneList} = useSelector(state => state.Zone)
+
+    useEffect(() => {
+        if (isSelect) {
+            let myModalEl = document.getElementById('selectZone')
+            bootstrap.Modal.getInstance(myModalEl).hide()
+            dispatch(intitialIsSelect())
+            return
+        }
+        dispatch(getZonetList())
+    }, [dispatch, isSelect])
+
+    const [zoneId, setZoneId] = useState()
+
+    const getZoneById = () => {
+        dispatch(getZoneDetailById(zoneId))
+    }
 
     const columns1 = [
         {
@@ -37,7 +55,16 @@ const SelectZonePopup = () => {
         }
     ]
 
-    let dataSource1 = []
+    let dataSource1 = arrZoneList.map((info, i)=>(
+        {
+            key: i,
+            zone_id: <div><input type="radio" value={info.id} name="zoneID" onChange={(e) => setZoneId(e.target.value)}/><span>{info.id}</span></div>,
+            zone_name: info.name,
+            region: info.region,
+            sites: info.site,
+            area: info.area
+        }        
+    ))
 
     return (
         <div className="modal fade selectzone-popup" id="selectZone" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -60,7 +87,7 @@ const SelectZonePopup = () => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="button" className="btn btn-primary">OKAY</button>
+                        <button type="button" className="btn btn-primary" onClick={getZoneById}>OKAY</button>
                     </div>
                 </div>
             </div>

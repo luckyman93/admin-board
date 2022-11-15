@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getGroupList, storeGroupId } from '../../reducers/group/reducer'
+import { getGroupList, storeGroupIds, initialGroupIds } from '../../reducers/group/reducer'
 import Table from './const/Table'
 import { Spin } from 'antd'
 import searchIcon from '../../assets/images/search.png'
@@ -11,12 +11,13 @@ const SelectGroupListPopup = () => {
     const { isGroupLoading, arrGroupList } = useSelector(state => state.Group)
 
     useEffect(() => {
+        dispatch(initialGroupIds())
         dispatch(getGroupList())
     }, [dispatch])
 
     const getGrouId = (e) => {
         let id = e.target.value        
-        dispatch(storeGroupId(id))       
+        dispatch(storeGroupIds(id))
     }
 
     const colums1 = [

@@ -13,7 +13,7 @@ import uploadIcon from '../assets/images/upload.png'
 //fbx load part start
 import { Canvas } from "@react-three/fiber"
 import { useLoader } from "@react-three/fiber"
-import { Environment, OrbitControls } from "@react-three/drei"
+import { OrbitControls } from "@react-three/drei"
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader"
 import { Suspense } from "react"
 //fbx end
@@ -22,7 +22,7 @@ const Scene = (props) => {
     const fbx = useLoader(FBXLoader, "fbxUpload/"+props.fbxName)
   
     return <primitive object={fbx} position={[1.5, 1.5, -2]}  scale={0.5} />;
-  };
+}
 
 const CreateZone = () => {
 
@@ -187,7 +187,6 @@ const CreateZone = () => {
                                                 <Scene 
                                                     fbxName = {fbxName}/>
                                                 <OrbitControls />
-                                                <Environment preset="forest"  />
                                             </Suspense>
                                         </Canvas>
                                     }

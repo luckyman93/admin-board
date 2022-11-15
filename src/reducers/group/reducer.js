@@ -27,18 +27,21 @@ const Group = createSlice({
       state.isGroupLoading = false
       state.arrGroupList = []
     },
-    storeGruopIds: (state, action) => {
+    storeGruopId: (state, action) => {
       if (state.arrSelectedGroupId.includes(action.payload)) {
         state.arrSelectedGroupId = state.arrSelectedGroupId.filter((info)=>(info !== action.payload ))
       } else {
         state.arrSelectedGroupId = state.arrSelectedGroupId.concat(action.payload )
       }
+    },
+    initialGroupId: (state) => {
+      state.arrSelectedGroupId=[]
     }
   },
 });
 
 // Actions
-const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingGrpDtlByIdSuccess, storeGruopIds } = Group.actions
+const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingGrpDtlByIdSuccess, storeGruopId, initialGroupId } = Group.actions
 
 // get group list..
 export const getGroupList = () => async dispatch => {  
@@ -77,8 +80,13 @@ export const getGrpDetailById = (id) => async dispatch => {
 }
 
 //store group ids
-export const storeGroupId = (id) => async dispatch =>  {
-  dispatch(storeGruopIds(id))
+export const storeGroupIds = (id) => async dispatch =>  {
+  dispatch(storeGruopId(id))
+}
+
+//initial group ids
+export const initialGroupIds = () => async dispatch =>  {
+  dispatch(initialGroupId())
 }
 
 export default Group.reducer
