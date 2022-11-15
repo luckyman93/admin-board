@@ -627,16 +627,17 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
 
 .profile-page.zones.gr-view h4 {
     font-family: Space Grotesk;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     line-height: 18px;
     letter-spacing: 0.1em;
     color: #5272B0;
     text-align: left;
-    opacity: 50%;
+    opacity: 75%;
     background: #fff;
     padding: 19px 30px;
     box-shadow: 0px 0px 1px 1px #cccccc52;
+    text-align: center;
 }
 
 .profile-page .gr-view .row {

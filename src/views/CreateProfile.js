@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import { getMachineTypeList, createMcProfileById } from '../reducers/machine/reducer'
 import { Spin } from 'antd'
+import { 
+    getMachineTypeList,
+    createMcProfileById } from '../reducers/machine/reducer'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 import deleteIcon from '../assets/images/delete.png'

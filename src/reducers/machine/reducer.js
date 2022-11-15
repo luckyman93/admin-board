@@ -117,7 +117,6 @@ export const createNewMachine = (groupId) => async dispatch => {
     apiClient.createNewMachine(data)
       .then((response)=>{
         if (response.status === 200) {
-
           //store new creating state in localstorage
           let item = {
             "creation_statue": 1,
@@ -125,7 +124,6 @@ export const createNewMachine = (groupId) => async dispatch => {
           }
           localStorage.setItem('Machine Creating Status', JSON.stringify(item))
           //..end
-
           toast.success('New machine created successfully!')
           dispatch(LoadingCrtMachinSuccess())
         } 
@@ -136,6 +134,7 @@ export const createNewMachine = (groupId) => async dispatch => {
         dispatch(LoadingFailure())
       })
   } catch (e) {
+    dispatch(LoadingFailure())
     console.error(e.message)
   }
 }
@@ -317,15 +316,17 @@ export const getMachineTypeList = () => async dispatch => {
         dispatch(LoadingFailure('machineType'))
       })
   } catch (e) {
+    dispatch(LoadingFailure('machineType'))
     console.error(e.message)
   }
 }
 
-//create new machine by id
+//create new machine profile by id
 export const createMcProfileById = (info) => async dispatch => {
 
   if (!valid(info.name)) return toast.error('Please enter machine name!')
-  if (info.type === 'none') return toast.error('Please select a machin type!')
+  if (!valid(info.activeSince)) return toast.error('Please enter machine name!')
+  if (info.type === 'none') return toast.error('Please select a machine type!')
 
   let id = JSON.parse(localStorage.getItem('Machine Creating Status')).machine_id
   let data = {
@@ -362,6 +363,7 @@ export const createMcProfileById = (info) => async dispatch => {
         dispatch(LoadingFailure())
       })
   } catch (e) {
+    dispatch(LoadingFailure())
     console.error(e.message)
   }
 }
