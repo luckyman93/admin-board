@@ -47,7 +47,13 @@ const Zone = createSlice({
 });
 
 // Actions
-const { LoadingRequest, LoadingFailure, LoadingZoneListSuccess, LoadingCreateNewSuccess, LoadingUdtZoneByIdSuccess, initialState } = Zone.actions
+const { 
+    LoadingRequest,
+    LoadingFailure,
+    LoadingZoneListSuccess,
+    LoadingCreateNewSuccess,
+    LoadingUdtZoneByIdSuccess,
+    initialState } = Zone.actions
 
 // get zone list..
 export const getZonetList = () => async dispatch => {
@@ -126,15 +132,17 @@ export const getZoneDetailById = (id) => async dispatch => {
 }
 
 //update zone detail by id
-export const updateZoneDetailById = (id) => async dispatch => {
+export const updateZoneDetailById = (id, data) => async dispatch => {
     if (!valid(data.fbxName)) return toast.error('Please input the fbxName!')
     if (!valid(data.groupIds)) return toast.error('Please select the groupIds!')
 
     try {
         dispatch(LoadingRequest())
-        apiClient.updateZoneDetailById(id)
+        apiClient.updateZoneDetailById(id, data)
         .then((response)=>{
+            console.log(response)
             if (response.status === 200) {
+                toast.success('Update successfully!')
                 dispatch(LoadingUdtZoneByIdSuccess(response.data))
             } 
         })

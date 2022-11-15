@@ -335,12 +335,32 @@ export const apiClient = {
         })
     },
 
-    //update zone by id
+    //get zone detail by id
     async getZoneDetailById(id) {
         let token = localStorage.getItem('Auth Token')
         return new Promise(function (resolve, reject) {
             axios
                 .get(baseUrl_2 + '/zone/v1/zone/' + id, {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
+        })
+    },
+
+    //update zone detail by id
+    async updateZoneDetailById(id, data) {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+                .put(baseUrl_2 + '/zone/v1/zone/' + id, data, {
                     headers: {
                     "Content-Type": "application/json",
                     "Authorization" : `Bearer ${token}`

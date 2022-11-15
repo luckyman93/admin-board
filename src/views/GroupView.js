@@ -1,29 +1,46 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Table from '../components/elements/const/Table'
+import { getZonetList } from '../reducers/zone/reducer'
+import { getGroupList } from '../reducers/group/reducer'
+import { Spin } from 'antd'
 
-const GroupView = (props) => {
+const GroupView = () => {
 
-    const dataSource1 = [
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getZonetList())
+        dispatch(getGroupList())
+    }, [])
+
+    const {isZoneLoading, arrZoneList} = useSelector(state => state.Zone)
+    const {arrGroupList} = useSelector(state => state.Group)
+
+    const getGroupName = (ids) => {
+        let arrName = []
+        ids.map((id) => {
+            arrGroupList.map((info)=>{
+               if (info.id === id) {
+                arrName.push(info.name)
+               } 
+            })
+        })
+        return arrName
+    }
+
+    const dataSource1 = arrZoneList.map((info, i) => (
         {
-            key: '1',
-            region: 'Mike',
-            site: 'HND',
-            area: 'T1',
-            zone: '2F-A1-N3Z',
-            group_id: '1,3,5',
-            group_name: 'TEAM A, TEAM C, TEAM E'
-        },
-        {
-            key: '2',
-            region: 'Mike',
-            site: 'HND',
-            area: 'T1',
-            zone: '2F-A1-N3Z',
-            group_id: '1,3,5',
-            group_name: 'TEAM A, TEAM C, TEAM E'
-          },
-    ]
-      
+            key: i,
+            region: info.region,
+            site: info.site,
+            area: info.area,
+            zone: info.name,
+            group_id: info.groupIds.toString(),
+            group_name: getGroupName(info.groupIds).toString()
+        }        
+    ))
+
     const columns1 = [
         {
           title: 'REGION',
@@ -88,9 +105,9 @@ const GroupView = (props) => {
                     </div> */}
                     <div className="selected-files">
                         <h3>SELECTED SITE</h3>
-                        <Table
-                            columns={columns2}
-                            dataSource={dataSource2}/>
+                            <Table
+                                columns={columns2}
+                                dataSource={dataSource2}/>
                         <button>CLEAR SELECTION</button>
                     </div>
                 </div>
@@ -114,9 +131,11 @@ const GroupView = (props) => {
             <div className="row">
                 <div className="col-sm-12">
                     <div className="main shadows">
-                        <Table
-                            columns={columns1}
-                            dataSource={dataSource1}/>
+                        <Spin spinning={isZoneLoading}>
+                            <Table
+                                columns={columns1}
+                                dataSource={dataSource1}/>
+                        </Spin>
                     </div>
                 </div>
             </div>

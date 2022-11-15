@@ -79,7 +79,7 @@ const UpdateZone = () =>  {
               }
             }
         }
-        dispatch((updateZoneDetailById(data)))
+        dispatch((updateZoneDetailById(objZoneDetail.id, data)))
     }
 
     let dataSource

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Spin } from 'antd'
 import { signInUser } from '../reducers/auth/reducer'
 import SendEmailForm from '../components/elements/SendMailFormPopup'
 //images start
@@ -10,6 +9,7 @@ import passwordIcon from '../assets/images/password.png'
 import eyeIcon from '../assets/images/eye.png'
 import logoIcon from '../assets/images/logo.png'
 //images end
+import { Spin } from 'antd'
 
 const SignIn = () =>  {
 
@@ -26,15 +26,15 @@ const SignIn = () =>  {
         dispatch(signInUser(credentials))
     }
 
-    const onViewPassWord = () => {
+    const handleViewPwd = () => {
         let dataShow = document.getElementById('hide').getAttribute('type')
         dataShow === 'text' 
             ? document.getElementById('hide').setAttribute('type', 'password')
             : document.getElementById('hide').setAttribute('type', 'text')
     }
 
-    let token =localStorage.getItem('Auth Token')
-    
+    //when user login, redirect to create machine
+    let token = localStorage.getItem('Auth Token')    
     if (token) return <Navigate to="/createmachine"/>
 
     return (
@@ -68,7 +68,7 @@ const SignIn = () =>  {
                                         onChange={(e) => setPassword(e.target.value)}
                                         required id="hide" />
 
-                                    <i className="show" onClick={onViewPassWord}><img src={eyeIcon} alt="eye"/></i>
+                                    <i className="show" onClick={handleViewPwd}><img src={eyeIcon} alt="eye"/></i>
                                 </div>
                                 <p className="forgot-passowrd">
                                     <Link type='button' data-bs-toggle="modal" data-bs-target="#sendmailform">FORGOT PASSWORD?</Link>

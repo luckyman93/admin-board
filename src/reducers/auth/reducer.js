@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { apiClient } from '../../api/apiClient'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 
 // Slice
 const Auth = createSlice({
@@ -34,10 +34,17 @@ const Auth = createSlice({
       state.isSendEmail = false
     }
   },
-});
+})
 
 // Actions
-const { SignInRequest, SignInSuccess, SignInFailure, SendEmailRequest, SendEmailSuccess, SendEmailFailure, InitialIsSendEmailState } = Auth.actions
+const {
+  SignInRequest,
+  SignInSuccess,
+  SignInFailure,
+  SendEmailRequest,
+  SendEmailSuccess, 
+  SendEmailFailure,
+  InitialIsSendEmailState } = Auth.actions
 
 // once user siginin..
 export const signInUser = ({ email, password }) => async dispatch => {
@@ -50,14 +57,24 @@ export const signInUser = ({ email, password }) => async dispatch => {
     dispatch(SignInRequest())
     apiClient.login(email, password)
       .then((response)=>{
-        if (response.auth) {
+          if (response.auth) {
           toast.success('login successfully!')
           dispatch(SignInSuccess())
         } else {
           dispatch(SignInFailure())
-          if(response.message === 'auth/wrong-password') toast.error('Please check the Password')
-          if(response.message === 'auth/user-not-found') toast.error('Please check the Email')
-          if(response.message === 'auth/too-many-requests') toast.error('too many requests')
+          switch(response.message) {
+            case 'auth/wrong-password':
+              toast.error('Please check the Password')
+              break
+            case 'auth/user-not-found':
+              toast.error('Please check the Email')
+              break
+            case 'auth/too-many-requests':
+              toast.error('too many requests')
+              break
+            default:
+              break
+          }
         }
       })
   } catch (e) {

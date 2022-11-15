@@ -41,7 +41,13 @@ const Group = createSlice({
 });
 
 // Actions
-const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingGrpDtlByIdSuccess, storeGruopId, initialGroupId } = Group.actions
+const {
+  LoadingRequest,
+  LoadingFailure,
+  LoadingGrpListSuccess,
+  LoadingGrpDtlByIdSuccess,
+  storeGruopId,
+  initialGroupId } = Group.actions
 
 // get group list..
 export const getGroupList = () => async dispatch => {  
