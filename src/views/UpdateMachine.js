@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
 import Table from '../components/elements/const/Table'
-import SelectGroupPopup from '../components/elements/SelectGroupPopup'
+import SelectGroupDetailPopup from '../components/elements/SelectGroupDetailPopup'
 import ServerOrderPopup from '../components/elements/ServerOrderPopup'
 import HealthCodePopup from '../components/elements/HealthCodePopup'
 import LocationDetailPopup from '../components/elements/LocationDetailPopup'
@@ -141,8 +141,8 @@ const UpdateMachine = () =>  {
                         dataSource={dataSource}/>
                 </Spin>                
             </div>
+            <SelectGroupDetailPopup/>
             <LocationDetailPopup/>
-            <SelectGroupPopup/>
             <ServerOrderPopup/>
             <HealthCodePopup/>
             <SvgViewer/>

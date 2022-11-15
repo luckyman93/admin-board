@@ -286,7 +286,6 @@ export const getGetMcImageById = (id) => async dispatch => {
     dispatch(LoadingRequest())
     apiClient.getGetMcImageById(id)
       .then((response)=>{
-        console.log(response)
         if (response.status === 200) {
           dispatch(LoadingGetMcImagesByIdSuccess(response.data))
         } 

@@ -4,11 +4,12 @@ import { toast } from 'react-toastify';
 
 // Slice
 const Group = createSlice({
-  name: 'createMachine',
+  name: 'group',
   initialState: {
     isGroupLoading: false,
     arrGroupList : [],
-    objGroupDetail : {}
+    objGroupDetail : {},
+    arrSelectedGroupId : []
   },
   reducers: {
     LoadingRequest: (state) => {
@@ -25,12 +26,19 @@ const Group = createSlice({
     LoadingFailure: (state) => {
       state.isGroupLoading = false
       state.arrGroupList = []
+    },
+    storeGruopIds: (state, action) => {
+      if (state.arrSelectedGroupId.includes(action.payload)) {
+        state.arrSelectedGroupId = state.arrSelectedGroupId.filter((info)=>(info !== action.payload ))
+      } else {
+        state.arrSelectedGroupId = state.arrSelectedGroupId.concat(action.payload )
+      }
     }
   },
 });
 
 // Actions
-const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingGrpDtlByIdSuccess } = Group.actions
+const {LoadingRequest, LoadingFailure, LoadingGrpListSuccess, LoadingGrpDtlByIdSuccess, storeGruopIds } = Group.actions
 
 // get group list..
 export const getGroupList = () => async dispatch => {  
@@ -68,5 +76,9 @@ export const getGrpDetailById = (id) => async dispatch => {
   }
 }
 
+//store group ids
+export const storeGroupId = (id) => async dispatch =>  {
+  dispatch(storeGruopIds(id))
+}
 
 export default Group.reducer

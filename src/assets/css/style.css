@@ -171,8 +171,8 @@ a#userDropdown img {
 
 .main.shadows button {
     border: transparent;
-    width: 54px;
-    background: #5272b045;
+    /* width: 54px; */
+    /* background: #5272b045; */
 }
 
 .select-files-li ul {
@@ -649,7 +649,8 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     margin: 0px;
 }
 
-.selectzone-popup table th {
+.profile-page .selectzone-popup table th {
+    background-color: #fff;
     font-family: Space Grotesk;
     font-size: 14px;
     padding: 17px 21px;
@@ -659,6 +660,10 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     text-align: left;
     color: #5272B0;
     /* opacity: 50%; */
+}
+
+.selectzone-popup .modal-header button {
+    border: none;
 }
 
 .selectzone-popup table {
@@ -685,6 +690,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
 }
 
 .selectzone-popup table td input {
+    width: auto !important;
     margin: 0px 6px 3px 0px;
 }
 
@@ -773,6 +779,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     right: 2px;
     bottom: 1px;
     height: 95%;
+    background: #5272b045;
 }
 
 select.form-control {
@@ -1446,6 +1453,11 @@ li {
 .resize-drag span:nth-of-type(4) {
     left: inherit;
     right: -31px;
+}
+
+.fbx-model-container {
+    width: 100%;
+    height: 400px;
 }
 
 

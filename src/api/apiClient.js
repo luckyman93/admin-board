@@ -314,4 +314,24 @@ export const apiClient = {
                 })
         })
     },
+
+    //create new zone
+    async createNewZone(data) {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+                .post(baseUrl_2 + '/zone/v1/zone/', data, {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
+        })
+    },
 }

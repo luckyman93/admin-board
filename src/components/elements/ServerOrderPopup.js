@@ -20,7 +20,7 @@ const ServerOrderPopup = () => {
         }
     }, [objMachineDetail])
 
-    const upDateServerCode = () => {
+    const updateServerCode = () => {
         dispatch(upDateSvOrderCode(objMachineDetail.id, objMachineDetail.groupId, code, activeAt))
     }
 
@@ -48,7 +48,7 @@ const ServerOrderPopup = () => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                        <button type="button" className="btn btn-primary" onClick={upDateServerCode}>POST</button>
+                        <button type="button" className="btn btn-primary" onClick={updateServerCode}>POST</button>
                     </div>
                 </div>
             </div>
