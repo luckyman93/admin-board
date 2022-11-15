@@ -73,14 +73,13 @@ img.full-width {
 
 nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     box-shadow: 0px 0px 0px 3px #5272b026;
-    padding: 1.5rem !important;
 }
 
 a#userDropdown img {
-    width: 50px;
+    width: 43px;
     padding: 10px 13px;
     background: #5272B026;
-    height: 50px;
+    height: 42px;
     object-fit: contain;
 }
 
@@ -2106,7 +2105,7 @@ ul#accordionSidebar button.btn.btn-primary {
 }
 
 .selectzone-popup.settings-popups main ul li:last-child a {
-    color: #dd1c1ca6;
+    color: #db5858a6;
 }
 
 .selectzone-popup.serverspopup input[type="datetime-local"] {
@@ -2228,13 +2227,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding: .75rem;
     position: relative;
     width: 100%;
-}
-
 /*dropdown css code*/
-
-li.nav-item .dropdown .dropdown-menu {
-    left: inherit;
-}
 
 .topbar .dropdown .dropdown-menu {
     border: none;
@@ -2255,7 +2248,6 @@ li.nav-item .dropdown .dropdown-menu {
 
 .topbar .dropdown .dropdown .dropdown-menu .modal-header {
     margin-bottom: 3px;
-    border-bottom: 3px solid #e3e6f0;
 }
 
 .topbar .dropdown .dropdown .dropdown-menu main {
@@ -2276,6 +2268,7 @@ li.nav-item .dropdown .dropdown-menu {
 
 .topbar .dropdown .dropdown .dropdown-menu main ul li:last-child a {
     padding-left: 31px;
+}
 }
 
 /*end*/

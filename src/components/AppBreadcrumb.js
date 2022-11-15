@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { signOut } from '../reducers/auth/reducer'
+import SettingPopup from './elements/SettingPoup'
 //images start
 import loginIcon from '../assets/images/login.png'
 //images end
@@ -30,10 +31,6 @@ const AppBreadcrumb = (props) =>  {
         return t
     }
 
-    const onSignOut = () => {
-        dispatch(signOut())
-    }
-
     const title = getTilteByChild()
 
   return (
@@ -48,9 +45,12 @@ const AppBreadcrumb = (props) =>  {
 
         <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown no-arrow">
-                <Link className="nav-link dropdown-toggle" to={'#'} id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div onClick={onSignOut}><img className="img-profile rounded-circle" src={loginIcon} alt="login_ico"/></div>
-                </Link>
+                <div className="dropdown">
+                    <a href='#' id="userDropdown" className="dropdown-toggle pointer" data-bs-toggle="dropdown">
+                        <img className="img-profile rounded-circle" src={loginIcon} alt="login_ico"/>
+                    </a>
+                    <SettingPopup/>
+                </div>
             </li>
         </ul>
     </nav>

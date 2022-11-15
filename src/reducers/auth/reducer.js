@@ -30,7 +30,7 @@ const Auth = createSlice({
     SendEmailFailure: (state) => {
       state.isSendEmailLoading = false
     },
-    InitialIsSendEmailState: (state) => {
+    InitialIsSendEmail: (state) => {
       state.isSendEmail = false
     }
   },
@@ -44,7 +44,7 @@ const {
   SendEmailRequest,
   SendEmailSuccess, 
   SendEmailFailure,
-  InitialIsSendEmailState } = Auth.actions
+  InitialIsSendEmail } = Auth.actions
 
 // once user siginin..
 export const signInUser = ({ email, password }) => async dispatch => {
@@ -61,7 +61,6 @@ export const signInUser = ({ email, password }) => async dispatch => {
           toast.success('login successfully!')
           dispatch(SignInSuccess())
         } else {
-          dispatch(SignInFailure())
           switch(response.message) {
             case 'auth/wrong-password':
               toast.error('Please check the Password')
@@ -75,11 +74,12 @@ export const signInUser = ({ email, password }) => async dispatch => {
             default:
               break
           }
+          dispatch(SignInFailure())
         }
       })
   } catch (e) {
     dispatch(SignInFailure())
-    console.error(e.message);
+    console.error(e.message)
   }
 }
 
@@ -106,7 +106,7 @@ export const sendEmailforResetPw = (email) => async dispatch => {
           toast.success('Email sent successfully!')
           dispatch(SendEmailSuccess())
         } else {
-          toast.error('Please check the Email!')
+          toast.error('Unregistered Email!')
           dispatch(SendEmailFailure())
         }
       })
@@ -120,7 +120,7 @@ export const sendEmailforResetPw = (email) => async dispatch => {
 export const initialIsSendEmail = () => async dispatch => {
 
   try {
-    dispatch(InitialIsSendEmailState())
+    dispatch(InitialIsSendEmail())
   } catch (e) {
     return console.error(e.message)
   }

@@ -55,7 +55,7 @@ export const getGroupList = () => async dispatch => {
     dispatch(LoadingRequest())
     apiClient.getGroupList()
       .then((response)=>{
-        if (response.status === 200 ) {
+        if (response.status === 200) {
           dispatch(LoadingGrpListSuccess(response.data.groups))
         } 
       })
@@ -75,7 +75,7 @@ export const getGrpDetailById = (id) => async dispatch => {
     dispatch(LoadingRequest())
     apiClient.getGrpDetailById(id)
       .then((response)=>{
-        if (response.status === 200 ) {
+        if (response.status === 200) {
           dispatch(LoadingGrpDtlByIdSuccess(response.data.group))
         }
       })
