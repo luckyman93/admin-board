@@ -18,9 +18,6 @@ interact('.resize-drag')
                 var c = (parseFloat(target.getAttribute('data-c')) || 0)
                 var d = (parseFloat(target.getAttribute('data-d')) || 0)
 
-                // var z = (parseFloat(target.getAttribute('data-z')) || 1)
-                // var d = (parseFloat(target.getAttribute('data-d')) || 2)
-
                 // update the element's style
                 target.style.width = event.rect.width + 'px'
                 target.style.height = event.rect.height + 'px'
@@ -32,30 +29,30 @@ interact('.resize-drag')
                 c += event.deltaRect.bottom
                 d += event.deltaRect.right
 
-                // z += event.deltaRect.bottom
-                // d += event.deltaRect.right
-
                 target.style.transform = 'translate(' + x + 'px,' + y + 'px)'
-
-                // target.style.transform = 'translate(' + z + 'px,' + d + 'px)'
 
                 target.setAttribute('data-x', x)
                 target.setAttribute('data-y', y)
                 target.setAttribute('data-c', c)
                 target.setAttribute('data-d', d)
 
-                // console.log( document.getElementsByClassName("resize-drag"))
-                // let datatX = document.getElementsByClassName("resize-drag").attr('data-x');
-                // let datatY = document.getElementsByClassName("resize-drag").attr('data-y');
-                // let datatc = document.getElementsByClassName("resize-drag").attr('data-c');
-                // let datatz = document.getElementsByClassName("resize-drag").attr('data-d');
+               document.getElementById("ca-la").innerHTML = (122+(x+43)/16).toFixed(6)
+               document.getElementById("ca-lo").innerHTML = (45-(y+45)/17).toFixed(6)
+               document.getElementById("cb-la").innerHTML = (153+(d-81)/16).toFixed(6)
+               document.getElementById("cb-lo").innerHTML = (45-(y+45)/17).toFixed(6)
+               document.getElementById("cc-la").innerHTML = (122+(x+43)/16).toFixed(6)
+               document.getElementById("cc-lo").innerHTML = (22-(c-123)/17).toFixed(6)
+               document.getElementById("cd-la").innerHTML = (153+(d-81)/16).toFixed(6)
+               document.getElementById("cd-lo").innerHTML = (22-(c-123)/17).toFixed(6)
 
-                // $('.first').text(Math.round(datatX, 100));
-                // $('.second').text(Math.round(datatY, 100));
-                // $('.three').text(Math.round(datatc, 100));
-                // $('.four').text(Math.round(datatz, 100));
-
-                // console.log(Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height))
+               document.getElementById("co-a-la").value = (122+(x+43)/16).toFixed(6)
+               document.getElementById("co-a-lo").value = (45-(y+45)/17).toFixed(6)
+               document.getElementById("co-b-la").value = (153+(d-81)/16).toFixed(6)
+               document.getElementById("co-b-lo").value = (45-(y+45)/17).toFixed(6)
+               document.getElementById("co-c-la").value = (122+(x+43)/16).toFixed(6)
+               document.getElementById("co-c-lo").value = (22-(c-123)/17).toFixed(6)
+               document.getElementById("co-d-la").value = (153+(d-81)/16).toFixed(6)
+               document.getElementById("co-d-lo").value = (22-(c-123)/17).toFixed(6)
             }
         },
         modifiers: [
@@ -63,11 +60,10 @@ interact('.resize-drag')
             interact.modifiers.restrictEdges({
                 outer: 'parent'
             }),
-
             // minimum size
             interact.modifiers.restrictSize({
                 min: {
-                    width: 100,
+                    width: 50,
                     height: 50
                 }
             })
@@ -82,8 +78,8 @@ interact('.resize-drag')
         inertia: true,
         modifiers: [
             interact.modifiers.restrictRect({
-                // restriction: 'parent',
-                // endOnly: true
+                restriction: 'parent',
+                endOnly: true
             })
         ]
     })

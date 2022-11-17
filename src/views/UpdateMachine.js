@@ -66,7 +66,7 @@ const UpdateMachine = () =>  {
         {
             key: i,
             machine_id: info.id,
-            group_id: <div className="cursor" onClick={(e) => getGroupById(e, info.id)}>DETAIL <i><img src={detailIcon} alt="detail_icon"/></i></div>,
+            group_id: <div className="cursor" onClick={(e) => getGroupById(e, info.groupId)}>DETAIL <i><img src={detailIcon} alt="detail_icon"/></i></div>,
             register_at: info.registeredAt,
             order_code: <div className="cursor" onClick={(e) => getMachineById(e, info.id)}>CHANGE <i><img src={editIcon} alt="edit_icon"/></i></div>,
             synced: info.updatedAt,

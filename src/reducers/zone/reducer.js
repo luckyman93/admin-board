@@ -40,6 +40,9 @@ const Zone = createSlice({
                   break
               }
         },
+        searchZoneByKey: (state, action) => {
+            state.arrZoneList = state.arrZoneList.filter((info) => info.name.toLocaleLowerCase().includes(action.payload))
+        },
         initialState : (state) => {
             state.isSelect = false
         }
@@ -53,6 +56,7 @@ const {
     LoadingZoneListSuccess,
     LoadingCreateNewSuccess,
     LoadingUdtZoneByIdSuccess,
+    searchZoneByKey,
     initialState } = Zone.actions
 
 // get zone list..
@@ -110,7 +114,7 @@ export const createNewZone = (data) => async dispatch => {
 
 //get zone detail by id
 export const getZoneDetailById = (id) => async dispatch => {
-    if (id === undefined) return toast.error('Please select zone!')
+    if (!valid(id)) return toast.error('Please select zone!')
 
     try {
         dispatch(LoadingRequest())
@@ -140,7 +144,6 @@ export const updateZoneDetailById = (id, data) => async dispatch => {
         dispatch(LoadingRequest())
         apiClient.updateZoneDetailById(id, data)
         .then((response)=>{
-            console.log(response)
             if (response.status === 200) {
                 toast.success('Update successfully!')
                 dispatch(LoadingUdtZoneByIdSuccess(response.data))
@@ -157,9 +160,19 @@ export const updateZoneDetailById = (id, data) => async dispatch => {
     }
 }
 
+//search zone by keyword
+export const searchZoneByKeyWord = (key) => async dispatch => {
+    dispatch(searchZoneByKey(key))
+}
+
 //initial select state
 export const intitialIsSelect = () => async dispatch => {
     dispatch(initialState())
+}
+
+//once page laod, initialization objZoneDetail 
+export const initObjZone = () => async dispatch => {
+    dispatch(LoadingFailure('zoneDetail'))
 }
 
 //validation

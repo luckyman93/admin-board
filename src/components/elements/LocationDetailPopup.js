@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { isEmpty } from "lodash"
 import { useDispatch, useSelector } from 'react-redux'
-import { updateMachineById } from '../../reducers/machine/reducer'
+import { updateMachineLocationById } from '../../reducers/machine/reducer'
 import Table from './const/Table'
 import { Spin } from 'antd'
 
@@ -76,7 +76,7 @@ const LocatioinDetailPopup = () => {
     ]
 
     const putLocation = () => {
-        dispatch(updateMachineById(region, latitude, longitude, objMCLocation.id))
+        dispatch(updateMachineLocationById(region, latitude, longitude, objMCLocation.id))
     }
 
     return (

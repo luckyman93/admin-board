@@ -11,12 +11,10 @@ const ServerOrderPopup = () => {
     const [activeAt, setActiveAt] = useState('')
     const {isMachineLoading, objMachineDetail} = useSelector(state => state.Machine)
 
-
     useEffect(() => {
         if (!isEmpty(objMachineDetail)) {
-            setCode(objMachineDetail.serverOrderCode)
-            objMachineDetail.serverOrderActiveDate !== null
-                ? setActiveAt(objMachineDetail.serverOrderActiveDate.slice(0, 16)) : setActiveAt('')
+            objMachineDetail.serverOrderCode === null ? setCode('') : setCode(objMachineDetail.serverOrderCode) 
+            objMachineDetail.serverOrderActiveDate === null ? setActiveAt('') : setActiveAt(objMachineDetail.serverOrderActiveDate.slice(0, 16))
         }
     }, [objMachineDetail])
 

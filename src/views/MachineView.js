@@ -125,7 +125,6 @@ const MachineView = (props) => {
                             <div className="maps">
                                 <iframe src="https://www.google.com/maps/d/embed?mid=1bJQydYxVYpemysvNJ8ccPBnP3Io70k8&ehbc=2E312F" width="100%" height="480"></iframe>
                             </div>
-
                             <div className="scroll-text">
                                 <span>SELECT A SITE TO SHOW DETAILS</span>
                             </div>

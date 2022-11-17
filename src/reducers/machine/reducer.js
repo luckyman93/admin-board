@@ -37,7 +37,10 @@ const Machine = createSlice({
       state.isMachineLoading = false
       state.objMCLocation = action.payload
     },
-    LoadingUpdMcByIdSuccess: (state, action) => {
+    LoadingCrtMcLocationByIdSuccess: (state) => {
+      state.isMachineLoading = false
+    },
+    LoadingUpdMcLocationByIdSuccess: (state, action) => {
       state.isMachineLoading = false
       state.objMCLocation = action.payload
     },
@@ -96,7 +99,8 @@ const {
   LoadingGetMcDetailSuccess,
   LoadingUpdateMcByIdSuccess,
   LoadingGetMcLocationByIdSuccess,
-  LoadingUpdMcByIdSuccess,
+  LoadingCrtMcLocationByIdSuccess,
+  LoadingUpdMcLocationByIdSuccess,
   LoadingGetMcHealthByIdSuccess,
   LoadingGetMcImagesByIdSuccess,
   LoadingGetMcTypeByIdSuccess,
@@ -181,7 +185,7 @@ export const getMcDetailById = (id) => async dispatch => {
   }
 }
 
-//update machine by id
+//update machine detail by id
 export const upDateSvOrderCode = (id, groupId, code, activeAt) => async dispatch => {
   //validation
   if (!valid(code)) return toast.error('Please enter the Server code!')
@@ -196,6 +200,7 @@ export const upDateSvOrderCode = (id, groupId, code, activeAt) => async dispatch
     dispatch(LoadingRequest())
     apiClient.upDateSvOrderCode(id, data)
       .then((response)=>{
+        console.log(response)
         if (response.status === 200) {
           dispatch(LoadingUpdateMcByIdSuccess(response.data))
           toast.success('updated successfully!')
@@ -227,8 +232,32 @@ export const getMcLocationById = (id) => async dispatch => {
   }
 }
 
-//update machine by Id
-export const updateMachineById = (re, la, lo, id) => async dispatch => {
+//create machine location by id
+export const createMcLocationById = (data) => async dispatch => {
+  let id = JSON.parse(localStorage.getItem('Machine Creating Status')).machine_id
+  try {
+    dispatch(LoadingRequest())
+    apiClient.createMcLocationById(id, data)
+      .then((response)=>{
+        if (response.status === 200) {
+          localStorage.removeItem('Machine Creating Status')
+          toast.success('Create machine location successfully!')
+          dispatch(LoadingCrtMcLocationByIdSuccess(response.data))
+        }
+      })
+      .catch((error)=>{
+        let errorInfo = error.response.data
+        toast.error(errorInfo.message)
+        dispatch(LoadingFailure())
+      })
+  } catch (e) {
+    dispatch(LoadingFailure())
+    console.error(e.message)
+  }
+}
+
+//update machine location by Id
+export const updateMachineLocationById = (re, la, lo, id) => async dispatch => {
 
   if (re.length >= 3) return toast.error('The maximum character length must be less than 3.')
   let data = {
@@ -239,12 +268,11 @@ export const updateMachineById = (re, la, lo, id) => async dispatch => {
 
   try {
     dispatch(LoadingRequest())
-    apiClient.updateMachineById(data, id)
+    apiClient.updateMcLocationById(data, id)
       .then((response)=>{
-        console.log(response)
         if (response.status === 200) {
           toast.success('Update successfully')
-          dispatch(LoadingUpdMcByIdSuccess(response.data))
+          dispatch(LoadingUpdMcLocationByIdSuccess(response.data))
         } 
       })
       .catch((error)=>{
@@ -253,6 +281,7 @@ export const updateMachineById = (re, la, lo, id) => async dispatch => {
         dispatch(LoadingFailure('updatingMachine'))
       })
   } catch (e) {
+    dispatch(LoadingFailure())
     console.error(e.message)
   }
 }
@@ -274,6 +303,7 @@ export const getMcHealthById = (id) => async dispatch => {
         dispatch(LoadingFailure('health'))
       })
   } catch (e) {
+    dispatch(LoadingFailure())
     console.error(e.message)
   }
 }

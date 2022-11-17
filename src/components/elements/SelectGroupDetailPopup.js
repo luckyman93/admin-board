@@ -5,7 +5,6 @@ import Table from './const/Table'
 import { Spin } from 'antd'
 
 const SelectGroupPopup = () => {
-
     
     const {isGroupLoading, objGroupDetail} = useSelector(state => state.Group)
 

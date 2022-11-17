@@ -105,9 +105,9 @@ const GroupView = () => {
                     </div> */}
                     <div className="selected-files">
                         <h3>SELECTED SITE</h3>
-                            <Table
-                                columns={columns2}
-                                dataSource={dataSource2}/>
+                        <Table
+                            columns={columns2}
+                            dataSource={dataSource2}/>
                         <button>CLEAR SELECTION</button>
                     </div>
                 </div>

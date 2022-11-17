@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getZonetList, getZoneDetailById, intitialIsSelect } from '../../reducers/zone/reducer'
-import Table from './const/Table'
-import { Spin } from 'antd'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
+import { Spin } from 'antd'
+import Table from './const/Table'
+import { 
+    getZonetList,
+    getZoneDetailById,
+    searchZoneByKeyWord,
+    intitialIsSelect } from '../../reducers/zone/reducer'
 import searchIcon from '../../assets/images/search.png'
 
 const SelectZonePopup = () => {
 
     const dispatch = useDispatch()
+    const [zoneId, setZoneId] = useState('')
+    const [keyword, setKeyword] = useState('')
     const {isZoneLoading, isSelect, arrZoneList} = useSelector(state => state.Zone)
 
     useEffect(() => {
@@ -21,10 +27,20 @@ const SelectZonePopup = () => {
         dispatch(getZonetList())
     }, [dispatch, isSelect])
 
-    const [zoneId, setZoneId] = useState()
 
     const getZoneById = () => {
+
         dispatch(getZoneDetailById(zoneId))
+    }
+
+    const searchZonebyKey = (e) => {
+        let value = e.target.value
+        if (value.length !== 0) {
+            dispatch(searchZoneByKeyWord(value))
+        } else {
+            dispatch(getZonetList())
+        }
+        setKeyword(value)
     }
 
     const columns1 = [
@@ -77,7 +93,7 @@ const SelectZonePopup = () => {
                     <div className="modal-body">
                         <Spin spinning={isZoneLoading}>
                             <div className="col-sm-12 search">
-                                <input type="text" placeholder="Search zone names..." />
+                                <input type="text" value={keyword} placeholder="Search zone names..." onChange={(e) => searchZonebyKey(e)}/>
                                 <button><img src={searchIcon} /></button>
                             </div>
                             <Table

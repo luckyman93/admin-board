@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createNewZone } from '../reducers/zone/reducer'
 import Table from '../components/elements/const/Table'
 import SelectGroupListPopup from '../components/elements/SelectGroupListPopup'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 import { Spin } from 'antd'
-import '../assets/js/custom'
+// import '../assets/js/custom'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 //images end
@@ -16,6 +16,7 @@ import { useLoader } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader"
 import { Suspense } from "react"
+import { Rnd } from 'react-rnd'
 //fbx end
 
 const Scene = (props) => {
@@ -23,6 +24,14 @@ const Scene = (props) => {
   
     return <primitive object={fbx} position={[1.5, 1.5, -2]}  scale={0.5} />;
 }
+
+const style = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "solid 1px #ddd",
+    background: "#f0f0f0"
+  };
 
 const CreateZone = () => {
 
@@ -36,6 +45,10 @@ const CreateZone = () => {
     const [site, setSite] = useState('') 
     const [area, setArea] = useState('')
     const [locationTags, setLocationTags] = useState('')
+    const [pX, setPX] = useState(0)
+    const [pY, setPY] = useState(0)
+    const [pC, setPC] = useState(0)
+    const [pD, setPD] = useState(0)
 
     const uploadFbx = (e) => {
         let modelName = e.target.files[0].name
@@ -45,6 +58,13 @@ const CreateZone = () => {
     const popUpSelectZone = () => {
         let myModal = new bootstrap.Modal(document.getElementById("selectGroupPopup"))
         myModal.show()
+    }
+
+    const onResize = (e, d, ref, dir, position) => {
+        setPX(position.x)
+        setPY(position.y)
+        setPC(pX + ref.offsetWidth)
+        setPD(pY + ref.offsetHeight)
     }
 
     const createZone = () => {
@@ -59,23 +79,24 @@ const CreateZone = () => {
             "locationTags": locationTags.split(","),
             "corners": {
               "gpsA": {
-                "latitude": 41.40388,
-                "longitude": 2.17403
+                "latitude": pX,
+                "longitude": pY
               },
               "gpsB": {
-                "latitude": 41.50543,
-                "longitude": 2.17403
+                "latitude": pC,
+                "longitude": pY
               },
               "gpsC": {
-                "latitude": 41.40338,
-                "longitude": 2.17111
+                "latitude": pX,
+                "longitude": pD
               },
               "gpsD": {
-                "latitude": 41.50543,
-                "longitude": 2017403
+                "latitude": pC,
+                "longitude": pD
               }
             }
         }
+        return
         dispatch((createNewZone(data)))
     }
 
@@ -123,22 +144,42 @@ const CreateZone = () => {
         {
             key: '9',
             zone_title: 'CORNER-A-GPS-LA',
-            content: <input type="text" placeholder="OPTIONAL..." />,
+            content: <input type="text" value={pX} placeholder="OPTIONAL..." onChange={(e)=>setPX(e.target.value)} />,
         },
         {
             key: '10',
             zone_title: 'CORNER-A-GPS-LO',
-            content: <input type="text" placeholder="OPTIONAL..." />,
+            content: <input type="text" value={pY} placeholder="OPTIONAL..." onChange={(e)=>setPY(e.target.value)}  />,
         },
         {
             key: '11',
             zone_title: 'CORNER-B-GPS-LA',
-            content: <input type="text" placeholder="OPTIONAL..." />,
+            content: <input type="text" value={pC} placeholder="OPTIONAL..." onChange={(e) => setPC(e.target.value)} />,
         },
         {
             key: '12',
             zone_title: 'CORNER-B-GPS-LO',
-            content: <input type="text" placeholder="OPTIONAL..." />,
+            content: <input type="text" value={pY} placeholder="OPTIONAL..." onChange={(e)=>setPY(e.target.value)}/>,
+        },
+        {
+            key: '13',
+            zone_title: 'CORNER-C-GPS-LA',
+            content: <input type="text" value={pX} placeholder="OPTIONAL..." onChange={(e)=>setPX(e.target.value)}/>,
+        },
+        {
+            key: '14',
+            zone_title: 'CORNER-C-GPS-LO',
+            content: <input type="text" value={pD} placeholder="OPTIONAL..." onChange={(e)=>setPD(e.target.value)}/>,
+        },
+        {
+            key: '15',
+            zone_title: 'CORNER-D-GPS-LA',
+            content: <input type="text" value={pC} placeholder="OPTIONAL..." onChange={(e) => setPC(e.target.value)} />,
+        },
+        {
+            key: '16',
+            zone_title: 'CORNER-D-GPS-LO',
+            content: <input type="text" value={pD} placeholder="OPTIONAL..." onChange={(e)=>setPD(e.target.value)} />,
         },
 
       ]
@@ -155,7 +196,6 @@ const CreateZone = () => {
           key: 'content',
         },
     ]
-
 
     return (
         <div className="container-fluid profile-page zones">
@@ -203,53 +243,60 @@ const CreateZone = () => {
                                     <ul>
                                         <li>
                                             <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="first">41.40338</h4>
+                                            <h4 id="ca-la">{pX}</h4>
                                         </li>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="first">41.40338</h4>
+                                            <span>CORNER-A-GPS-LO</span>
+                                            <h4 id="ca-lo">{pY}</h4>
                                         </li>
                                     </ul>
                                     <ul>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="second">41.40338</h4>
+                                            <span>CORNER-B-GPS-LA</span>
+                                            <h4 id="cb-la">{pC}</h4>
                                         </li>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="second">41.40338</h4>
+                                            <span>CORNER-B-GPS-LO</span>
+                                            <h4 id="cb-lo">{pY}</h4>
                                         </li>
                                     </ul>
                                 </div>
 
                                 <div className="mydarg-section" id="demoRoot">
-                                    <div className="resize-drag" data-x={0} data-y={0} data-c={0} data-d={0}>
+                                    <Rnd
+                                        className="resize-drag"
+                                        disableDragging = {true}
+                                        position={{ x: Number(pX), y: Number(pY) }}
+                                        size = {{width: (pC - pX), height: (pD - pY)}}
+                                        onResize={(e, direction, ref, delta, position) => onResize(e, direction, ref, delta, position)}
+                                        bounds = {"parent"}
+                                        default={{x: 0, y: 0, width: 0, height: 0,}}>
                                         <span>A</span>
                                         <span>B</span>
                                         <span>C</span>
                                         <span>D</span>
-                                    </div>
+                                    </Rnd>
                                 </div>
 
                                 <div className="text two">
                                     <ul>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="three">41.40338</h4>
+                                            <span>CORNER-C-GPS-LA</span>
+                                            <h4 id="cc-la">{pX}</h4>
                                         </li>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="three">41.40338</h4>
+                                            <span>CORNER-C-GPS-LO</span>
+                                            <h4 id="cc-lo">{pD}</h4>
                                         </li>
                                     </ul>
                                     <ul>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="four">41.40338</h4>
+                                            <span>CORNER-B-GPS-LA</span>
+                                            <h4 id="cd-la">{pC}</h4>
                                         </li>
                                         <li>
-                                            <span>CORNER-A-GPS-LA</span>
-                                            <h4 className="four">41.40338</h4>
+                                            <span>CORNER-B-GPS-LO</span>
+                                            <h4 id="cd-lo">{pD}</h4>
                                         </li>
                                     </ul>
                                 </div>
