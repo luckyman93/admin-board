@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Map from '../components/elements/const/Map'
 import Table from '../components/elements/const/Table'
 import { getZonetList } from '../reducers/zone/reducer'
 import { getGroupList } from '../reducers/group/reducer'
@@ -8,14 +9,13 @@ import { Spin } from 'antd'
 const GroupView = () => {
 
     const dispatch = useDispatch()
-
+    const {isZoneLoading, arrZoneList} = useSelector(state => state.Zone)
+    const {arrGroupList} = useSelector(state => state.Group)
+    
     useEffect(() => {
         dispatch(getZonetList())
         dispatch(getGroupList())
     }, [])
-
-    const {isZoneLoading, arrZoneList} = useSelector(state => state.Zone)
-    const {arrGroupList} = useSelector(state => state.Group)
 
     const getGroupName = (ids) => {
         let arrName = []
@@ -27,6 +27,10 @@ const GroupView = () => {
             })
         })
         return arrName
+    }
+
+    const filterGroupByID = (e, zoneId) => {
+        console.log(zoneId)
     }
 
     const dataSource1 = arrZoneList.map((info, i) => (
@@ -95,6 +99,24 @@ const GroupView = () => {
           },
     ]
 
+    const locations = [
+        {
+          name: "Osaka",
+          location: { 
+            lat: 34.6937,
+            lng: 135.5023 
+          },
+        },
+        {
+          name: "Tokyo",
+          location: { 
+            lat: 35.6762,
+            lng: 139.6503
+          },
+        },
+    ]
+
+    
     return (
         <div className="container-fluid profile-page zones gr-view">
             <div className="row">
@@ -117,7 +139,9 @@ const GroupView = () => {
 
                         <div className="modelthreed">
                             <div className="maps">
-                                <iframe src="https://www.google.com/maps/d/embed?mid=1bJQydYxVYpemysvNJ8ccPBnP3Io70k8&ehbc=2E312F" width="100%" height="480"></iframe>
+                                <Map
+                                    locations={locations}
+                                    onClickMark={filterGroupByID} />
                             </div>
 
                             <div className="scroll-text">

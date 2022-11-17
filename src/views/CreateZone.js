@@ -1,15 +1,13 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createNewZone } from '../reducers/zone/reducer'
 import Table from '../components/elements/const/Table'
 import SelectGroupListPopup from '../components/elements/SelectGroupListPopup'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 import { Spin } from 'antd'
-// import '../assets/js/custom'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 //images end
-
 //fbx load part start
 import { Canvas } from "@react-three/fiber"
 import { useLoader } from "@react-three/fiber"
@@ -24,14 +22,6 @@ const Scene = (props) => {
   
     return <primitive object={fbx} position={[1.5, 1.5, -2]}  scale={0.5} />;
 }
-
-const style = {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "solid 1px #ddd",
-    background: "#f0f0f0"
-  };
 
 const CreateZone = () => {
 
