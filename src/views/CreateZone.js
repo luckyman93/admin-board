@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, Suspense} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { createNewZone } from '../reducers/zone/reducer'
 import Table from '../components/elements/const/Table'
@@ -8,19 +8,17 @@ import { Spin } from 'antd'
 //images start
 import uploadIcon from '../assets/images/upload.png'
 //images end
-//fbx load part start
-import { Canvas } from "@react-three/fiber"
-import { useLoader } from "@react-three/fiber"
+//fbx start
+import { Canvas, useLoader } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader"
-import { Suspense } from "react"
 import { Rnd } from 'react-rnd'
 //fbx end
 
 const Scene = (props) => {
     const fbx = useLoader(FBXLoader, "fbxUpload/"+props.fbxName)
-  
-    return <primitive object={fbx} position={[1.5, 1.5, -2]}  scale={0.5} />;
+
+    return <primitive object={fbx} position={[1.5, 1.5, -2]}  scale={0.5} />
 }
 
 const CreateZone = () => {
@@ -28,11 +26,11 @@ const CreateZone = () => {
     const dispatch = useDispatch()
     const {isZoneLoading} = useSelector(state => state.Zone)
     const {arrSelectedGroupId} = useSelector(state => state.Group)
-    const [zoneId, setZoneId] = useState('') 
-    const [region, setRegion] = useState('') 
-    const [zoneName, setZoneName] = useState('') 
-    const [fbxName, setFbxName] = useState('') 
-    const [site, setSite] = useState('') 
+    const [zoneId, setZoneId] = useState('')
+    const [region, setRegion] = useState('')
+    const [zoneName, setZoneName] = useState('')
+    const [fbxName, setFbxName] = useState('')
+    const [site, setSite] = useState('')
     const [area, setArea] = useState('')
     const [locationTags, setLocationTags] = useState('')
     const [pX, setPX] = useState(0)
@@ -109,7 +107,7 @@ const CreateZone = () => {
         {
             key: '4',
             zone_title: 'FBX',
-            content: <i><input type="file" id="select-files" onChange = {(e) => uploadFbx(e)}/> <span className="value"></span><span className="upload-text">UPLOAD FILE</span><span><img src={uploadIcon} /></span></i>,
+            content: <i><input type="file" className="cursor" id="select-files" onChange = {(e) => uploadFbx(e)}/> <span className="value"></span><span className="upload-text">UPLOAD FILE</span><span><img src={uploadIcon} /></span></i>,
         },
         {
             key: '5',

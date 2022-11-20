@@ -42,7 +42,7 @@ const GroupView = () => {
             zone: info.name,
             group_id: info.groupIds.toString(),
             group_name: getGroupName(info.groupIds).toString()
-        }        
+        }
     ))
 
     const columns1 = [
@@ -91,12 +91,12 @@ const GroupView = () => {
             title: 'REGION',
             dataIndex: 'region',
             key: 'region',
-          },
-          {
+        },
+        {
             title: 'SITE NAME',
             dataIndex: 'site',
             key: 'site',
-          },
+        },
     ]
 
     const locations = [

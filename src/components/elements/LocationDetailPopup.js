@@ -15,10 +15,12 @@ const LocatioinDetailPopup = () => {
     let dataSource2
 
     useEffect(() => {
-        setRegion(!objMCLocation.region?'':objMCLocation.region)
-        setLatitude(!objMCLocation.latitude?'':objMCLocation.latitude)
-        setLongitude(!objMCLocation.longitude?'':objMCLocation.longitude)
-    }, [])
+        if (!isEmpty(objMCLocation)) {
+            objMCLocation.region === null ? setRegion('') : setRegion(objMCLocation.region)
+            objMCLocation.latitude === null ? setLatitude('') : setLatitude(objMCLocation.latitude)
+            objMCLocation.longitude === null ? setLongitude('') : setLongitude(objMCLocation.longitude)
+        }
+    }, [objMCLocation])
 
     if (isEmpty(objMCLocation)) {
         dataSource2 = []
@@ -60,7 +62,7 @@ const LocatioinDetailPopup = () => {
                 id_value : objMCLocation.tags.toString()
             } 
         ]
-    }    
+    }
 
     const columns2 = [
         {
