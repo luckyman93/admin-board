@@ -17,6 +17,7 @@ import { useLoader } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader"
 import { Suspense } from "react"
+import { Rnd } from 'react-rnd'
 //fbx end
 
 const Scene = (props) => {
@@ -31,9 +32,27 @@ const UpdateZone = () =>  {
     const [fbxName, setFbxName] = useState('') 
     const {isZoneLoading, objZoneDetail} = useSelector(state => state.Zone)
     const {arrSelectedGroupId} = useSelector(state => state.Group)
+    const [pX, setPX] = useState(0)
+    const [pY, setPY] = useState(0)
+    const [pC, setPC] = useState(0)
+    const [pD, setPD] = useState(0)
+    const [XX, setXX] = useState(0)
+    const [YY, setYY] = useState(0)
+    const [CC, setCC] = useState(0)
+    const [DD, setDD] = useState(0)
 
     useEffect(() => {
-        if (!isEmpty(objZoneDetail)) setFbxName(objZoneDetail.fbxName)
+        if (!isEmpty(objZoneDetail)) {
+            setFbxName(objZoneDetail.fbxName)
+            setXX(objZoneDetail.corners.gpsA.longitude)
+            setYY(objZoneDetail.corners.gpsA.latitude)
+            setCC(objZoneDetail.corners.gpsB.longitude)
+            setDD(objZoneDetail.corners.gpsC.latitude)
+            setPX(calCoordinateX(objZoneDetail.corners.gpsA.longitude))
+            setPY(calCoordinateY(objZoneDetail.corners.gpsA.latitude))
+            setPC(calCoordinateX(objZoneDetail.corners.gpsB.longitude))
+            setPD(calCoordinateY(objZoneDetail.corners.gpsC.latitude))
+        }
     }, [objZoneDetail])
 
     const showSelectZoneModal = () => {
@@ -46,9 +65,43 @@ const UpdateZone = () =>  {
         setFbxName(modelName)
     }
 
-    const popUpSelectZone = () => {
+    const popUpSelectGroup = () => {
         let myModal = new bootstrap.Modal(document.getElementById("selectGroupPopup"))
         myModal.show()
+    }
+
+    const onResize = (e, d, ref, dir, position) => {
+        setPX(position.x)
+        setPY(position.y)
+        setPC(pX + ref.offsetWidth)
+        setPD(pY + ref.offsetHeight)
+        setXX(calLongitude(position.x))
+        setYY(calLatitude(position.y))
+        setCC(calLongitude(pX + ref.offsetWidth))
+        setDD(calLatitude(pY + ref.offsetHeight))
+    }
+
+    const latTop = 41.56
+    const latBottom = 31
+    const lonLeft = 129.43
+    const lonRight = 142.07
+    const regWidth = 847
+    const regHeight = 418
+
+    const calLongitude = (val) => {
+        return (lonLeft + val * (lonRight - lonLeft)/regWidth).toFixed(4)
+    }
+
+    const calLatitude = (val) => {
+        return (latTop - val * (latTop - latBottom)/regHeight).toFixed(4)
+    }
+
+    const calCoordinateX = (val) => {
+        return (regWidth / (lonRight - lonLeft) * (val - lonLeft)).toFixed(4)
+    }
+
+    const calCoordinateY = (val) => {
+        return (regHeight / (latTop - latBottom) * (latTop - val)).toFixed(4)
     }
 
     const updateZoneById = () => {
@@ -61,24 +114,25 @@ const UpdateZone = () =>  {
             "groupIds": arrSelectedGroupId,
             "locationTags": objZoneDetail.locationTags,
             "corners": {
-              "gpsA": {
-                "latitude": 41.40388,
-                "longitude": 2.17403
-              },
-              "gpsB": {
-                "latitude": 41.50543,
-                "longitude": 2.17403
-              },
-              "gpsC": {
-                "latitude": 41.40338,
-                "longitude": 2.17111
-              },
-              "gpsD": {
-                "latitude": 41.50543,
-                "longitude": 2017403
-              }
+                "gpsA": {
+                  "latitude": Number(calLatitude(pY)),
+                  "longitude": Number(calLongitude(pX))
+                },
+                "gpsB": {
+                  "latitude": Number(calLatitude(pY)),
+                  "longitude": Number(calLongitude(pC))
+                },
+                "gpsC": {
+                  "latitude": Number(calLatitude(pD)),
+                  "longitude": Number(calLongitude(pX))
+                },
+                "gpsD": {
+                  "latitude": Number(calLatitude(pD)),
+                  "longitude": Number(calLongitude(pC))
+                }
             }
         }
+
         dispatch((updateZoneDetailById(objZoneDetail.id, data)))
     }
 
@@ -95,15 +149,15 @@ const UpdateZone = () =>  {
                 region: objZoneDetail.region,
                 site: objZoneDetail.site,
                 area: objZoneDetail.area,
-                group: <span className="cursor" onClick={popUpSelectZone}>= <br/>SELECT</span>,
-                a_la: objZoneDetail.corners.gpsA.latitude,
-                a_lo: objZoneDetail.corners.gpsA.longitude,
-                b_la: objZoneDetail.corners.gpsB.latitude,
-                b_lo: objZoneDetail.corners.gpsB.longitude,
-                c_la: objZoneDetail.corners.gpsC.latitude,
-                c_lo: objZoneDetail.corners.gpsC.longitude,
-                d_la: objZoneDetail.corners.gpsD.latitude,
-                d_lo:  objZoneDetail.corners.gpsD.longitude
+                group: <span className="cursor" onClick={popUpSelectGroup}>= <br/>SELECT</span>,
+                a_la: <input className='corner' type="text" value={YY} placeholder="OPTIONAL..." onChange={(e)=>{setYY(e.target.value); setPY(calCoordinateY(e.target.value));}} />,
+                a_lo: <input className='corner' type="text" value={XX} placeholder="OPTIONAL..." onChange={(e)=>{setXX(e.target.value); setPX(calCoordinateX(e.target.value));}}  />,
+                b_la: <input className='corner' type="text" value={YY} placeholder="OPTIONAL..." onChange={(e) => {setYY(e.target.value); setPY(calCoordinateY(e.target.value));}} />,
+                b_lo: <input className='corner' type="text" value={CC} placeholder="OPTIONAL..." onChange={(e)=>{setCC(e.target.value); setPC(calCoordinateX(e.target.value));}}/>,
+                c_la: <input className='corner' type="text" value={DD} placeholder="OPTIONAL..." onChange={(e)=>{setDD(e.target.value); setPD(calCoordinateY(e.target.value));}}/>,
+                c_lo: <input className='corner' type="text" value={XX} placeholder="OPTIONAL..." onChange={(e)=>{setXX(e.target.value); setPX(calCoordinateX(e.target.value));}}/>,
+                d_la: <input className='corner' type="text" value={DD} placeholder="OPTIONAL..." onChange={(e) => {setCC(e.target.value); setPC(calCoordinateX(e.target.value));}} />,
+                d_lo: <input className='corner' type="text" value={CC} placeholder="OPTIONAL..." onChange={(e)=>{setDD(e.target.value); setPD(calCoordinateY(e.target.value));}} />,
             }
         ]
     }
@@ -251,55 +305,62 @@ const UpdateZone = () =>  {
                                         <ul>
                                             <li>
                                                 <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="first">41.40338</h4>
+                                                <h4 id="ca-la">{YY}</h4>
                                             </li>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="first">41.40338</h4>
+                                                <span>CORNER-A-GPS-LO</span>
+                                                <h4 id="ca-lo">{XX}</h4>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="second">41.40338</h4>
+                                                <span>CORNER-B-GPS-LA</span>
+                                                <h4 id="cb-la">{YY}</h4>
                                             </li>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="second">41.40338</h4>
+                                                <span>CORNER-B-GPS-LO</span>
+                                                <h4 id="cb-lo">{CC}</h4>
                                             </li>
                                         </ul>
                                     </div>
 
                                     <div className="mydarg-section" id="demoRoot">
-                                        <div className="resize-drag" data-x="" data-y="" data-c="" data-d="">
+                                        <Rnd
+                                            className="resize-drag"
+                                            disableDragging = {true}
+                                            position={{ x: Number(pX), y: Number(pY) }}
+                                            size = {{width: (pC - pX), height: (pD - pY)}}
+                                            onResize={(e, direction, ref, delta, position) => onResize(e, direction, ref, delta, position)}
+                                            bounds = {"parent"}
+                                            default={{x: 0, y: 0, width: 0, height: 0,}}>
                                             <span>A</span>
                                             <span>B</span>
                                             <span>C</span>
                                             <span>D</span>
-                                        </div>
+                                        </Rnd>
                                     </div>
 
                                     <div className="text two">
                                         <ul>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="three">41.40338</h4>
+                                                <span>CORNER-C-GPS-LA</span>
+                                                <h4 id="cc-la">{DD}</h4>
                                             </li>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="three">41.40338</h4>
+                                                <span>CORNER-C-GPS-LO</span>
+                                                <h4 id="cc-lo">{XX}</h4>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="four">41.40338</h4>
+                                                <span>CORNER-D-GPS-LA</span>
+                                                <h4 id="cd-la">{DD}</h4>
                                             </li>
                                             <li>
-                                                <span>CORNER-A-GPS-LA</span>
-                                                <h4 className="four">41.40338</h4>
+                                                <span>CORNER-D-GPS-LO</span>
+                                                <h4 id="cd-lo">{CC}</h4>
                                             </li>
-                                        </ul>
+                                        </ul>   
                                     </div>
                                 </div>
 

@@ -37,6 +37,10 @@ const CreateZone = () => {
     const [pY, setPY] = useState(0)
     const [pC, setPC] = useState(0)
     const [pD, setPD] = useState(0)
+    const [XX, setXX] = useState(0)
+    const [YY, setYY] = useState(0)
+    const [CC, setCC] = useState(0)
+    const [DD, setDD] = useState(0)
 
     const uploadFbx = (e) => {
         let modelName = e.target.files[0].name
@@ -53,6 +57,33 @@ const CreateZone = () => {
         setPY(position.y)
         setPC(pX + ref.offsetWidth)
         setPD(pY + ref.offsetHeight)
+        setXX(calLongitude(position.x))
+        setYY(calLatitude(position.y))
+        setCC(calLongitude(pX + ref.offsetWidth))
+        setDD(calLatitude(pY + ref.offsetHeight))
+    }
+
+    const latTop = 41.56
+    const latBottom = 31
+    const lonLeft = 129.43
+    const lonRight = 142.07
+    const regWidth = 847
+    const regHeight = 418
+
+    const calLongitude = (val) => {
+        return (lonLeft + val * (lonRight - lonLeft)/regWidth).toFixed(4)
+    }
+
+    const calLatitude = (val) => {
+        return (latTop - val * (latTop - latBottom)/regHeight).toFixed(4)
+    }
+
+    const calCoordinateX = (val) => {
+        return (regWidth / (lonRight - lonLeft) * (val - lonLeft)).toFixed(4)
+    }
+
+    const calCoordinateY = (val) => {
+        return (regHeight / (latTop - latBottom) * (latTop - val)).toFixed(4)
     }
 
     const createZone = () => {
@@ -67,24 +98,24 @@ const CreateZone = () => {
             "locationTags": locationTags.split(","),
             "corners": {
               "gpsA": {
-                "latitude": pX,
-                "longitude": pY
+                "latitude": Number(calLatitude(pY)),
+                "longitude": Number(calLongitude(pX))
               },
               "gpsB": {
-                "latitude": pC,
-                "longitude": pY
+                "latitude": Number(calLatitude(pY)),
+                "longitude": Number(calLongitude(pC))
               },
               "gpsC": {
-                "latitude": pX,
-                "longitude": pD
+                "latitude": Number(calLatitude(pD)),
+                "longitude": Number(calLongitude(pX))
               },
               "gpsD": {
-                "latitude": pC,
-                "longitude": pD
+                "latitude": Number(calLatitude(pD)),
+                "longitude": Number(calLongitude(pC))
               }
             }
         }
-        return
+
         dispatch((createNewZone(data)))
     }
 
@@ -127,47 +158,47 @@ const CreateZone = () => {
         {
             key: '8',
             zone_title: 'GROUP',
-            content: <span className="sekedt cursor" onClick={popUpSelectZone}>SELECT FROM LIST =</span>,
+            content: <div><span className="sekedt cursor" onClick={popUpSelectZone}>{arrSelectedGroupId.length === 0 ? "*" : arrSelectedGroupId.toString()}</span> <i className='sfl cursor' onClick={popUpSelectZone}>SELECT FROM LIST =</i></div>
         },
         {
             key: '9',
             zone_title: 'CORNER-A-GPS-LA',
-            content: <input type="text" value={pX} placeholder="OPTIONAL..." onChange={(e)=>setPX(e.target.value)} />,
+            content: <input type="text" value={YY} placeholder="OPTIONAL..." onChange={(e)=>{setYY(e.target.value); setPY(calCoordinateY(e.target.value));}} />,
         },
         {
             key: '10',
             zone_title: 'CORNER-A-GPS-LO',
-            content: <input type="text" value={pY} placeholder="OPTIONAL..." onChange={(e)=>setPY(e.target.value)}  />,
+            content: <input type="text" value={XX} placeholder="OPTIONAL..." onChange={(e)=>{setXX(e.target.value); setPX(calCoordinateX(e.target.value));}}  />,
         },
         {
             key: '11',
             zone_title: 'CORNER-B-GPS-LA',
-            content: <input type="text" value={pC} placeholder="OPTIONAL..." onChange={(e) => setPC(e.target.value)} />,
+            content: <input type="text" value={YY} placeholder="OPTIONAL..." onChange={(e) => {setYY(e.target.value); setPY(calCoordinateY(e.target.value));}} />,
         },
         {
             key: '12',
             zone_title: 'CORNER-B-GPS-LO',
-            content: <input type="text" value={pY} placeholder="OPTIONAL..." onChange={(e)=>setPY(e.target.value)}/>,
+            content: <input type="text" value={CC} placeholder="OPTIONAL..." onChange={(e)=>{setCC(e.target.value); setPC(calCoordinateX(e.target.value));}}/>,
         },
         {
             key: '13',
             zone_title: 'CORNER-C-GPS-LA',
-            content: <input type="text" value={pX} placeholder="OPTIONAL..." onChange={(e)=>setPX(e.target.value)}/>,
+            content: <input type="text" value={DD} placeholder="OPTIONAL..." onChange={(e)=>{setDD(e.target.value); setPD(calCoordinateY(e.target.value));}}/>,
         },
         {
             key: '14',
             zone_title: 'CORNER-C-GPS-LO',
-            content: <input type="text" value={pD} placeholder="OPTIONAL..." onChange={(e)=>setPD(e.target.value)}/>,
+            content: <input type="text" value={XX} placeholder="OPTIONAL..." onChange={(e)=>{setXX(e.target.value); setPX(calCoordinateX(e.target.value));}}/>,
         },
         {
             key: '15',
             zone_title: 'CORNER-D-GPS-LA',
-            content: <input type="text" value={pC} placeholder="OPTIONAL..." onChange={(e) => setPC(e.target.value)} />,
+            content: <input type="text" value={DD} placeholder="OPTIONAL..." onChange={(e) => {setCC(e.target.value); setPC(calCoordinateX(e.target.value));}} />,
         },
         {
             key: '16',
             zone_title: 'CORNER-D-GPS-LO',
-            content: <input type="text" value={pD} placeholder="OPTIONAL..." onChange={(e)=>setPD(e.target.value)} />,
+            content: <input type="text" value={CC} placeholder="OPTIONAL..." onChange={(e)=>{setDD(e.target.value); setPD(calCoordinateY(e.target.value));}} />,
         },
 
       ]
@@ -231,21 +262,21 @@ const CreateZone = () => {
                                     <ul>
                                         <li>
                                             <span>CORNER-A-GPS-LA</span>
-                                            <h4 id="ca-la">{pX}</h4>
+                                            <h4 id="ca-la">{YY}</h4>
                                         </li>
                                         <li>
                                             <span>CORNER-A-GPS-LO</span>
-                                            <h4 id="ca-lo">{pY}</h4>
+                                            <h4 id="ca-lo">{XX}</h4>
                                         </li>
                                     </ul>
                                     <ul>
                                         <li>
                                             <span>CORNER-B-GPS-LA</span>
-                                            <h4 id="cb-la">{pC}</h4>
+                                            <h4 id="cb-la">{YY}</h4>
                                         </li>
                                         <li>
                                             <span>CORNER-B-GPS-LO</span>
-                                            <h4 id="cb-lo">{pY}</h4>
+                                            <h4 id="cb-lo">{CC}</h4>
                                         </li>
                                     </ul>
                                 </div>
@@ -270,21 +301,21 @@ const CreateZone = () => {
                                     <ul>
                                         <li>
                                             <span>CORNER-C-GPS-LA</span>
-                                            <h4 id="cc-la">{pX}</h4>
+                                            <h4 id="cc-la">{DD}</h4>
                                         </li>
                                         <li>
                                             <span>CORNER-C-GPS-LO</span>
-                                            <h4 id="cc-lo">{pD}</h4>
+                                            <h4 id="cc-lo">{XX}</h4>
                                         </li>
                                     </ul>
                                     <ul>
                                         <li>
-                                            <span>CORNER-B-GPS-LA</span>
-                                            <h4 id="cd-la">{pC}</h4>
+                                            <span>CORNER-D-GPS-LA</span>
+                                            <h4 id="cd-la">{DD}</h4>
                                         </li>
                                         <li>
-                                            <span>CORNER-B-GPS-LO</span>
-                                            <h4 id="cd-lo">{pD}</h4>
+                                            <span>CORNER-D-GPS-LO</span>
+                                            <h4 id="cd-lo">{CC}</h4>
                                         </li>
                                     </ul>
                                 </div>

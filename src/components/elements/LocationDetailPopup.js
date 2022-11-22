@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { isEmpty } from "lodash"
 import { useDispatch, useSelector } from 'react-redux'
 import { updateMachineLocationById } from '../../reducers/machine/reducer'
+import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 import Table from './const/Table'
 import { Spin } from 'antd'
 
-const LocatioinDetailPopup = () => {
+const LocatioinDetailPopup = (props) => {
 
     const [region, setRegion] = useState('')
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
+    const [zone, setZone] = useState('')
     const dispatch = useDispatch()
     const {isMachineLoading, objMCLocation} = useSelector(state => state.Machine)
+    const {objZoneDetail} = useSelector(state => state.Zone)
     let dataSource2
 
     useEffect(() => {
@@ -19,8 +22,12 @@ const LocatioinDetailPopup = () => {
             objMCLocation.region === null ? setRegion('') : setRegion(objMCLocation.region)
             objMCLocation.latitude === null ? setLatitude('') : setLatitude(objMCLocation.latitude)
             objMCLocation.longitude === null ? setLongitude('') : setLongitude(objMCLocation.longitude)
+            objMCLocation.zone === null ? setZone('') : setZone(objMCLocation.zone)
         }
-    }, [objMCLocation])
+        if (!isEmpty(objZoneDetail)) {
+            objZoneDetail.name === null ? setZone('') : setZone(objZoneDetail.name)
+        }
+    }, [objMCLocation, objZoneDetail])
 
     if (isEmpty(objMCLocation)) {
         dataSource2 = []
@@ -44,7 +51,7 @@ const LocatioinDetailPopup = () => {
             {
                 key : '4',
                 id : 'ZONE',
-                id_value : objMCLocation.zone
+                id_value : <div><span>{zone.length === 0 ? "*SELECT FROM ZONE LIST" : zone}</span> <i className='cursor' onClick={props.onPopupSelectZone}>GET ZONE LIST =</i></div>
             },
             {
                 key : '5',
@@ -78,12 +85,12 @@ const LocatioinDetailPopup = () => {
     ]
 
     const putLocation = () => {
-        dispatch(updateMachineLocationById(region, latitude, longitude, objMCLocation.id))
+        dispatch(updateMachineLocationById(region, latitude, longitude, zone, objMCLocation.id))
     }
 
     return (
         <div className="modal fade selectzone-popup grDetailPopup locationDetailPopup" id="locationDetailPopup" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title uppercase" id="exampleModalLabel">v2/machine/location/id</h5>

@@ -439,6 +439,18 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     box-sizing: border-box;
 }
 
+.profile-page.zones td .sfl {
+    font-family: Space Grotesk;
+    font-size: 12px;
+    font-weight: 700;
+    /* line-height: 15px; */
+    letter-spacing: 0.1em;
+    text-align: left;
+    font-style: normal;
+    color: #5272B0;
+    float: right;
+}
+
 .profile-page.zones th,
 .profile-page.zones td {
     padding: 17px 21px;
@@ -475,7 +487,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
 .profile-page.zones table input[type="text"],
 .profile-page.zones table input,
 .profile-page.zones table span {
-    width: 100%;
+    width: 70px;
     word-break: break-all;
     padding: 0px;
     background: transparent;
@@ -486,6 +498,7 @@ nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top {
     color: #4C4C4C;
     letter-spacing: 0.1em;
     text-align: left;
+    border: none;
     /* opacity: 50%; */
 }
 
@@ -1779,8 +1792,8 @@ li {
 }
 
 .container-fluid.profile-page.machine-list.update-zone .data-list table {
-    width: 1331px!important;
-    max-width: 1331px!important;
+    width: 1400px!important;
+    max-width: 1400px!important;
 }
 
 .container-fluid.profile-page.machine-list.update-zone .data-list table th,
@@ -2005,7 +2018,7 @@ li {
 
 .selectzone-popup.grDetailPopup.locationDetailPopup .modal-dialog .modal-content .main input {
     font-family: Space Grotesk;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 15px;
     letter-spacing: 0.1em;
@@ -2018,7 +2031,7 @@ li {
     font-family: Space Grotesk;
     font-size: 12px;
     font-weight: 700;
-    line-height: 15px;
+    /* line-height: 15px; */
     letter-spacing: 0.1em;
     text-align: left;
     font-style: normal;

@@ -223,6 +223,7 @@ export const getMcLocationById = (id) => async dispatch => {
         }
       })
       .catch((error)=>{
+        console.log(error)
         let errorInfo = error.response.data
         toast.error(errorInfo.message)
         dispatch(LoadingFailure('location'))
@@ -257,11 +258,12 @@ export const createMcLocationById = (data) => async dispatch => {
 }
 
 //update machine location by Id
-export const updateMachineLocationById = (re, la, lo, id) => async dispatch => {
+export const updateMachineLocationById = (re, la, lo, zo, id) => async dispatch => {
 
   if (re.length >= 3) return toast.error('The maximum character length must be less than 3.')
   let data = {
     region: re,
+    zone: zo,
     latitude: la,
     longitude: lo
   }

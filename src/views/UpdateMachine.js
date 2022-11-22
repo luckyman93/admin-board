@@ -6,8 +6,10 @@ import SelectGroupDetailPopup from '../components/elements/SelectGroupDetailPopu
 import ServerOrderPopup from '../components/elements/ServerOrderPopup'
 import HealthCodePopup from '../components/elements/HealthCodePopup'
 import LocationDetailPopup from '../components/elements/LocationDetailPopup'
+import SelectZonePopup from '../components/elements/SelectZonePopup'
 import SvgViewer from '../components/elements/SvgViewer'
 import { getGrpDetailById } from '../reducers/group/reducer'
+import { initObjZone } from '../reducers/zone/reducer'
 import { 
     getMachineList,
     getMcDetailById,
@@ -29,6 +31,7 @@ const UpdateMachine = () =>  {
     const {isMachineLoading, arrMachineList} = useSelector(state => state.Machine)
 
     useEffect(() => {
+        dispatch(initObjZone())
         dispatch(getMachineList())
     }, [dispatch])
 
@@ -53,13 +56,17 @@ const UpdateMachine = () =>  {
     }
 
     const getHealthById = (e, i) => {
-        showModal("successPopup")
+        showModal("healthCdePopup")
         dispatch(getMcHealthById(i))
     }
 
     const getSvgById = (e, i) => {
         showModal("svgViewerPopup")
         dispatch(getGetMcImageById(i))
+    }
+
+    const popUpSelectZone = () => {
+        showModal("selectZone")
     }
 
     const dataSource = arrMachineList.map((info, i) => (
@@ -142,9 +149,11 @@ const UpdateMachine = () =>  {
                 </Spin>                
             </div>
             <SelectGroupDetailPopup/>
-            <LocationDetailPopup/>
+            <LocationDetailPopup 
+                onPopupSelectZone={popUpSelectZone}/>
             <ServerOrderPopup/>
             <HealthCodePopup/>
+            <SelectZonePopup/>
             <SvgViewer/>
         </div>
     )

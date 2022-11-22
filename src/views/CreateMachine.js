@@ -13,7 +13,7 @@ const CreateMachine = () =>  {
     const { isMachineLoading } = useSelector(state => state.Machine)
 
     useEffect(() => {
-        dispatch(getGroupList())            
+        dispatch(getGroupList())
     }, [dispatch])
 
     const createGroup = (e) => {

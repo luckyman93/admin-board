@@ -1,5 +1,6 @@
 import React from 'react'
 import Table from '../components/elements/const/Table'
+import Map from '../components/elements/const/Map'
 
 const MachineView = (props) => {
 
@@ -101,6 +102,27 @@ const MachineView = (props) => {
           },
     ]
 
+    const filterMachineByID = (e, zoneId) => {
+        console.log(zoneId)
+    }
+
+    const locations = [
+        {
+          name: "Osaka",
+          location: { 
+            lat: 34.6937,
+            lng: 135.5023 
+          },
+        },
+        {
+          name: "Tokyo",
+          location: { 
+            lat: 35.6762,
+            lng: 139.6503
+          },
+        },
+    ]
+
     return (
         <div className="container-fluid profile-page zones gr-view">
             <div className="row">
@@ -123,7 +145,9 @@ const MachineView = (props) => {
 
                         <div className="modelthreed">
                             <div className="maps">
-                                <iframe src="https://www.google.com/maps/d/embed?mid=1bJQydYxVYpemysvNJ8ccPBnP3Io70k8&ehbc=2E312F" width="100%" height="480"></iframe>
+                                <Map
+                                    locations={locations}
+                                    onClickMark={filterMachineByID} />
                             </div>
                             <div className="scroll-text">
                                 <span>SELECT A SITE TO SHOW DETAILS</span>
