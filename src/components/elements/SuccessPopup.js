@@ -7,7 +7,7 @@ const SuccessPopup = () => {
 
     // const {isMachineLoading, objMcHealth} = useSelector(state => state.Machine)
 
-    let obj
+    let obj = {}
 
     if (isEmpty(objMcHealth)) {
         obj = {
@@ -27,7 +27,7 @@ const SuccessPopup = () => {
 
     return (
         <div className="modal fade selectzone-popup healthCdePopup" id="successPopup" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog">
+            <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title uppercase" id="exampleModalLabel">SUCCESS</h5>

@@ -1,15 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { signOut } from '../reducers/auth/reducer'
 import SettingPopup from './elements/SettingPoup'
 //images start
 import loginIcon from '../assets/images/login.png'
 //images end
 
 const AppBreadcrumb = (props) =>  {
-
-    const dispatch = useDispatch()
 
     const arrTitleInfo = [
         { childName:'CreateMachine', title:'MACHINE SETTINGS' },
