@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Map from '../components/elements/const/Map'
 import Table from '../components/elements/const/Table'
@@ -9,6 +9,7 @@ import { Spin } from 'antd'
 const GroupView = () => {
 
     const dispatch = useDispatch()
+    const [arrtempZoneList, setArrTempZoneList] = useState([])
     const {isZoneLoading, arrZoneList} = useSelector(state => state.Zone)
     const {arrGroupList} = useSelector(state => state.Group)
     
@@ -16,6 +17,10 @@ const GroupView = () => {
         dispatch(getZonetList())
         dispatch(getGroupList())
     }, [])
+
+    useEffect(() => {
+        setArrTempZoneList(arrZoneList)
+    }, [arrZoneList])
 
     const getGroupName = (ids) => {
         let arrName = []
@@ -29,11 +34,16 @@ const GroupView = () => {
         return arrName
     }
 
-    const filterGroupByID = (e, zoneId) => {
-        console.log(zoneId)
+    const filterGroupByID = (e, zoneName) => {
+        let arr = arrZoneList.filter((info) => info.name.includes(zoneName))
+        setArrTempZoneList(arr)
     }
 
-    const dataSource1 = arrZoneList.map((info, i) => (
+    const clearSelection = () => {
+        setArrTempZoneList(arrZoneList)
+    }
+
+    const dataSource1 = arrtempZoneList.map((info, i) => (
         {
             key: i,
             region: info.region,
@@ -47,19 +57,19 @@ const GroupView = () => {
 
     const columns1 = [
         {
-          title: 'REGION',
-          dataIndex: 'region',
-          key: 'region',
+            title: 'REGION',
+            dataIndex: 'region',
+            key: 'region',
         },
         {
-          title: 'SITE',
-          dataIndex: 'site',
-          key: 'site',
+            title: 'SITE',
+            dataIndex: 'site',
+            key: 'site',
         },
         {
-          title: 'AREA',
-          dataIndex: 'area',
-          key: 'area',
+            title: 'AREA',
+            dataIndex: 'area',
+            key: 'area',
         },
         {
             title: 'ZONE',
@@ -78,13 +88,13 @@ const GroupView = () => {
         },
     ]
 
-    const dataSource2 = [
+    const dataSource2 = arrtempZoneList.map((info, i) => (
         {
-            key: '1',
-            region: 'JPN',
-            site: 'KIX',
-        },
-    ]
+            key: i,
+            region: info.region,
+            site: info.site
+        }
+    ))
 
     const columns2 = [
         {
@@ -99,22 +109,15 @@ const GroupView = () => {
         },
     ]
 
-    const locations = [
+    const locations = arrZoneList.map((info) => (
         {
-          name: "Osaka",
-          location: { 
-            lat: 34.6937,
-            lng: 135.5023 
-          },
-        },
-        {
-          name: "Tokyo",
-          location: { 
-            lat: 35.6762,
-            lng: 139.6503
-          },
-        },
-    ]
+            name: info.name,
+            location: { 
+                lat: info.corners.gpsA.latitude,
+                lng: info.corners.gpsA.longitude 
+            },
+        }
+    ))
 
     
     return (
@@ -122,16 +125,21 @@ const GroupView = () => {
             <div className="row">
                 <div className="col-sm-5 right-separate">
                     <h3>FILTER BY SITE</h3>
-                    {/* <div className="main shadows">
-                        <h4>NO SITE SELECTED</h4>
-                    </div> */}
-                    <div className="selected-files">
-                        <h3>SELECTED SITE</h3>
-                        <Table
-                            columns={columns2}
-                            dataSource={dataSource2}/>
-                        <button>CLEAR SELECTION</button>
-                    </div>
+                    {
+                        arrtempZoneList.length === arrZoneList.length 
+                        ?
+                            <div className="main shadows">
+                                <h4>NO SITE SELECTED</h4>
+                            </div>
+                        :
+                            <div className="selected-files">
+                                <h3>SELECTED SITE</h3>
+                                <Table
+                                    columns={columns2}
+                                    dataSource={dataSource2}/>
+                                <button onClick={clearSelection}>CLEAR SELECTION</button>
+                            </div>
+                    }                    
                 </div>
                 <div className="col-sm-7 border-left">
                     <div className="main shadows">

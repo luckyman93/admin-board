@@ -7,12 +7,14 @@ const Machine = createSlice({
   name: 'machine',
   initialState: {
     isMachineLoading: false,
+    isSuccessPopup : false,
     arrMachineList : [],
     objMachineDetail : {},
     objMCLocation : {},
     objMcHealth : {},
     arrImageList : [],
-    arrMachineType : []
+    arrMachineType : [],
+    objSuccessData : {}
   },
   reducers: {
     LoadingRequest: (state) => {
@@ -37,8 +39,10 @@ const Machine = createSlice({
       state.isMachineLoading = false
       state.objMCLocation = action.payload
     },
-    LoadingCrtMcLocationByIdSuccess: (state) => {
+    LoadingCrtMcLocationByIdSuccess: (state, action) => {
       state.isMachineLoading = false
+      state.isSuccessPopup = true
+      state.objSuccessData = action.payload
     },
     LoadingUpdMcLocationByIdSuccess: (state, action) => {
       state.isMachineLoading = false
@@ -58,6 +62,10 @@ const Machine = createSlice({
     },
     LoadingCrMcProByIdSuccess: (state) => {
       state.isMachineLoading = false
+    },    
+    LoadingMachineBySiteOrZoneSuccess: (state, action) => {
+      state.isMachineLoading = false
+      state.arrMachineList = action.payload
     },
     LoadingFailure: (state, action) => {
       state.isMachineLoading = false
@@ -83,6 +91,9 @@ const Machine = createSlice({
         case 'machineType':
           state.arrMachineType = []
           break
+        case 'isSuccessPopup':
+          state.isSuccessPopup = false
+        break
         default:
           break
       }
@@ -104,7 +115,8 @@ const {
   LoadingGetMcHealthByIdSuccess,
   LoadingGetMcImagesByIdSuccess,
   LoadingGetMcTypeByIdSuccess,
-  LoadingCrMcProByIdSuccess
+  LoadingCrMcProByIdSuccess,
+  LoadingMachineBySiteOrZoneSuccess
 } = Machine.actions
 
 // create new machine
@@ -130,7 +142,7 @@ export const createNewMachine = (groupId) => async dispatch => {
           //..end
           toast.success('New machine created successfully!')
           dispatch(LoadingCrtMachinSuccess())
-        } 
+        }
       })
       .catch((error) => {
         let errorInfo = error.response.data
@@ -185,22 +197,21 @@ export const getMcDetailById = (id) => async dispatch => {
   }
 }
 
-//update machine detail by id
-export const upDateSvOrderCode = (id, groupId, code, activeAt) => async dispatch => {
+//update machine by id
+export const upDateSvOrderCode = (id, code, activeAt) => async dispatch => {
   //validation
   if (!valid(code)) return toast.error('Please enter the Server code!')
   if (!valid(activeAt)) return toast.error('Please enter the Server Activated Date!')
 
   let data = {
-    "groupId": groupId,
-    "registeredAt": new Date().toJSON(),
+    "serverOrderCode": code,
+    "serverOrderActiveDate": activeAt + ":00.00Z",
   }
   
   try {
     dispatch(LoadingRequest())
     apiClient.upDateSvOrderCode(id, data)
       .then((response)=>{
-        console.log(response)
         if (response.status === 200) {
           dispatch(LoadingUpdateMcByIdSuccess(response.data))
           toast.success('updated successfully!')
@@ -223,7 +234,6 @@ export const getMcLocationById = (id) => async dispatch => {
         }
       })
       .catch((error)=>{
-        console.log(error)
         let errorInfo = error.response.data
         toast.error(errorInfo.message)
         dispatch(LoadingFailure('location'))
@@ -241,7 +251,6 @@ export const createMcLocationById = (data) => async dispatch => {
     apiClient.createMcLocationById(id, data)
       .then((response)=>{
         if (response.status === 200) {
-          localStorage.removeItem('Machine Creating Status')
           toast.success('Create machine location successfully!')
           dispatch(LoadingCrtMcLocationByIdSuccess(response.data))
         }
@@ -255,6 +264,11 @@ export const createMcLocationById = (data) => async dispatch => {
     dispatch(LoadingFailure())
     console.error(e.message)
   }
+}
+
+// intitial successPopup state
+export const intitialIsSuccessPopup = () => async dispatch => {
+  dispatch(LoadingFailure('isSuccessPopup'))
 }
 
 //update machine location by Id
@@ -357,7 +371,7 @@ export const getMachineTypeList = () => async dispatch => {
 export const createMcProfileById = (info) => async dispatch => {
 
   if (!valid(info.name)) return toast.error('Please enter machine name!')
-  if (!valid(info.activeSince)) return toast.error('Please enter machine name!')
+  if (!valid(info.activeSince)) return toast.error('Please enter ACTIVE SINCE!')
   if (info.type === 'none') return toast.error('Please select a machine type!')
 
   let id = JSON.parse(localStorage.getItem('Machine Creating Status')).machine_id
@@ -399,6 +413,49 @@ export const createMcProfileById = (info) => async dispatch => {
     console.error(e.message)
   }
 }
+
+// // search Machine list by site
+// export const searchMachineBySite = (key) => async dispatch => {
+//   try {
+//     dispatch(LoadingRequest())
+//     apiClient.searchMachineBySite(key)
+//       .then((response)=>{
+//         if (response.status === 200) {
+//           console.log(response)
+//           dispatch(LoadingMachineBySiteOrZoneSuccess(response.data))
+//         }
+//       })
+//       .catch((error)=>{
+//         let errorInfo = error.response.data
+//         toast.error(errorInfo.message)
+//         dispatch(LoadingFailure())
+//       })
+//   } catch (e) {
+//     dispatch(LoadingFailure())
+//     console.error(e.message)
+//   }
+// }
+
+// // search Machine list by zone
+// export const searchMachineByZone = (key) => async dispatch => {
+//   try {
+//     dispatch(LoadingRequest())
+//     apiClient.searchMachineByZone(key)
+//       .then((response)=>{
+//         if (response.status === 200) {
+//           dispatch(LoadingMachineBySiteOrZoneSuccess(response.data))
+//         }
+//       })
+//       .catch((error)=>{
+//         let errorInfo = error.response.data
+//         toast.error(errorInfo.message)
+//         dispatch(LoadingFailure())
+//       })
+//   } catch (e) {
+//     dispatch(LoadingFailure())
+//     console.error(e.message)
+//   }
+// }
 
 //validation
 const valid = (value) => {

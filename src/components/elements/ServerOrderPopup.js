@@ -19,7 +19,7 @@ const ServerOrderPopup = () => {
     }, [objMachineDetail])
 
     const updateServerCode = () => {
-        dispatch(upDateSvOrderCode(objMachineDetail.id, objMachineDetail.groupId, code, activeAt))
+        dispatch(upDateSvOrderCode(objMachineDetail.id, code, activeAt))
     }
 
     return (

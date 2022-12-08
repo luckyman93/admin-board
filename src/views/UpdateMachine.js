@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spin } from 'antd'
 import Table from '../components/elements/const/Table'
@@ -15,7 +15,10 @@ import {
     getMcDetailById,
     getMcLocationById,
     getMcHealthById,
-    getGetMcImageById } from '../reducers/machine/reducer'
+    getGetMcImageById,
+    // searchMachineBySite,
+    // searchMachineByZone
+ } from '../reducers/machine/reducer'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 
 //images start
@@ -28,6 +31,8 @@ import searchIcon from '../assets/images/search.png'
 const UpdateMachine = () =>  {
 
     const dispatch = useDispatch()
+    const [siteKey, setSiteKey] = useState('')
+    const [zoneKey, setZoneKey] = useState('')
     const {isMachineLoading, arrMachineList} = useSelector(state => state.Machine)
 
     useEffect(() => {
@@ -67,6 +72,14 @@ const UpdateMachine = () =>  {
 
     const popUpSelectZone = () => {
         showModal("selectZone")
+    }
+
+    const searchMachineBySiteOrZone = (e, key) => {
+        // if (key === 'site') {
+        //     dispatch(searchMachineBySite(siteKey))
+        // } else {
+        //     dispatch(searchMachineByZone(zoneKey))
+        // }
     }
 
     const dataSource = arrMachineList.map((info, i) => (
@@ -130,12 +143,12 @@ const UpdateMachine = () =>  {
         <div className="container-fluid profile-page zones machine-list">
             <div className="row">
                 <div className="col-sm-4 search">
-                    <input type="text" placeholder="Search site names..." />
-                    <button><img src={searchIcon} alt="search_icon"/></button>
+                    <input type="text" value={siteKey} placeholder="Search site names..." onChange={e => setSiteKey(e.target.value)} />
+                    <button onClick={(e) => searchMachineBySiteOrZone(e, 'site')}><img src={searchIcon} alt="search_icon"/></button>
                 </div>
                 <div className="col-sm-4 search">
-                    <input type="text" placeholder="Search machine names..." />
-                    <button><img src={searchIcon} alt="search_icon"/></button>
+                    <input type="text" value={zoneKey} placeholder="Search machine names..." onChange={e => setZoneKey(e.target.value)}  />
+                    <button onClick={(e) => searchMachineBySiteOrZone(e, 'zone')}><img src={searchIcon} alt="search_icon"/></button>
                 </div>
                 <div className="col-sm-4 btnss">
                     <button>GET MACHINE LIST</button>

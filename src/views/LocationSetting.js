@@ -5,21 +5,28 @@ import { isEmpty } from 'lodash'
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js'
 import Table from '../components/elements/const/Table'
 import SelectZonePopup from '../components/elements/SelectZonePopup'
+import SuccessPopup from '../components/elements/SuccessPopup'
 import { initObjZone } from '../reducers/zone/reducer'
-import { createMcLocationById } from '../reducers/machine/reducer'
+import { createMcLocationById, intitialIsSuccessPopup } from '../reducers/machine/reducer'
 import { Spin } from 'antd'
 
 const LocationSetting = () =>  {
 
     const dispatch = useDispatch()
     const { objZoneDetail } = useSelector(state => state.Zone)
-    const { isMachineLoading } = useSelector(state => state.Machine)
+    const { isMachineLoading, isSuccessPopup, objSuccessData } = useSelector(state => state.Machine)
     const [latitude, setLatitude] = useState('')
     const [longitude, setLongitude] = useState('')
 
     useEffect(() => {
         if (!isEmpty(objZoneDetail)) dispatch(initObjZone())
-    }, [dispatch])
+        if (isSuccessPopup) {
+            let myModal = new bootstrap.Modal(document.getElementById("successPopup"))
+            myModal.show()
+            localStorage.removeItem('Machine Creating Status')
+            dispatch(intitialIsSuccessPopup())
+        }
+    }, [dispatch, isSuccessPopup])
 
     const columns1 = [
         {
@@ -147,7 +154,7 @@ const LocationSetting = () =>  {
             "area": objZoneDetail.area,
             "zone": objZoneDetail.name,
             "latitude": Number(latitude),
-            "longitude":  Number(longitude),
+            "longitude": Number(longitude),
             "tags": objZoneDetail.locationTags
         }
         dispatch(createMcLocationById(data))
@@ -161,6 +168,8 @@ const LocationSetting = () =>  {
     return (
         <div className="container-fluid profile-page zones gr-view location-view">
             <SelectZonePopup />
+            <SuccessPopup 
+                objSuccessData = {objSuccessData}/>
             <Spin spinning={isMachineLoading}>
                 <div className="row">
                     <div className="col-sm-5 right-separate">

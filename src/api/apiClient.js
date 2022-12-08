@@ -314,6 +314,45 @@ export const apiClient = {
         })
     },
 
+    //search machine by site
+    async searchMachineBySite(key) {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+                .get(baseUrl_2 + '/datalake/v1/machine/site/'+key, {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
+        })
+    },
+
+    //search machine by zone
+    async searchMachineByZone(key) {
+        let token = localStorage.getItem('Auth Token')
+        return new Promise(function (resolve, reject) {
+            axios
+                .get(baseUrl_2 + '/datalake/v1/machine/zone/'+key, {
+                    headers: {
+                    "Content-Type": "application/json",
+                    "Authorization" : `Bearer ${token}`
+                    } 
+                })
+                .then(function (response) {
+                resolve(response)
+                })
+                .catch(function (error) {
+                reject(error)
+                })
+        })
+    },
 //ZONE
     //get zone list
     async getZonetList() {

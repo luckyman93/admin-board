@@ -38,7 +38,7 @@ function Map(props) {
             onLoad={onLoad}
             onUnmount={onUnmount}>
             { props.locations.map((item) => (
-                <Marker key={item.name} position={item.location} onClick={(e) => props.onClickMark(e, 1)}/>
+                <Marker key={item.name} position={item.location} onClick={(e) => props.onClickMark(e, item.name)}/>
                 ))
             }
             <></>
