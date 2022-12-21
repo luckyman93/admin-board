@@ -44,6 +44,7 @@ const CreateZone = () => {
 
     const uploadFbx = (e) => {
         let modelName = e.target.files[0].name
+        console.log(e)
         setFbxName(modelName)
     }
 

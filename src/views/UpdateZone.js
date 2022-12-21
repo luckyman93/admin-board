@@ -152,11 +152,11 @@ const UpdateZone = () =>  {
                 group: <span className="cursor" onClick={popUpSelectGroup}>= <br/>SELECT</span>,
                 a_la: <input className='corner' type="text" value={YY} placeholder="OPTIONAL..." onChange={(e)=>{setYY(e.target.value); setPY(calCoordinateY(e.target.value));}}/>,
                 a_lo: <input className='corner' type="text" value={XX} placeholder="OPTIONAL..." onChange={(e)=>{setXX(e.target.value); setPX(calCoordinateX(e.target.value));}}/>,
-                b_la: <input className='corner' type="text" value={YY} placeholder="OPTIONAL..." onChange={(e) => {setYY(e.target.value); setPY(calCoordinateY(e.target.value));}}/>,
+                b_la: <input className='corner' type="text" value={YY} placeholder="OPTIONAL..." onChange={(e)=>{setYY(e.target.value); setPY(calCoordinateY(e.target.value));}}/>,
                 b_lo: <input className='corner' type="text" value={CC} placeholder="OPTIONAL..." onChange={(e)=>{setCC(e.target.value); setPC(calCoordinateX(e.target.value));}}/>,
                 c_la: <input className='corner' type="text" value={DD} placeholder="OPTIONAL..." onChange={(e)=>{setDD(e.target.value); setPD(calCoordinateY(e.target.value));}}/>,
                 c_lo: <input className='corner' type="text" value={XX} placeholder="OPTIONAL..." onChange={(e)=>{setXX(e.target.value); setPX(calCoordinateX(e.target.value));}}/>,
-                d_la: <input className='corner' type="text" value={DD} placeholder="OPTIONAL..." onChange={(e) => {setCC(e.target.value); setPC(calCoordinateX(e.target.value));}} />,
+                d_la: <input className='corner' type="text" value={DD} placeholder="OPTIONAL..." onChange={(e)=>{setCC(e.target.value); setPC(calCoordinateX(e.target.value));}} />,
                 d_lo: <input className='corner' type="text" value={CC} placeholder="OPTIONAL..." onChange={(e)=>{setDD(e.target.value); setPD(calCoordinateY(e.target.value));}} />,
             }
         ]

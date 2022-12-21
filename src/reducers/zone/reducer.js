@@ -84,9 +84,9 @@ export const getZonetList = () => async dispatch => {
 export const createNewZone = (data) => async dispatch => {
     if (!valid(data.id)) return toast.error('Please input the id!')
     if (!valid(data.region)) return toast.error('Please input the region!')
-    if (data.region.length > 3) return toast.error('The region maximum character length must be less than 3.')
+    if (data.region.length > 4) return toast.error('The region maximum character length must be less than 3.')
     if (!valid(data.site)) return toast.error('Please input the site!')
-    if (data.groupIds.site > 3) return toast.error('The maximum character length must be less than 3.')
+    if (data.groupIds.site > 4) return toast.error('The maximum character length must be less than 3.')
     if (!valid(data.area)) return toast.error('Please input the area!')
     if (!valid(data.fbxName)) return toast.error('Please input the fbxName!')
     if (!valid(data.groupIds)) return toast.error('Please select the groupIds!')
